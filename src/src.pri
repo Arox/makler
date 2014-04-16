@@ -1,0 +1,11 @@
+INCLUDEPATH += src/dialogs \
+                src/widget
+
+SOURCES += $$PWD/main.cpp \
+        $$PWD/mainwindow.cpp
+    
+HEADERS  += $$PWD/mainwindow.h
+    
+FORMS    += $$PWD/mainwindow.ui
+    
+
