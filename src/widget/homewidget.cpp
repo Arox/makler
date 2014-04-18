@@ -15,14 +15,12 @@ HomeWidget::HomeWidget(int aAgent, QWidget *parent) :
     mIsLoad(false),
     mAddress(AddressWidget::NORMAL),
     mHomeAddress1(AddressWidget::NORMAL)
-  //, mHomeAddress2(AddressWidget::NORMAL)
 {
     ui->setupUi(this);
     ui->mainLayout->addWidget(&mClient);
     ui->mainLayout->addWidget(&mType);
     ui->mainLayout->addWidget(&mAddress);
     ui->mainLayout->addWidget(&mHomeAddress1);
-    //ui->mainLayout->addWidget(&mHomeAddress2);
     ui->mainLayout->addWidget(&mArea);
     ui->mainLayout->addWidget(&mPrice);
     ui->mainLayout->addWidget(&mInformation);
@@ -54,10 +52,6 @@ void HomeWidget::backWidget()
             {
                 mHomeAddress1.save();
             }
-            /*else
-            {
-                mHomeAddress2.save();
-            }*/
         }
         emit back(this);
     }
@@ -119,7 +113,6 @@ void HomeWidget::load(int aId)
     mPrice.load(mId);
     mAddress.load(mId, 1);
     mHomeAddress1.load(mId,1);
-    //mHomeAddress2.load(mId,2);
     mButtons.setId(mId);
 
     mClient.setEnable(vAgent == mAgent);
@@ -130,7 +123,6 @@ void HomeWidget::load(int aId)
     mPrice.setEnable(vAgent == mAgent);
     mAddress.setEnable(vAgent == mAgent);
     mHomeAddress1.setEnable(vAgent == mAgent);
-    //mHomeAddress2.setEnable(vAgent == mAgent);
 
     ResponseRecordType vRecord = execQuery(QString("SELECT \"create\", now() as read FROM objects WHERE id = %1")
                     .arg(mId))[0];

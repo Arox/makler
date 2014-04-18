@@ -44,7 +44,6 @@ private:
     CommentWidget mComment;
     ButtonsWidget mButtons;
     AddressHomeWidget mHomeAddress1;
-    //AddressHomeWidget mHomeAddress2;
 
     int mId;
     int mAgent;
