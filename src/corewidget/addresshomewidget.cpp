@@ -14,16 +14,9 @@ AddressHomeWidget::AddressHomeWidget(int aState, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //connect(ui->mpGarden->lineEdit(), SIGNAL(returnPressed()), this, SLOT(saveGarden()));
-    //connect(ui->mpStreet->lineEdit(), SIGNAL(returnPressed()), this, SLOT(saveStreet()));
-
     ui->mpStreet->setEnabled(false);
-    /*ui->mpStreet->blockSignals(true);
-    loadGarden();
-    ui->mpStreet->blockSignals(false);
-*/
-    setState(aState);
     mBoxes << ui->mpGarden << ui->mpStreet;
+    setState(aState);
 
 }
 AddressHomeWidget::~AddressHomeWidget()
@@ -86,7 +79,7 @@ void AddressHomeWidget::loadGarden()
 
     if (ui->mpGarden->count())
     {
-        if (mState == FIND) ui->mpGarden->insertItem(0, "", -1);
+        if (isState(FIND)) ui->mpGarden->insertItem(0, "", -1);
         ui->mpGarden->setCurrentIndex(0);
         on_mpGarden_currentIndexChanged(0);
     }
@@ -119,7 +112,7 @@ void AddressHomeWidget::loadStreet()
 
     if (ui->mpStreet->count())
     {
-        if (mState == FIND) ui->mpStreet->insertItem(0, "", -1);
+        if (isState(FIND)) ui->mpStreet->insertItem(0, "", -1);
         ui->mpStreet->setCurrentIndex(0);
     }
 }
@@ -199,14 +192,20 @@ void AddressHomeWidget::setEnable(bool aEnable)
 
 QList<int> AddressHomeWidget::garden()
 {
-    return idsComboBox(ui->mpGarden);
-    //return (ui->mpGarden->currentIndex() > 0 ? ui->mpGarden->itemData(ui->mpGarden->currentIndex()).toInt() : -1);
+    if (isState(MULTISELECT))
+    {
+        return idsComboBox(ui->mpGarden);
+    }
+    return  idComboBox(ui->mpGarden);
 }
 
 QList<int> AddressHomeWidget::street()
 {
-    return idsComboBox(ui->mpStreet);
-    //return (ui->mpStreet->currentIndex() > 0 ? ui->mpStreet->itemData(ui->mpStreet->currentIndex()).toInt() : -1);
+    if (isState(MULTISELECT))
+    {
+        return idsComboBox(ui->mpStreet);
+    }
+    return  idComboBox(ui->mpStreet);
 }
 
 int AddressHomeWidget::number1()
@@ -239,10 +238,15 @@ bool AddressHomeWidget::isNumber2()
     return number2() > 0;
 }
 
+bool AddressHomeWidget::isState(int aState)
+{
+    return mState & aState;
+}
+
 void AddressHomeWidget::setState(int aState)
 {
     mState = aState;
-    if (aState & NORMAL)
+    if (isState(NORMAL))
     {
         ui->mpGarden->setVisible(true);
         ui->mpNumber1->setVisible(true);
@@ -255,7 +259,7 @@ void AddressHomeWidget::setState(int aState)
         ui->mpStreet->blockSignals(false);
     }
 
-    if (aState & FIND)
+    if (isState(FIND))
     {
         ui->mpGarden->setVisible(true);
         ui->mpNumber1->setVisible(false);
@@ -266,7 +270,7 @@ void AddressHomeWidget::setState(int aState)
         ui->label_4->setVisible(false);
     }
 
-    if (aState &  FINDHOME)
+    if (isState(FINDHOME))
     {
         ui->mpGarden->setVisible(true);
         ui->mpNumber1->setVisible(true);
@@ -276,7 +280,7 @@ void AddressHomeWidget::setState(int aState)
         ui->label_3->setVisible(true);
         ui->label_4->setVisible(true);
     }
-    if (aState &  MULTISELECT)
+    if (isState(MULTISELECT))
     {
         connect(&mMapper, SIGNAL(mapped(int)), this, SLOT(selectComboBox(int)));
         for (int i = 0; i < mBoxes.count(); ++i)
@@ -330,6 +334,20 @@ QList<int> AddressHomeWidget::idsComboBox(QComboBox* apBox)
     }
     return vResult;
 }
+
+QList<int> AddressHomeWidget::idComboBox(QComboBox* apBox)
+{
+    QList<int> vResult;
+    if (apBox->currentIndex() >= 0)
+    {
+        if (apBox->itemData(apBox->currentIndex()).toInt() >= 0)
+        {
+            vResult.append(apBox->itemData(apBox->currentIndex()).toInt());
+        }
+    }
+    return vResult;
+}
+
 
 void AddressHomeWidget::clickItemComboBox(QComboBox *apBox, int aIndex)
 {

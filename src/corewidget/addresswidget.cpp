@@ -14,9 +14,9 @@ AddressWidget::AddressWidget(int aState, QWidget *parent) :
     mState(NORMAL)
 {
     ui->setupUi(this);
-    setState(aState);
     connect(ui->mpCity, SIGNAL(currentIndexChanged(int)), this, SLOT(on_mpCity_currentIndexChanged(int)));
     mBoxes << ui->mpCity << ui->mpLocality << ui->mpStreet;
+    setState(aState);
 }
 
 AddressWidget::~AddressWidget()
@@ -85,6 +85,11 @@ void AddressWidget::saveStreet()
     ui->mpStreet->setCurrentIndex(ui->mpStreet->findText(vName));
 }
 
+bool AddressWidget::isState(int aState)
+{
+    return mState & aState;
+}
+
 void AddressWidget::loadCity()
 {
     ResponseType vResponse = execQuery(QString("select id, name from address_city where type_fk IN (select id from typecity where name='city')"));
@@ -101,7 +106,7 @@ void AddressWidget::loadCity()
     ui->mpCity->setCompleter(vpComp);
     if (ui->mpCity->count())
     {
-        if (mState == FIND) ui->mpCity->insertItem(0, "", -1);
+        if (isState(FIND) && !isState(MULTISELECT)) ui->mpCity->insertItem(0, "", -1);
         ui->mpCity->setCurrentIndex(0);
         on_mpCity_currentIndexChanged(0);
     }
@@ -134,7 +139,7 @@ void AddressWidget::loadLocality()
     }
     if (ui->mpLocality->count())
     {
-        if (mState == FIND) ui->mpLocality->insertItem(0, "", -1);
+        if (isState(FIND) && !isState(MULTISELECT)) ui->mpLocality->insertItem(0, "", -1);
         ui->mpLocality->setCurrentIndex(0);
     }
 
@@ -173,7 +178,7 @@ void AddressWidget::loadStreet()
 
     if (ui->mpStreet->count())
     {
-        if (mState == FIND) ui->mpStreet->insertItem(0, "", -1);
+        if (isState(FIND) && !isState(MULTISELECT)) ui->mpStreet->insertItem(0, "", -1);
         ui->mpStreet->setCurrentIndex(0);
     }
 }
@@ -281,20 +286,29 @@ void AddressWidget::setEnable(bool aEnable)
 
 QList<int> AddressWidget::city()
 {
-    return idsComboBox(ui->mpCity);
-    //return (ui->mpCity->currentIndex() >= 0 ? ui->mpCity->itemData(ui->mpCity->currentIndex()).toInt() : -1);
+    if (isState(MULTISELECT))
+    {
+        return idsComboBox(ui->mpCity);
+    }
+    return  idComboBox(ui->mpCity);
 }
 
 QList<int> AddressWidget::locality()
 {
-    return idsComboBox(ui->mpLocality);
-    //return (ui->mpLocality->currentIndex() >= 0 ? ui->mpLocality->itemData(ui->mpLocality->currentIndex()).toInt() : -1);
+    if (isState(MULTISELECT))
+    {
+        return idsComboBox(ui->mpLocality);
+    }
+    return  idComboBox(ui->mpLocality);
 }
 
 QList<int> AddressWidget::street()
 {
-    return idsComboBox(ui->mpStreet);
-    //return (ui->mpStreet->currentIndex() >= 0 ? ui->mpStreet->itemData(ui->mpStreet->currentIndex()).toInt() : -1);
+    if (isState(MULTISELECT))
+    {
+        return idsComboBox(ui->mpStreet);
+    }
+    return  idComboBox(ui->mpStreet);
 }
 
 int AddressWidget::number1()
@@ -329,6 +343,7 @@ bool AddressWidget::isLocality()
 
 bool AddressWidget::isStreet()
 {
+
     return street().count() > 0;
 }
 
@@ -356,7 +371,7 @@ void AddressWidget::setState(int aState)
 {
     mState = aState;
 
-    if (aState & NORMAL)
+    if (isState(NORMAL))
     {
         ui->mpCity->setVisible(true);
         ui->mpLandMark->setVisible(true);
@@ -369,19 +384,15 @@ void AddressWidget::setState(int aState)
         ui->label_2->setVisible(true);
         ui->label_3->setVisible(true);
         ui->label_6->setVisible(true);
-        ui->mpStreet->blockSignals(false);
     }
-    if (aState & FIND)
+    if (isState(FIND))
     {
         ui->mpCity->setVisible(true);
         ui->mpLandMark->setVisible(false);
         ui->mpLocality->setVisible(true);
-        ui->mpNumber1->setVisible(false);
-        ui->mpNumber2->setVisible(false);
-        ui->mpRoom->setVisible(false);
         ui->mpStreet->setVisible(true);
 
-        ui->label->setVisible(false);
+
         ui->label_2->setVisible(false);
         ui->label_3->setVisible(false);
         ui->label_6->setVisible(false);
@@ -389,30 +400,31 @@ void AddressWidget::setState(int aState)
         ui->mpCity->setEditable(true);
         ui->mpStreet->setEditable(true);
         ui->mpLocality->setEditable(true);
-    }
-    if (aState & FINDROOM)
-    {
-        ui->mpCity->setVisible(true);
-        ui->mpLandMark->setVisible(false);
-        ui->mpLocality->setVisible(true);
-        ui->mpNumber1->setVisible(true);
-        ui->mpNumber2->setVisible(true);
-        ui->mpRoom->setVisible(true);
-        ui->mpStreet->setVisible(true);
 
-        ui->label->setVisible(true);
-        ui->label_6->setVisible(false);
+        if (isState(FINDROOM))
+        {
+            ui->mpNumber1->setVisible(true);
+            ui->mpNumber2->setVisible(true);
+            ui->mpRoom->setVisible(true);
 
-        ui->mpCity->setEditable(true);
-        ui->mpStreet->setEditable(true);
-        ui->mpLocality->setEditable(true);
+            ui->label->setVisible(true);
+        }
+        else
+        {
+            ui->mpNumber1->setVisible(false);
+            ui->mpNumber2->setVisible(false);
+            ui->mpRoom->setVisible(false);
+            ui->label->setVisible(false);
+        }
     }
-    if (aState & MULTISELECT)
+
+    if (isState(MULTISELECT))
     {
         connect(&mMapper, SIGNAL(mapped(int)), this, SLOT(selectComboBox(int)));
         for (int i = 0; i < mBoxes.count(); ++i)
         {
             connect(mBoxes[i], SIGNAL(activated(int)), &mMapper, SLOT(map()));
+            connect(mBoxes[i], SIGNAL(currentIndexChanged(int)), &mMapper, SLOT(map()));
             mMapper.setMapping(mBoxes[i], i);
         }
     }
@@ -439,6 +451,19 @@ void AddressWidget::on_mpCity_currentIndexChanged(int index)
 bool AddressWidget::canSave()
 {
     return (ui->mpStreet->currentIndex() >= 0) && (ui->mpNumber1->text().length());
+}
+
+QList<int> AddressWidget::idComboBox(QComboBox* apBox)
+{
+    QList<int> vResult;
+    if (apBox->currentIndex() >= 0)
+    {
+        if (apBox->itemData(apBox->currentIndex()).toInt() >= 0)
+        {
+            vResult.append(apBox->itemData(apBox->currentIndex()).toInt());
+        }
+    }
+    return vResult;
 }
 
 QList<int> AddressWidget::idsComboBox(QComboBox* apBox)

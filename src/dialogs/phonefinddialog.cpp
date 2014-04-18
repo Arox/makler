@@ -275,40 +275,40 @@ void PhoneFindDialog::on_mpFind_clicked()
     QStringList vWheres;
     if (mAddress.isVisible())
     {
-        if (mAddress.isNumber1())
+        //if (mAddress.isNumber1())
+        //{
+
+        vWheres
+                << (mAddress.isLocality() ? QString("microdistrict_fk = %1").arg(mAddress.locality().at(0)) : QString(""))
+                << (mAddress.isStreet() ? QString("street_fk = %1").arg(mAddress.street().at(0)) : QString(""))
+                << (mAddress.isNumber1() ? QString("number1 = '%1'").arg(mAddress.number1()) : QString(""))
+                << (mAddress.isNumber2() ? QString("number2 = '%1'").arg(mAddress.number2()) : QString(""))
+                << (mAddress.isRoom() ? QString("room = '%1'").arg(mAddress.room()) : QString(""));
+        vWheres.removeAll("");
+        if (vWheres.count())
         {
 
-            vWheres
-                    << (mAddress.isLocality() ? QString("microdistrict_fk = %1").arg(mAddress.locality().at(0)) : QString(""))
-                    << (mAddress.isStreet() ? QString("street_fk = %1").arg(mAddress.street().at(0)) : QString(""))
-                    << (mAddress.isNumber1() ? QString("number1 = '%1'").arg(mAddress.number1()) : QString(""))
-                    << (mAddress.isNumber2() ? QString("number2 = '%1'").arg(mAddress.number2()) : QString(""))
-                    << (mAddress.isRoom() ? QString("room = '%1'").arg(mAddress.room()) : QString(""));
-            vWheres.removeAll("");
-            if (vWheres.count())
-            {
-
-                vConstraints << QString("(%1)").arg(vWheres.join(" AND "));
-            }
+            vConstraints << QString("(%1)").arg(vWheres.join(" AND "));
         }
+        //}
     }
 
     if (mHomeAddress.isVisible())
     {
-        if (mHomeAddress.isNumber1())
+        //if (mHomeAddress.isNumber1())
+        //{
+        vWheres.clear();
+        vWheres
+                << (mHomeAddress.isStreet() ? QString("street_fk = %1").arg(mHomeAddress.street().at(0)) : QString(""))
+                << (mHomeAddress.isNumber1() ? QString("number1 = '%1'").arg(mHomeAddress.number1()) : QString(""))
+                << (mHomeAddress.isNumber2() ? QString("number2 = '%1'").arg(mHomeAddress.number2()) : QString(""));
+        vWheres.removeAll("");
+        if (vWheres.count())
         {
-            vWheres.clear();
-            vWheres
-                    << (mHomeAddress.isStreet() ? QString("street_fk = %1").arg(mHomeAddress.street().at(0)) : QString(""))
-                    << (mHomeAddress.isNumber1() ? QString("number1 = '%1'").arg(mHomeAddress.number1()) : QString(""))
-                    << (mHomeAddress.isNumber2() ? QString("number2 = '%1'").arg(mHomeAddress.number2()) : QString(""));
-            vWheres.removeAll("");
-            if (vWheres.count())
-            {
 
-                vConstraints << QString("(%1)").arg(vWheres.join(" AND "));
-            }
+            vConstraints << QString("(%1)").arg(vWheres.join(" AND "));
         }
+        //}
     }
     if (vConstraints.count())
     {

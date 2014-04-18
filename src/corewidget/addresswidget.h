@@ -19,8 +19,8 @@ public:
     enum StateWidget
     {
         NORMAL = 1,
-        FIND = 2,
-        FINDROOM = 4,
+        FIND = 128,
+        FINDROOM = 192,
         MULTISELECT = 8
     };
     explicit AddressWidget(int aState, QWidget *parent = 0);
@@ -63,6 +63,7 @@ private slots:
     void on_mpCity_currentIndexChanged(int index);
 protected:
     QList<int> idsComboBox(QComboBox* apBox);
+    QList<int> idComboBox(QComboBox* apBox);
     void clickItemComboBox(QComboBox* apBox, int aIndex);
 
 protected slots:
@@ -70,6 +71,7 @@ protected slots:
 private:
     void setEnabledWidgets(bool aEnable);
     void setState(int aState);
+    bool isState(int aState);
 private:
     Ui::AddressWidget *ui;
     int mId;

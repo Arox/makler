@@ -24,9 +24,9 @@ public:
 public:
     enum StateWidget
     {
-        NORMAL = 0,
-        FIND = 1,
-        FINDHOME = 4,
+        NORMAL = 1,
+        FIND = 128,
+        FINDHOME = 192,
         MULTISELECT = 8
     };
 
@@ -54,12 +54,14 @@ private slots:
     void on_mpStreet_currentIndexChanged(int index);
 protected:
     QList<int> idsComboBox(QComboBox* apBox);
+    QList<int> idComboBox(QComboBox* apBox);
     void clickItemComboBox(QComboBox* apBox, int aIndex);
 protected slots:
     void selectComboBox(int aIndex);
 private:
     void setEnabledWidgets(bool aEnable);
     void setState(int aState);
+    bool isState(int aState);
 private:
     Ui::AddressHomeWidget *ui;
     bool mEnabled;
