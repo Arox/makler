@@ -37,7 +37,7 @@ FindPhoneTableModel::FindPhoneTableModel(QObject *parent):
     QAbstractTableModel(parent)
 {
     mHeaders << TRANSLATE("Агент")          //0
-             << TRANSLATE("Покупатель")    //1
+             << TRANSLATE("Тип сделки")    //1
              << TRANSLATE("Имя клиента")      //2
              << TRANSLATE("Адрес")       //3
              << TRANSLATE("Цена")       //4
@@ -113,11 +113,11 @@ void FindPhoneTableModel::load(QString aWhere)
 
     if (aWhere.count())
     {
-        vSqlQuery = QString("Select fio, type, client, address, price, date from total_find_phone_view where %1").arg(aWhere);
+        vSqlQuery = QString("Select fio, (case WHEN type is NULL THEN 'покупатель' ELSE type END) as type, client, address, price, date from total_find_phone_view where %1").arg(aWhere);
     }
     else
     {
-        vSqlQuery = QString("Select fio, type, client, address, price, date from total_find_phone_view");
+        vSqlQuery = QString("Select fio, (case WHEN type is NULL THEN 'покупатель' ELSE type END) as type, client, address, price, date from total_find_phone_view");
     }
 
     qDebug() << vSqlQuery;
@@ -127,7 +127,7 @@ void FindPhoneTableModel::load(QString aWhere)
     if (mData.count())
     {
         mHeaders << TRANSLATE("Агент")          //0
-                 << TRANSLATE("Покупатель")    //1
+                 << TRANSLATE("Тип сделки")    //1
                  << TRANSLATE("Имя клиента")      //2
                  << TRANSLATE("Адрес")       //3
                  << TRANSLATE("Цена")       //4
