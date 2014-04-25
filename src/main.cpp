@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     qDebug() << vTime;
-    w.load(new TopMenu(w.user_fk(), w.roles()));
+    w.load(WidgetForControl::SignalWidgetType(0, new TopMenu(w.user_fk(), w.roles())));
     w.show();
     qDebug() << QTime::currentTime();
     qDebug() << QTime::currentTime().addSecs(-1*(vTime.hour() * 3600 + vTime.minute()* 60 + vTime.second()));

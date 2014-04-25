@@ -31,7 +31,6 @@ private slots:
     void on_mpChangeAgent_clicked();
 
     void on_mpTake_clicked();
-
 private:
     Ui::AdminWidget *ui;
     ViewObjects* mpViewObjects;

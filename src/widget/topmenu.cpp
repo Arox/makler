@@ -180,13 +180,13 @@ void TopMenu::backWidget(WidgetForControl* apSender)
 
 void TopMenu::disconnectWidget(WidgetForControl* apWidget)
 {
-    disconnect(apWidget, SIGNAL(changeWidget(SignalWidgetType)), this, SLOT(load(SignalWidgetType)));
+    disconnect(apWidget, SIGNAL(changeWidget(WidgetForControl::SignalWidgetType)), this, SLOT(load(WidgetForControl::SignalWidgetType)));
     disconnect(apWidget, SIGNAL(back(WidgetForControl*)), this, SLOT(backWidget(WidgetForControl*)));
 }
 
 void TopMenu::connectWidget(WidgetForControl* apWidget)
 {
-    connect(apWidget, SIGNAL(changeWidget(SignalWidgetType)), this, SLOT(load(SignalWidgetType)));
+    connect(apWidget, SIGNAL(changeWidget(WidgetForControl::SignalWidgetType)), this, SLOT(load(WidgetForControl::SignalWidgetType)));
     connect(apWidget, SIGNAL(back(WidgetForControl*)), this, SLOT(backWidget(WidgetForControl*)));
 }
 

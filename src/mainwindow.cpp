@@ -104,16 +104,16 @@ QStringList MainWindow::roles() const
 void MainWindow::disconnectWidget(int aIndex)
 {
     WidgetForControl* vpWidget = mWidgets[aIndex];
-    disconnect(vpWidget, SIGNAL(changeWidget(WidgetForControl*)), this, SLOT(load(WidgetForControl*)));
-    disconnect(vpWidget, SIGNAL(back()), this, SLOT(backWidget()));
+    disconnect(vpWidget, SIGNAL(changeWidget(WidgetForControl::SignalWidgetType)), this, SLOT(load(WidgetForControl::SignalWidgetType)));
+    disconnect(vpWidget, SIGNAL(back(WidgetForControl*)), this, SLOT(backWidget(WidgetForControl*)));
     disconnect(this, SIGNAL(reloadWidget(WidgetForControl*)), vpWidget, SLOT(reload(WidgetForControl*)));
 }
 
 void MainWindow::connectWidget(int aIndex)
 {
     WidgetForControl* vpWidget = mWidgets[aIndex];
-    connect(vpWidget, SIGNAL(changeWidget(WidgetForControl*)), this, SLOT(load(WidgetForControl*)));
-    connect(vpWidget, SIGNAL(back()), this, SLOT(backWidget()));
+    connect(vpWidget, SIGNAL(changeWidget(WidgetForControl::SignalWidgetType)), this, SLOT(load(WidgetForControl::SignalWidgetType)));
+    connect(vpWidget, SIGNAL(back(WidgetForControl*)), this, SLOT(backWidget(WidgetForControl*)));
     connect(this, SIGNAL(reloadWidget(WidgetForControl*)), vpWidget, SLOT(reload(WidgetForControl*)));
 }
 
@@ -168,21 +168,13 @@ void MainWindow::setSize(int aIndex)
 
     vRect.setHeight(vNewHeight);
     vRect.setWidth(vNewWidth);
-    //setMinimumSize(vMinWidth, vMinHeight);
-    //setMaximumSize(vMaxWidth, vMaxHeight);
-    //vpWidget->setMinimumSize(vMinWidth, vMinHeight);
-    //vpWidget->setMaximumSize(vMaxWidth, vMaxHeight);
 
     if (mWidgets.count() == 1)
     {
-        //setMaximumSize(vMaxWidth, vMaxHeight);
-        //vpWidget->setMaximumSize(vMaxWidth, vMaxHeight);
         showNormal();
     }
     else
     {
-        //setMaximumSize(16000, 16000);
-        //vpWidget->setMaximumSize(16000, 16000);
         showMaximized();
     }
     vpWidget->setGeometry(vRect);
@@ -197,8 +189,9 @@ void MainWindow::setSize(int aIndex)
 
 }
 
-void MainWindow::load(WidgetForControl* apControl)
+void MainWindow::load(WidgetForControl::SignalWidgetType apControl)
 {
+    WidgetForControl* vpControl = apControl.second;
     if (mWidgets.count())
     {
         disconnectWidget(mWidgets.count() - 1);
@@ -206,16 +199,13 @@ void MainWindow::load(WidgetForControl* apControl)
         ui->mainLayout->removeWidget(vpWidget);
         vpWidget->setParent(0);
     }
-    mWidgets.append(apControl);
+    mWidgets.append(vpControl);
     connectWidget(mWidgets.count() - 1);
     ui->mainLayout->addWidget(mWidgets[mWidgets.count() - 1]);
-    //setWindowTitle(mWidgets[mWidgets.count() - 1]->name());
-    //ui->mpNamePage->clear();
-    //ui->mpNamePage->setText(mWidgets[mWidgets.count() - 1]->name());
     setSize(mWidgets.count() - 1);
 }
 
-void MainWindow::backWidget()
+void MainWindow::backWidget(WidgetForControl *)
 {
     WidgetForControl* vpWidget = 0;
     if (mWidgets.count())
@@ -227,14 +217,11 @@ void MainWindow::backWidget()
         ui->mainLayout->removeWidget(vpWidget);
         connectWidget(mWidgets.count() - 1);
         emit reloadWidget(vpWidget);
-        //delete vpWidget;
 
         if (!mWidgets.count()) return;
 
         ui->mainLayout->addWidget(mWidgets[mWidgets.count() - 1]);
         setWindowTitle(mWidgets[mWidgets.count() - 1]->name());
-        //ui->mpNamePage->clear();
-        //ui->mpNamePage->setText(mWidgets[mWidgets.count() - 1]->name());
         setSize(mWidgets.count() - 1);
     }
 }
@@ -294,5 +281,5 @@ void MainWindow::changeStyle(QString aNameStyle)
 
 void MainWindow::on_mpSettings_clicked()
 {
-    load(new SettingsWidget(mUser_fk, mRoles, this));
+    load(WidgetForControl::SignalWidgetType(0, new SettingsWidget(mUser_fk, mRoles, this)));
 }

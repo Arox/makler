@@ -21,8 +21,6 @@ AdminWidget::AdminWidget(QWidget *parent) :
     ui->mainLayout->insertWidget(0, mpViewObjects);
     loadAgents();
     changeSelect(false);
-
-    connect(mpViewObjects, SIGNAL(back()), this, SIGNAL(back()));
 }
 
 AdminWidget::~AdminWidget()

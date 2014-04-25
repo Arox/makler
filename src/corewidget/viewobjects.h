@@ -62,16 +62,12 @@ private slots:
     void on_mpSelectAll_clicked();
 
     void on_mpAgents_currentIndexChanged(int index);
-
 private:
     Ui::ViewObjects *ui;
     TableModelApartment mApartmnet;
     TableModelHome mHome;
     TableModelRent mRent;
     TableModelClient mClient;
-
-    QString mStyleOn;
-    QString mStyleOff;
 
     QList<TableModel*> mModelsList;
     QString mOldFilter;

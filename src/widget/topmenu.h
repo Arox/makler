@@ -37,7 +37,7 @@ private slots:
 
 //from mainwindow
 public slots:
-    void load(SignalWidgetType apControl);
+    void load(WidgetForControl::SignalWidgetType apControl);
     void backWidget(WidgetForControl* apSender);
 signals:
     void reloadWidget(WidgetForControl* apControl);

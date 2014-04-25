@@ -31,8 +31,8 @@ public:
     QStringList roles() const;
 
 public slots:
-    void load(WidgetForControl* apControl);
-    void backWidget();
+    void load(WidgetForControl::SignalWidgetType apControl);
+    void backWidget(WidgetForControl*);
     void closeWidget();
     void closeWindow();
 signals:

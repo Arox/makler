@@ -19,7 +19,7 @@ public:
     virtual QSize size() = 0;
     virtual QString idName() = 0;
 signals:
-    void changeWidget(SignalWidgetType);
+    void changeWidget(WidgetForControl::SignalWidgetType);
     void back(WidgetForControl*);
     //void close();
 public slots:
