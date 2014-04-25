@@ -27,15 +27,12 @@ TopMenu::TopMenu(int aUser_fk, QStringList aRoles, QWidget *parent) :
     vWidgets.append(new ClientsWidget(mUser_fk,this));
 
     TableModelApartment* vpModelApartment = new TableModelApartment(this);
-    vpModelApartment->addFilter(QString("agent_fk = %1").arg(mUser_fk));
     vWidgets.append(new ViewObjectWidget(vpModelApartment, new ApartmentWidget(mUser_fk), this));
 
     TableModelRent* vpModelRent = new TableModelRent(this);
-    vpModelRent->addFilter(QString("agent_fk = %1").arg(mUser_fk));
     vWidgets.append(new ViewObjectWidget(vpModelRent, new RentWidget(mUser_fk), this));
 
     TableModelHome* vpModelHome = new TableModelHome(this);
-    vpModelHome->addFilter(QString("agent_fk = %1").arg(mUser_fk));
     vWidgets.append(new ViewObjectWidget(vpModelHome, new HomeWidget(mUser_fk), this));
 
     vWidgets.append(new FindObjectWidget(mUser_fk,this));

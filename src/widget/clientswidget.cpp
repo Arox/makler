@@ -36,7 +36,7 @@ ClientsWidget::ClientsWidget(int aAgent, QWidget *parent) :
             mValuesTypeObject.append(QPair<QString, int>(vResponse[i]["name"].toString(), vResponse[i]["id"].toInt()));
         }
     }
-
+    mClientModel.addFilter(QString("agent_fk = %1").arg(aAgent));
     mClientWidget.setVisible(false);
     ui->verticalLayout_2->addWidget(&mFindObject);
 

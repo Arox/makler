@@ -101,15 +101,20 @@ void AddressWidget::loadCity()
         ui->mpCity->addItem(vResponse[i]["name"].toString(), vResponse[i]["id"]);
         vList << vResponse[i]["name"].toString();
     }
-    QCompleter* vpComp = new QCompleter(vList, this);
-    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->mpCity->setCompleter(vpComp);
+
     if (ui->mpCity->count())
     {
-        if (isState(FIND) && !isState(MULTISELECT)) ui->mpCity->insertItem(0, "", -1);
+        if (isState(FIND) && !isState(MULTISELECT))
+        {
+            vList.insert(0, "");
+            ui->mpCity->insertItem(0, "", -1);
+        }
         ui->mpCity->setCurrentIndex(0);
         on_mpCity_currentIndexChanged(0);
     }
+    QCompleter* vpComp = new QCompleter(vList, this);
+    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->mpCity->setCompleter(vpComp);
     ui->mpCity->blockSignals(false);
 }
 
@@ -125,9 +130,7 @@ void AddressWidget::loadLocality()
         ui->mpLocality->addItem(vResponse[i]["name"].toString(), vResponse[i]["id"]);
         vList << vResponse[i]["name"].toString();
     }
-    QCompleter* vpComp = new QCompleter(vList, this);
-    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->mpLocality->setCompleter(vpComp);
+
 
     if (ui->mpCity->count())
     {
@@ -139,9 +142,16 @@ void AddressWidget::loadLocality()
     }
     if (ui->mpLocality->count())
     {
-        if (isState(FIND) && !isState(MULTISELECT)) ui->mpLocality->insertItem(0, "", -1);
+        if (isState(FIND) && !isState(MULTISELECT))
+        {
+            vList.insert(0, "");
+            ui->mpLocality->insertItem(0, "", -1);
+        }
         ui->mpLocality->setCurrentIndex(0);
     }
+    QCompleter* vpComp = new QCompleter(vList, this);
+    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->mpLocality->setCompleter(vpComp);
 
 }
 
@@ -163,9 +173,6 @@ void AddressWidget::loadStreet()
         vList << s1;
     }
 
-    QCompleter* vpComp = new QCompleter(vList, this);
-    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->mpStreet->setCompleter(vpComp);
 
     if (ui->mpCity->count())
     {
@@ -178,9 +185,17 @@ void AddressWidget::loadStreet()
 
     if (ui->mpStreet->count())
     {
-        if (isState(FIND) && !isState(MULTISELECT)) ui->mpStreet->insertItem(0, "", -1);
+        if (isState(FIND) && !isState(MULTISELECT))
+        {
+            vList.insert(0, "");
+            ui->mpStreet->insertItem(0, "", -1);
+        }
         ui->mpStreet->setCurrentIndex(0);
     }
+    QCompleter* vpComp = new QCompleter(vList, this);
+    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->mpStreet->setCompleter(vpComp);
+
 }
 
 void AddressWidget::load(int aIdObjects, int aNumber)

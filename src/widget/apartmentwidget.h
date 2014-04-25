@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "generalwidget.h"
 #include "clientheaderwidget.h"
-#include "addresswidget.h"
+#include "address/addresswidget.h"
 #include "informationarea.h"
 #include "pricewidget.h"
 #include "typeapartment.h"

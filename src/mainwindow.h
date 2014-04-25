@@ -17,6 +17,12 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    enum StatusApp
+    {
+        INIZIALIZE,
+        WORK,
+        CLOSE
+    };
     
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -45,6 +51,8 @@ private slots:
     void on_mpInformation_clicked();
     void changeStyle(QString aNameStyle);
 
+    void on_mpSettings_clicked();
+
 private:
     Ui::MainWindow *ui;
     QList<WidgetForControl*> mWidgets;
@@ -52,6 +60,7 @@ private:
     QStringList mRoles;
     QTimer mTimer;
     QScrollArea* mpArea;
+    StatusApp mStatus;
 };
 
 #endif // MAINWINDOW_H

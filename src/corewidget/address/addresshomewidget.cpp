@@ -10,7 +10,8 @@ AddressHomeWidget::AddressHomeWidget(int aState, QWidget *parent) :
     MainWidget(parent),
     ui(new Ui::AddressHomeWidget),
     mEnabled(true),
-    mId(-1)
+    mId(-1),
+    mState(NORMAL)
 {
     ui->setupUi(this);
 
@@ -73,16 +74,21 @@ void AddressHomeWidget::loadGarden()
         ui->mpGarden->addItem(vResponse[i]["name"].toString(), vResponse[i]["id"]);
         vList << vResponse[i]["name"].toString();
     }
-    QCompleter* vpComp = new QCompleter(vList, this);
-    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->mpGarden->setCompleter(vpComp);
+
 
     if (ui->mpGarden->count())
     {
-        if (isState(FIND)) ui->mpGarden->insertItem(0, "", -1);
+        if (isState(FIND) && !isState(MULTISELECT))
+        {
+            ui->mpGarden->insertItem(0, "", -1);
+            vList.insert(0, "");
+        }
         ui->mpGarden->setCurrentIndex(0);
         on_mpGarden_currentIndexChanged(0);
     }
+    QCompleter* vpComp = new QCompleter(vList, this);
+    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->mpGarden->setCompleter(vpComp);
 }
 
 void AddressHomeWidget::loadStreet()
@@ -98,9 +104,7 @@ void AddressHomeWidget::loadStreet()
         ui->mpStreet->addItem(vResponse[i]["name"].toString(), vResponse[i]["id"]);
         vList << vResponse[i]["name"].toString();
     }
-    QCompleter* vpComp = new QCompleter(vList, this);
-    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->mpStreet->setCompleter(vpComp);
+
     if (ui->mpGarden->currentIndex() >= 0)
     {
         ui->mpStreet->setEnabled(mEnabled);
@@ -112,9 +116,16 @@ void AddressHomeWidget::loadStreet()
 
     if (ui->mpStreet->count())
     {
-        if (isState(FIND)) ui->mpStreet->insertItem(0, "", -1);
+        if (isState(FIND) && !isState(MULTISELECT))
+        {
+            vList.insert(0, "");
+            ui->mpStreet->insertItem(0, "", -1);
+        }
         ui->mpStreet->setCurrentIndex(0);
     }
+    QCompleter* vpComp = new QCompleter(vList, this);
+    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->mpStreet->setCompleter(vpComp);
 }
 
 void AddressHomeWidget::save()

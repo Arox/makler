@@ -1,9 +1,26 @@
+INCLUDEPATH += $$PWD/general \
+               $$PWD/tablemodels
 
-INCLUDEPATH += src/general \
-               src/tablemodels
+SUBDIRS = address
 
+#ADDRESS
 SOURCES += \
-    $$PWD/addresswidget.cpp \
+    $$PWD/address/addresswidget.cpp \
+    $$PWD/address/addresshomewidget.cpp \
+    $$PWD/address/address.cpp
+
+HEADERS  +=  \
+    $$PWD/address/addresswidget.h \
+    $$PWD/address/addresshomewidget.h \
+    $$PWD/address/address.h
+
+FORMS    +=  \
+    $$PWD/address/addresswidget.ui \
+    $$PWD/address/addresshomewidget.ui \
+    $$PWD/address/address.ui
+
+#ALL OTHER
+SOURCES += \
     $$PWD/pricewidget.cpp \
     $$PWD/informationarea.cpp \
     $$PWD/apartmentinformation.cpp \
@@ -11,7 +28,6 @@ SOURCES += \
     $$PWD/typeapartment.cpp \
     $$PWD/commentwidget.cpp \
     $$PWD/buttonswidget.cpp \
-    $$PWD/addresshomewidget.cpp \
     $$PWD/typehomewidget.cpp \
     $$PWD/mainwidget.cpp \
     $$PWD/findobjectswidget.cpp \
@@ -19,16 +35,15 @@ SOURCES += \
     $$PWD/passportwidget.cpp \
     $$PWD/viewobjects.cpp \
     $$PWD/agentwidget.cpp \
-    src/corewidget/helpwidget.cpp \
-    src/corewidget/aboutproducerwidget.cpp \
-    src/corewidget/addinfoaboutdatabase.cpp \
-    src/corewidget/buttontopmenuwidget.cpp \
-    src/corewidget/mylineedit.cpp \
-    src/corewidget/clientsphonewidget.cpp
+    $$PWD/helpwidget.cpp \
+    $$PWD/aboutproducerwidget.cpp \
+    $$PWD/addinfoaboutdatabase.cpp \
+    $$PWD/buttontopmenuwidget.cpp \
+    $$PWD/mylineedit.cpp \
+    $$PWD/clientsphonewidget.cpp
 
 
 HEADERS  +=  \
-    $$PWD/addresswidget.h \
     $$PWD/pricewidget.h \
     $$PWD/informationarea.h \
     $$PWD/apartmentinformation.h \
@@ -36,7 +51,6 @@ HEADERS  +=  \
     $$PWD/typeapartment.h \
     $$PWD/commentwidget.h \
     $$PWD/buttonswidget.h \
-    $$PWD/addresshomewidget.h \
     $$PWD/typehomewidget.h \
     $$PWD/mainwidget.h \
     $$PWD/findobjectswidget.h \
@@ -44,15 +58,14 @@ HEADERS  +=  \
     $$PWD/passportwidget.h \
     $$PWD/viewobjects.h \
     $$PWD/agentwidget.h \
-    src/corewidget/helpwidget.h \
-    src/corewidget/aboutproducerwidget.h \
-    src/corewidget/addinfoaboutdatabase.h \
-    src/corewidget/buttontopmenuwidget.h \
-    src/corewidget/mylineedit.h \
-    src/corewidget/clientsphonewidget.h
+    $$PWD/helpwidget.h \
+    $$PWD/aboutproducerwidget.h \
+    $$PWD/addinfoaboutdatabase.h \
+    $$PWD/buttontopmenuwidget.h \
+    $$PWD/mylineedit.h \
+    $$PWD/clientsphonewidget.h
 
 FORMS    +=  \
-    $$PWD/addresswidget.ui \
     $$PWD/pricewidget.ui \
     $$PWD/informationarea.ui \
     $$PWD/apartmentinformation.ui \
@@ -60,15 +73,14 @@ FORMS    +=  \
     $$PWD/typeapartment.ui \
     $$PWD/commentwidget.ui \
     $$PWD/buttonswidget.ui \
-    $$PWD/addresshomewidget.ui \
     $$PWD/typehomewidget.ui \
     $$PWD/findobjectswidget.ui \
     $$PWD/clientheaderalternativewidget.ui \
     $$PWD/passportwidget.ui \
     $$PWD/viewobjects.ui \
     $$PWD/agentwidget.ui \
-    src/corewidget/helpwidget.ui \
-    src/corewidget/aboutproducerwidget.ui \
-    src/corewidget/addinfoaboutdatabase.ui \
-    src/corewidget/buttontopmenuwidget.ui \
-    src/corewidget/clientsphonewidget.ui
+    $$PWD/helpwidget.ui \
+    $$PWD/aboutproducerwidget.ui \
+    $$PWD/addinfoaboutdatabase.ui \
+    $$PWD/buttontopmenuwidget.ui \
+    $$PWD/clientsphonewidget.ui

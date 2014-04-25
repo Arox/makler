@@ -1,7 +1,7 @@
 #ifndef FINDADDRESSHOMEWIDGET_H
 #define FINDADDRESSHOMEWIDGET_H
 
-#include "addresshomewidget.h"
+#include "address/addresshomewidget.h"
 
 class FindAddressHomeWidget : public AddressHomeWidget
 {

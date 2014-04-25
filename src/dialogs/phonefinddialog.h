@@ -2,8 +2,8 @@
 #define PHONEFINDDIALOG_H
 
 #include <QDialog>
-#include "addresswidget.h"
-#include "addresshomewidget.h"
+#include "address/addresswidget.h"
+#include "address/addresshomewidget.h"
 #include "mylineedit.h"
 
 namespace Ui {

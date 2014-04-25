@@ -18,6 +18,7 @@
     <qresource prefix="/buttons">
         <file>help.png</file>
         <file>info.png</file>
+        <file>settings.png</file>
     </qresource>
     <qresource prefix="/select">
         <file>select-ok.png</file>

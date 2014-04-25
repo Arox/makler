@@ -2,7 +2,8 @@ INCLUDEPATH += src/corewidget \
                 src/models \
                 src/find \
                 src/editors \
-                src/sync
+                src/sync \
+                src/tablemodels
 
 SOURCES += \
     $$PWD/apartmentwidget.cpp \
@@ -17,7 +18,8 @@ SOURCES += \
     src/widget/adminwidget.cpp \
     src/widget/messagewidget.cpp \
     src/widget/generalwindow.cpp \
-    src/widget/topmenu.cpp
+    src/widget/topmenu.cpp \
+    src/widget/settingswidget.cpp
 
 HEADERS  += \
     $$PWD/apartmentwidget.h \
@@ -32,7 +34,8 @@ HEADERS  += \
     src/widget/adminwidget.h \
     src/widget/messagewidget.h \
     src/widget/generalwindow.h \
-    src/widget/topmenu.h
+    src/widget/topmenu.h \
+    src/widget/settingswidget.h
 
 FORMS    +=  \
     $$PWD/apartmentwidget.ui \
@@ -45,4 +48,5 @@ FORMS    +=  \
     src/widget/adminwidget.ui \
     src/widget/messagewidget.ui \
     src/widget/generalwindow.ui \
-    src/widget/topmenu.ui
+    src/widget/topmenu.ui \
+    src/widget/settingswidget.ui

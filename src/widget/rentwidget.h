@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include "clientheaderwidget.h"
-#include "addresswidget.h"
-#include "addresshomewidget.h"
+#include "address/addresswidget.h"
+#include "address/addresshomewidget.h"
 #include "informationarea.h"
 #include "pricewidget.h"
 #include "typeapartment.h"

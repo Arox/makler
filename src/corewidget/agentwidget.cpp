@@ -87,35 +87,56 @@ void AgentWidget::save()
         return;
     }
 
-    if (mId < 0)
+    if (execQuery(QString("SELECT id FROM users WHERE login = '%1'").arg(ui->mpLogin->text())).count())
     {
-        if (execQuery(QString("SELECT id FROM users WHERE login = '%1'").arg(ui->mpLogin->text())).count())
-        {
-            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Пользователь с таим логином уже существует"));
-            return;
-        }
-        execQuery(QString("INSERT INTO users (login, password) VALUES ('%1', md5(''))")
-                  .arg(ui->mpLogin->text()));
-        mId = execQuery(
-                    QString("SELECT id FROM users WHERE login = '%1'")
-                    .arg(ui->mpLogin->text()))[0]["id"].toInt();
+        QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Пользователь с таим логином уже существует"));
+        return;
     }
-    ResponseType vResponse = execQuery(QString("SELECT man_fk as id from users WHERE id = %1").arg(mId));
-    if (vResponse[0]["id"].isNull())
+
+    if (mId < 0)
     {
         execQuery(QString("INSERT INTO mans (name, sername, patronymic) VALUES ('%1', '%2', '%3')")
                   .arg(ui->mpName->text())
                   .arg(ui->mpSername->text())
                   .arg(ui->mpPatronymic->text()));
-        vResponse = execQuery(QString("SELECT max(id) as id FROM mans WHERE name='%1' AND sername = '%2' AND patronymic = '%3'")
+        ResponseType vResponse = execQuery(QString("SELECT max(id) as id FROM mans WHERE name='%1' AND sername = '%2' AND patronymic = '%3'")
                               .arg(ui->mpName->text())
                               .arg(ui->mpSername->text())
                               .arg(ui->mpPatronymic->text()));
-        execQuery(QString("UPDATE users SET man_fk = %1 WHERE id = %2")
-                  .arg(vResponse[0]["id"].toInt())
-                .arg(mId));
+        if (vResponse.count())
+        {
+            mId = vResponse[0]["id"].toInt();
+        }
+        else
+        {
+            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные"));
+            return;
+        }
+
     }
-    int vIdMan = vResponse[0]["id"].toInt();
+    int vIdUser;
+    ResponseType vResponse = execQuery(QString("SELECT id as id from users WHERE man_fk = %1").arg(mId));
+    if (!vResponse.count())
+    {
+
+        if (!execQuery(QString("INSERT INTO users (login, password, man_fk) VALUES ('%1', md5('%2'), %3)")
+                  .arg(ui->mpLogin->text())
+                  .arg(ui->mpPassword1->text())
+                  .arg(mId)).count())
+        {
+            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные"));
+            return;
+        }
+
+        vIdUser = execQuery(QString("SELECT id FROM users WHERE login = '%1'").arg(ui->mpLogin->text()))[0]["id"].toInt();
+
+    }
+    else
+    {
+        vIdUser = vResponse[0]["id"].toInt();
+    }
+
+    int vIdMan = mId;
 
     execQuery(QString("UPDATE mans SET name = '%1', sername = '%2', patronymic = '%3' WHERE id = %4")
               .arg(ui->mpName->text())
@@ -126,20 +147,20 @@ void AgentWidget::save()
     execQuery(QString("UPDATE users SET login = '%1', is_active = %2 WHERE id = %3")
               .arg(ui->mpLogin->text())
               .arg(ui->mpActive->isChecked() ? "TRUE" : "FALSE")
-              .arg(mId));
+              .arg(vIdUser));
     if (!ui->mpPassword1->text().isEmpty())
     {
         execQuery(QString("UPDATE users SET password = md5('%1') WHERE id = %2")
                   .arg(ui->mpPassword1->text())
-                  .arg(mId));
+                  .arg(vIdUser));
     }
-    execQuery(QString("DELETE FROM users_roles WHERE user_fk = %1").arg(mId));
+    execQuery(QString("DELETE FROM users_roles WHERE user_fk = %1").arg(vIdUser));
     for (int i = 0; i < ui->mpRoles->count(); ++i)
     {
         if (ui->mpRoles->item(i)->isSelected())
         {
             execQuery(QString("INSERT INTO users_roles (user_fk, role_fk) VALUES(%1, %2)")
-                      .arg(mId)
+                      .arg(vIdUser)
                       .arg(mRolesIds.at(i)));
         }
     }

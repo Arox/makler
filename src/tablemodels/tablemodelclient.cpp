@@ -32,7 +32,7 @@ QVariant TableModelClient::data(const QModelIndex &index, int role) const
         case 2:
             return mData[index.row()]["locations"];
         case 3:
-            return QVariant();
+            return mData[index.row()]["type"];
         case 4:
             return QString("%1").arg(mData[index.row()]["price"].toInt());
         default:
@@ -54,6 +54,14 @@ bool TableModelClient::setData(const QModelIndex &index, const QVariant &value, 
         mData[index.row()].setData("locations", value);
         //return true;
     }
+    if (index.column() == 3)
+    {
+        execQuery(QString("UPDATE orders SET type = '%1' WHERE object_fk = %2")
+                  .arg(value.toString())
+                  .arg(id(index.row())));
+        mData[index.row()].setData("type", value);
+        //return true;
+    }
     if (index.column() == 4)
     {
         execQuery(QString("UPDATE orders SET price = '%1' WHERE object_fk = %2")
@@ -69,7 +77,7 @@ bool TableModelClient::setData(const QModelIndex &index, const QVariant &value, 
 
 Qt::ItemFlags TableModelClient::flags(const QModelIndex &index) const
 {
-       if ((index.column() == 2 || index.column() == 4))
+       if ((index.column() == 2 || index.column() == 4 || index.column() == 3))
        {
            return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
        }
@@ -78,17 +86,18 @@ Qt::ItemFlags TableModelClient::flags(const QModelIndex &index) const
 
 int TableModelClient::typeObject(int aRow)
 {
-    return mData[aRow]["type"].toInt();
+    return mData[aRow]["type_fk"].toInt();
 }
 
 void TableModelClient::load()
 {
     QStringList vSql;
-    vSql //<< "SELECT DISTINCT ON (id, status, type, locations, price) objects.id as id, objects.status as status"
+    vSql //<< "SELECT DISTINCT ON (id, status, type, locations, price) objects.id as id, objects.status as status, objects.agent_fk as agent_fk"
          << select()
-         << ",orders.type_fk as type"
+         << ",orders.type_fk as type_fk"
          << ",orders.locations as locations, orders.price as price"
          << ",min(clients.fio) as fio"
+         << ",orders.type as type"
          << from()
          << "INNER JOIN types ON objects.type_fk = types.id"
          << "LEFT JOIN orders ON orders.object_fk = objects.id"
@@ -96,7 +105,7 @@ void TableModelClient::load()
          << "INNER JOIN clients ON clientheader.id = clients.header_fk"
          << where("types.type = 'client'")
          //<< "AND types.type = 'client'"
-         << "group by objects.id, objects.status, orders.type_fk, orders.locations, orders.price, mans.sername, mans.name, mans.patronymic"
+         << "group by objects.id, objects.status, orders.type_fk, orders.locations, orders.price, mans.sername, mans.name, mans.patronymic, orders.type"
          << "ORDER BY objects.id desc";
 
      mData = execQuery(vSql.join(" "));

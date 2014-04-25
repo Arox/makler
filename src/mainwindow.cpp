@@ -8,6 +8,7 @@
 #include "aboutproducerwidget.h"
 #include "dialogasideup.h"
 #include "styles.h"
+#include "settingswidget.h"
 
 #include <QDebug>
 #include <QDesktopWidget>
@@ -20,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->mpInformation->setVisible(false);
-
+    //ui->mpInformation->setVisible(false);
+    mStatus = INIZIALIZE;
     DialogAuthentification v;
     if (v.exec() == QDialog::Rejected) exit(0);
     countMail();
@@ -30,12 +31,17 @@ MainWindow::MainWindow(QWidget *parent) :
     mRoles = v.roles();
 
     DialogAsideUp vAsideUp(mUser_fk, this);
-    if (vAsideUp.countAside())
+    while (vAsideUp.countAside())
     {
         vAsideUp.exec();
-        if (vAsideUp.countAside()) close();
+        if (vAsideUp.countAside())
+        {
+            close();
+            if (mStatus == CLOSE) exit(0);
+        }
     }
 
+    mStatus = WORK;
     mTimer.setSingleShot(false);
     mTimer.setInterval(5 * 1000);
     connect(&mTimer, SIGNAL(timeout()), this, SLOT(countMail()));
@@ -71,10 +77,12 @@ void MainWindow::closeEvent(QCloseEvent *apEvent)
     if (vResult)
     {
         apEvent->accept();
+        mStatus = CLOSE;
     }
     else
     {
         apEvent->ignore();
+        mStatus = WORK;
     }
 }
 
@@ -98,9 +106,7 @@ void MainWindow::disconnectWidget(int aIndex)
     WidgetForControl* vpWidget = mWidgets[aIndex];
     disconnect(vpWidget, SIGNAL(changeWidget(WidgetForControl*)), this, SLOT(load(WidgetForControl*)));
     disconnect(vpWidget, SIGNAL(back()), this, SLOT(backWidget()));
-    //disconnect(vpWidget, SIGNAL(close()), this, SLOT(closeWidget()));
     disconnect(this, SIGNAL(reloadWidget(WidgetForControl*)), vpWidget, SLOT(reload(WidgetForControl*)));
-    //disconnect(vpWidget, SIGNAL(close()), this, SLOT(closeWindow()));
 }
 
 void MainWindow::connectWidget(int aIndex)
@@ -108,9 +114,7 @@ void MainWindow::connectWidget(int aIndex)
     WidgetForControl* vpWidget = mWidgets[aIndex];
     connect(vpWidget, SIGNAL(changeWidget(WidgetForControl*)), this, SLOT(load(WidgetForControl*)));
     connect(vpWidget, SIGNAL(back()), this, SLOT(backWidget()));
-    //connect(vpWidget, SIGNAL(close()), this, SLOT(closeWidget()));
     connect(this, SIGNAL(reloadWidget(WidgetForControl*)), vpWidget, SLOT(reload(WidgetForControl*)));
-    //connect(vpWidget, SIGNAL(close()), this, SLOT(closeWindow()));
 }
 
 void MainWindow::setSize(int aIndex)
@@ -195,15 +199,15 @@ void MainWindow::setSize(int aIndex)
 
 void MainWindow::load(WidgetForControl* apControl)
 {
-    /*if (mWidgets.count())
+    if (mWidgets.count())
     {
         disconnectWidget(mWidgets.count() - 1);
         WidgetForControl* vpWidget = mWidgets[mWidgets.count() - 1];
         ui->mainLayout->removeWidget(vpWidget);
         vpWidget->setParent(0);
-    }*/
+    }
     mWidgets.append(apControl);
-    //connectWidget(mWidgets.count() - 1);
+    connectWidget(mWidgets.count() - 1);
     ui->mainLayout->addWidget(mWidgets[mWidgets.count() - 1]);
     //setWindowTitle(mWidgets[mWidgets.count() - 1]->name());
     //ui->mpNamePage->clear();
@@ -286,4 +290,9 @@ void MainWindow::closeWindow()
 void MainWindow::changeStyle(QString aNameStyle)
 {
     Styles::setStyle(aNameStyle);
+}
+
+void MainWindow::on_mpSettings_clicked()
+{
+    load(new SettingsWidget(mUser_fk, mRoles, this));
 }
