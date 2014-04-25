@@ -32,4 +32,7 @@
         <file>mailmenu.png</file>
         <file>exit.png</file>
     </qresource>
+    <qresource prefix="/main">
+        <file>idea.png</file>
+    </qresource>
 </RCC>
