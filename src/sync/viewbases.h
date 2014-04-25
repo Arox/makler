@@ -22,8 +22,6 @@ public:
     virtual QSize size();
     virtual QString idName();
 private slots:
-    void on_mpBack_clicked();
-
     void on_mpAdd_clicked();
 
     void on_mpRemove_clicked();

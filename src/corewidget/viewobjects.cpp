@@ -7,9 +7,6 @@ ViewObjects::ViewObjects(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    mStyleOn = QString::fromUtf8("background-color: rgba(162, 197, 40, 1);");
-    mStyleOff = QString::fromUtf8("background-color: rgba(162, 197, 40, 0.5);");
-
     mModelsList << &mApartmnet << &mHome << &mRent << &mClient;
 
     foreach(TableModel* vpModel, mModelsList)
@@ -24,7 +21,6 @@ ViewObjects::ViewObjects(QWidget *parent) :
     on_mpActive_clicked();
     on_mpApartment_clicked();
 
-    connect(ui->mpBack, SIGNAL(clicked()), this, SIGNAL(back()));
     loadAgents();
 }
 
@@ -91,12 +87,8 @@ void ViewObjects::setCheckStatus(QPushButton* apButton)
     ui->mpActive->setChecked(false);
     ui->mpArchive->setChecked(false);
     ui->mpAside->setChecked(false);
-    ui->mpActive->setStyleSheet(mStyleOff);
-    ui->mpArchive->setStyleSheet(mStyleOff);
-    ui->mpAside->setStyleSheet(mStyleOff);
 
     apButton->setChecked(true);
-    apButton->setStyleSheet(mStyleOn);
 
     foreach (TableModel* vpModel, mModelsList)
     {
@@ -136,11 +128,6 @@ void ViewObjects::on_mpApartment_clicked()
     ui->mpHome->setChecked(false);
     ui->mpClient->setChecked(false);
 
-    ui->mpApartment->setStyleSheet(mStyleOn);
-    ui->mpRent->setStyleSheet(mStyleOff);
-    ui->mpHome->setStyleSheet(mStyleOff);
-    ui->mpClient->setStyleSheet(mStyleOff);
-
     load(APARTMENT, "");
 
     emit changeModel(APARTMENT);
@@ -153,11 +140,6 @@ void ViewObjects::on_mpRent_clicked()
     ui->mpRent->setChecked(true);
     ui->mpHome->setChecked(false);
     ui->mpClient->setChecked(false);
-
-    ui->mpApartment->setStyleSheet(mStyleOff);
-    ui->mpRent->setStyleSheet(mStyleOn);
-    ui->mpHome->setStyleSheet(mStyleOff);
-    ui->mpClient->setStyleSheet(mStyleOff);
 
     load(RENT, "");
 
@@ -172,11 +154,6 @@ void ViewObjects::on_mpHome_clicked()
     ui->mpHome->setChecked(true);
     ui->mpClient->setChecked(false);
 
-    ui->mpApartment->setStyleSheet(mStyleOff);
-    ui->mpRent->setStyleSheet(mStyleOff);
-    ui->mpHome->setStyleSheet(mStyleOn);
-    ui->mpClient->setStyleSheet(mStyleOff);
-
     load(HOME, "");
 
     emit changeModel(HOME);
@@ -189,11 +166,6 @@ void ViewObjects::on_mpClient_clicked()
     ui->mpRent->setChecked(false);
     ui->mpHome->setChecked(false);
     ui->mpClient->setChecked(true);
-
-    ui->mpApartment->setStyleSheet(mStyleOff);
-    ui->mpRent->setStyleSheet(mStyleOff);
-    ui->mpHome->setStyleSheet(mStyleOff);
-    ui->mpClient->setStyleSheet(mStyleOn);
 
     load(CLIENT, "");
 

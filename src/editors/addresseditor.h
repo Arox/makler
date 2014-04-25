@@ -32,8 +32,6 @@ private slots:
     
     void on_mpRenameCity_clicked();
     
-    void on_mpRemove_clicked();
-
     void on_mpAddLocality_clicked();
 
     void on_mpRenameLocality_clicked();
@@ -47,8 +45,6 @@ private slots:
     void on_mpRemoveStreet_clicked();
 
     void on_mpType_activated(int index);
-
-    void on_mpRename_clicked();
 
     void on_mpRemoveCity_clicked();
 

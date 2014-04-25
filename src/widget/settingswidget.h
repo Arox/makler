@@ -25,6 +25,8 @@ public:
     virtual QSize maxSize();
     virtual QSize size();
     virtual QString idName();
+private slots:
+    void backClicked();
 private:
     Ui::SettingsWidget *ui;
     AdminWidget* mpAdmin;

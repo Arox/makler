@@ -229,11 +229,6 @@ void AddressEditor::on_mpRenameCity_clicked()
 }
 
 
-void AddressEditor::on_mpRemove_clicked()
-{
-
-}
-
 void AddressEditor::on_mpAddLocality_clicked()
 {
     int vIdCity = ui->mpCity->itemData(ui->mpCity->currentIndex()).toInt();
@@ -345,11 +340,6 @@ void AddressEditor::on_mpType_activated(int index)
     ui->mpRemoveLocality->setVisible(vFlag);
 
     loadCity();
-
-}
-
-void AddressEditor::on_mpRename_clicked()
-{
 
 }
 

@@ -22,6 +22,13 @@ SettingsWidget::SettingsWidget(int aUser_fk, QStringList aRoles, QWidget *parent
         mpSync = new ViewBases(this);
         ui->mpContainer->addItem(mpSync, TRANSLATE("Синхронизация данных"));
     }
+
+    connect(ui->mpBack, SIGNAL(clicked()), this, SLOT(backClicked()));
+}
+
+void SettingsWidget::backClicked()
+{
+    emit back(this);
 }
 
 SettingsWidget::~SettingsWidget()

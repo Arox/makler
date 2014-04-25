@@ -20,11 +20,6 @@ ViewBases::~ViewBases()
     delete ui;
 }
 
-void ViewBases::on_mpBack_clicked()
-{
-    emit back(this);
-}
-
 void ViewBases::on_mpAdd_clicked()
 {
     AppendDatabase* vpBaseEditor = new AppendDatabase(this);
