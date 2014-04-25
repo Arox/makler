@@ -43,10 +43,7 @@ int main(int argc, char *argv[])
         Styles::setStyle(Styles::styles().at(0));
     }
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", Settings::databaseLocalName());
-    db.setDatabaseName("base.sqlite");
-
-    /*QString vType = Settings::databaseType();
+    QString vType = Settings::databaseType();
     QString vHost = Settings::databaseHost();
     QString vName = Settings::databaseName();
     QString vLogin = Settings::databaseLogin();
@@ -57,7 +54,7 @@ int main(int argc, char *argv[])
          db.setDatabaseName(vName);
          db.setUserName(vLogin);
          db.setPassword(vPassword);
-         db.setPort(vPort);*/
+         db.setPort(vPort);
          if (!db.open())
          {
              QMessageBox::information(0, QString(""), db.lastError().text());
