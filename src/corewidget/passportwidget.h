@@ -16,7 +16,6 @@ public:
     explicit PassportWidget(QWidget *parent = 0);
     ~PassportWidget();
     void load(int aIdObjects);
-    void setEnable(bool aEnable);
 public slots:
     void save();
 private:

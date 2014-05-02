@@ -41,8 +41,3 @@ void CommentWidget::save()
                   .arg(mIdObject));
     }
 }
-
-void CommentWidget::setEnable(bool aEnable)
-{
-    ui->mpComment->setEnabled(aEnable);
-}

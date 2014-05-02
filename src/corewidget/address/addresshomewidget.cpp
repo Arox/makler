@@ -86,6 +86,10 @@ void AddressHomeWidget::loadGarden()
         ui->mpGarden->setCurrentIndex(0);
         on_mpGarden_currentIndexChanged(0);
     }
+    else
+    {
+        ui->mpGarden->setEnabled(false);
+    }
     QCompleter* vpComp = new QCompleter(vList, this);
     vpComp->setCaseSensitivity(Qt::CaseInsensitive);
     ui->mpGarden->setCompleter(vpComp);
@@ -122,6 +126,10 @@ void AddressHomeWidget::loadStreet()
             ui->mpStreet->insertItem(0, "", -1);
         }
         ui->mpStreet->setCurrentIndex(0);
+    }
+    else
+    {
+        ui->mpStreet->setEnabled(false);
     }
     QCompleter* vpComp = new QCompleter(vList, this);
     vpComp->setCaseSensitivity(Qt::CaseInsensitive);
@@ -188,17 +196,6 @@ void AddressHomeWidget::load(int aIdObjects, int aNumber)
     ui->mpNumber2->blockSignals(false);
     ui->mpStreet->blockSignals(false);
 
-}
-
-void AddressHomeWidget::setEnable(bool aEnable)
-{
-    ui->mpGarden->setEnabled(aEnable);
-    mEnabled = aEnable;
-    if (!ui->mpGarden->count()) aEnable = false;
-    ui->mpStreet->setEnabled(aEnable);
-    if (!ui->mpStreet->count()) aEnable = false;
-    ui->mpNumber1->setEnabled(aEnable);
-    ui->mpNumber2->setEnabled(aEnable);
 }
 
 QList<int> AddressHomeWidget::garden()

@@ -140,22 +140,3 @@ void TypeHomeWidget::save()
               .arg(mId));
     MainWidget::save();
 }
-
-void TypeHomeWidget::setEnable(bool aEnable)
-{
-    ui->mpFund->setEnabled(aEnable);
-    ui->mpCategory->setEnabled(aEnable);
-    ui->mpLevels->setEnabled(aEnable);
-    ui->mpMaterial->setEnabled(aEnable);
-    ui->mpRoomes->setEnabled(aEnable);
-    ui->mpArea->setEnabled(aEnable);
-    ui->mpBook->setEnabled(aEnable);
-    ui->mpRegion->setEnabled(aEnable);
-    ui->mpHome->setEnabled(aEnable);
-    ui->mpGardenHome->setEnabled(aEnable);
-    ui->mpSizeX->setEnabled(aEnable);
-    ui->mpSizeY->setEnabled(aEnable);
-    ui->mpStage->setEnabled(aEnable);
-    ui->mpYear->setEnabled(aEnable);
-    //mInfoArea.setEnable(aEnable);
-}

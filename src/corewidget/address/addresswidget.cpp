@@ -115,6 +115,10 @@ void AddressWidget::loadCity()
         }
         on_mpCity_currentIndexChanged(0);
     }
+    else
+    {
+        ui->mpCity->setEnabled(false);
+    }
     QCompleter* vpComp = new QCompleter(vList, this);
     vpComp->setCaseSensitivity(Qt::CaseInsensitive);
     ui->mpCity->setCompleter(vpComp);
@@ -155,6 +159,10 @@ void AddressWidget::loadLocality()
         {
             ui->mpStreet->setCurrentIndex(0);
         }
+    }
+    else
+    {
+        ui->mpLocality->setEnabled(false);
     }
     QCompleter* vpComp = new QCompleter(vList, this);
     vpComp->setCaseSensitivity(Qt::CaseInsensitive);
@@ -202,6 +210,10 @@ void AddressWidget::loadStreet()
         {
             ui->mpStreet->setCurrentIndex(0);
         }
+    }
+    else
+    {
+        ui->mpStreet->setEnabled(false);
     }
     QCompleter* vpComp = new QCompleter(vList, this);
     vpComp->setCaseSensitivity(Qt::CaseInsensitive);
@@ -295,21 +307,6 @@ void AddressWidget::save()
               .arg(mId));
     MainWidget::save();
 }
-
-void AddressWidget::setEnable(bool aEnable)
-{
-    ui->mpCity->setEnabled(aEnable);
-    mEnabled = aEnable;
-    if (!ui->mpCity->count()) aEnable = false;
-    ui->mpStreet->setEnabled(aEnable);
-    ui->mpLocality->setEnabled(aEnable);
-    if (!ui->mpStreet->count()) aEnable = false;
-    ui->mpLandMark->setEnabled(aEnable);
-    ui->mpNumber1->setEnabled(aEnable);
-    ui->mpNumber2->setEnabled(aEnable);
-    ui->mpRoom->setEnabled(aEnable);
-}
-
 
 QList<int> AddressWidget::city()
 {

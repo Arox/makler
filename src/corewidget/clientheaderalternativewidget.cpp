@@ -33,16 +33,6 @@ ClientHeaderAlternativeWidget::~ClientHeaderAlternativeWidget()
     delete ui;
 }
 
-void ClientHeaderAlternativeWidget::setEnable(bool aEnable)
-{
-    ui->mpDescription->setEnabled(aEnable);
-    for (int i = 0; i < mNames.count(); ++i)
-    {
-        mNames.at(i)->setEnabled(aEnable);
-        mPhones.at(i)->setEnabled(aEnable);
-    }
-}
-
 void ClientHeaderAlternativeWidget::load(int aAgent, int aIdObjects)
 {
     Q_UNUSED(aAgent);

@@ -14,6 +14,7 @@ class MyLineEdit: public QLineEdit
 public:
     MyLineEdit(QString aText, EchoMode aType, QWidget* apPerent = 0);
     QString	text() const;
+    void setRealText(QString aText);
 protected:
     virtual void focusInEvent(QFocusEvent * e);
     virtual void focusOutEvent(QFocusEvent * e);

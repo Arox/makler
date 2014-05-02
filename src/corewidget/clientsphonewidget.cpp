@@ -75,8 +75,8 @@ void ClientsPhoneWidget::load(int aIdHeader)
         {
             addContact();
             mIds[i] = vQueryClients[i]["id"].toInt();
-            mpFios[i]->setText(vQueryClients[i]["fio"].toString());
-            mpPhones[i]->setText(vQueryClients[i]["phone"].toString());
+            mpFios[i]->setRealText(vQueryClients[i]["fio"].toString());
+            mpPhones[i]->setRealText(vQueryClients[i]["phone"].toString());
             ++i;
         }
     }

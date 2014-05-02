@@ -22,6 +22,18 @@ QString	MyLineEdit::text() const
     return QString();
 }
 
+void MyLineEdit::setRealText(QString aText)
+{
+    if (aText.length())
+    {
+        setPalette(mTextPalette);
+        clear();
+        mIsEdit = true;
+        setEchoMode(mType);
+        setText(aText);
+    }
+}
+
 void MyLineEdit::focusInEvent(QFocusEvent * e)
 {
     if (!mIsEdit)

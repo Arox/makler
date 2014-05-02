@@ -26,10 +26,6 @@ public:
     explicit AddressWidget(int aState, QWidget *parent = 0);
     ~AddressWidget();
     void load(int aIdObjects, int aNumber);
-    void setEnable(bool aEnable);
-
-
-
      bool canSave();
 public:
 

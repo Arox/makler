@@ -25,14 +25,6 @@ ClientHeaderWidget::~ClientHeaderWidget()
     delete ui;
 }
 
-void ClientHeaderWidget::setEnable(bool aEnable)
-{
-    ui->mpDescription->setEnabled(aEnable);
-    ui->mpFirm->setEnabled(aEnable);
-    //ui->mpGet->setEnabled(aEnable);
-    mpContacts->setEnabled(aEnable);
-}
-
 void ClientHeaderWidget::load(int aAgent, int aIdObjects)
 {
     MainWidget::load();

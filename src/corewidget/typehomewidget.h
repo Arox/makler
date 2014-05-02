@@ -16,7 +16,6 @@ public:
     explicit TypeHomeWidget(QWidget *parent = 0);
     ~TypeHomeWidget();
     void load(int aIdObjects);
-    void setEnable(bool aEnable);
 public slots:
     void save();
 private:

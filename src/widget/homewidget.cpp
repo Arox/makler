@@ -115,14 +115,14 @@ void HomeWidget::load(int aId)
     mHomeAddress1.load(mId,1);
     mButtons.setId(mId);
 
-    mClient.setEnable(vAgent == mAgent);
-    mInformation.setEnable(vAgent == mAgent);
-    mComment.setEnable(vAgent == mAgent);
-    mType.setEnable(vAgent == mAgent);
-    mArea.setEnable(vAgent == mAgent);
-    mPrice.setEnable(vAgent == mAgent);
-    mAddress.setEnable(vAgent == mAgent);
-    mHomeAddress1.setEnable(vAgent == mAgent);
+    mClient.setEnabled(vAgent == mAgent);
+    mInformation.setEnabled(vAgent == mAgent);
+    mComment.setEnabled(vAgent == mAgent);
+    mType.setEnabled(vAgent == mAgent);
+    mArea.setEnabled(vAgent == mAgent);
+    mPrice.setEnabled(vAgent == mAgent);
+    mAddress.setEnabled(vAgent == mAgent);
+    mHomeAddress1.setEnabled(vAgent == mAgent);
 
     ResponseRecordType vRecord = execQuery(QString("SELECT \"create\", now() as read FROM objects WHERE id = %1")
                     .arg(mId))[0];

@@ -299,14 +299,6 @@ bool ApartmentInformation::isSave()
     return execQuery(QString("SELECT * FROM optionvalue WHERE object_fk = %1").arg(mIdObject)).count();
 }
 
-void ApartmentInformation::setEnable(bool aEnable)
-{
-    foreach (BrainComboBox* vpBox, mBoxes)
-    {
-        vpBox->setEnabled(aEnable);
-    }
-}
-
 QString ApartmentInformation::sqlWhere()
 {
     QStringList vWheres;

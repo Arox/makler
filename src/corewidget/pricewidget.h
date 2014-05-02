@@ -17,7 +17,6 @@ public:
     explicit PriceWidget(QWidget *parent = 0);
     ~PriceWidget();
     void load(int aIdObjects);
-    void setEnable(bool aEnable);
 public slots:
     void save();
 private:

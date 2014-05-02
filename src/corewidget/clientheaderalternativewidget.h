@@ -20,7 +20,6 @@ public:
     explicit ClientHeaderAlternativeWidget(QWidget *parent = 0);
     ~ClientHeaderAlternativeWidget();
     void load(int aAgent, int aIdObjects);
-    void setEnable(bool aEnable);
 signals:
     void changed();
 public slots:

@@ -15,7 +15,6 @@ public:
     explicit InformationArea(QWidget *parent = 0);
     ~InformationArea();
     void load(int aIdObjects);
-    void setEnable(bool aEnable);
 public slots:
     void save();
 private:

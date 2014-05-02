@@ -106,14 +106,14 @@ void RentWidget::load(int aId)
     mHomeAddress.load(mId, 1);
     mButtons.setId(mId);
 
-    mClient.setEnable(vAgent == mAgent);
-    mInformation.setEnable(vAgent == mAgent);
-    mComment.setEnable(vAgent == mAgent);
-    mType.setEnable(vAgent == mAgent);
-    mArea.setEnable(vAgent == mAgent);
-    mPrice.setEnable(vAgent == mAgent);
-    mAddress.setEnable(vAgent == mAgent);
-    mHomeAddress.setEnable(vAgent == mAgent);
+    mClient.setEnabled(vAgent == mAgent);
+    mInformation.setEnabled(vAgent == mAgent);
+    mComment.setEnabled(vAgent == mAgent);
+    mType.setEnabled(vAgent == mAgent);
+    mArea.setEnabled(vAgent == mAgent);
+    mPrice.setEnabled(vAgent == mAgent);
+    mAddress.setEnabled(vAgent == mAgent);
+    mHomeAddress.setEnabled(vAgent == mAgent);
 
 
 

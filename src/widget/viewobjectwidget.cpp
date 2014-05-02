@@ -23,9 +23,6 @@ ViewObjectWidget::ViewObjectWidget(TypeObject aType, int aAgent_fk, QWidget *par
     WidgetForControl(parent),
     ui(new Ui::ViewObjectWidget),
     mMapper(this)
-/*    mpModel(aType)
-  ,mpWidgetAdd(apWidgetAdd)
-  ,mpWidgetFind(apWidgetFind)*/
 {
     ui->setupUi(this);
 

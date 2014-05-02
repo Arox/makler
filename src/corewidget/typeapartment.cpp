@@ -109,13 +109,3 @@ void TypeApartment::save()
               .arg(mId));
     MainWidget::save();
 }
-
-void TypeApartment::setEnable(bool aEnable)
-{
-    ui->mpApartment->setEnabled(aEnable);
-    ui->mpFond->setEnabled(aEnable);
-    ui->mpLevel->setEnabled(aEnable);
-    ui->mpLevels->setEnabled(aEnable);
-    ui->mpMaterial->setEnabled(aEnable);
-    ui->mpRooms->setEnabled(aEnable);
-}

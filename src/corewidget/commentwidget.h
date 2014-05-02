@@ -15,7 +15,6 @@ public:
     explicit CommentWidget(QWidget *parent = 0);
     ~CommentWidget();
     void load(int aIdObject);
-    void setEnable(bool aEnable);
 public slots:
     void save();
 private:

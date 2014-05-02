@@ -33,7 +33,6 @@ public:
     explicit Address(int aType, int aState, QWidget *parent = 0);
     ~Address();
     void load(int aIdObjects, int aNumber);
-    void setEnable(bool aEnable);
     bool canSave();
 
 public slots:

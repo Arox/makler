@@ -76,10 +76,3 @@ void InformationArea::save()
               .arg(mId));
     MainWidget::save();
 }
-
-void InformationArea::setEnable(bool aEnable)
-{
-    ui->mpFloor->setEnabled(aEnable);
-    ui->mpKitchen->setEnabled(aEnable);
-    ui->mpTotal->setEnabled(aEnable);
-}

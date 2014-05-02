@@ -19,7 +19,6 @@ public:
     explicit AddressHomeWidget(int aState, QWidget *parent = 0);
     ~AddressHomeWidget();
     void load(int aIdObjects, int aNumber);
-    void setEnable(bool aEnable);
     bool canSave();
 public:
     enum StateWidget

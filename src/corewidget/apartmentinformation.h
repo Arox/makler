@@ -63,7 +63,6 @@ public:
     void setNameDictionary(QString aName, int aCountColumn, bool aMultiSelect = false);
     void load(int aIdObject);
     virtual bool isSave();
-    void setEnable(bool aEnable);
     QString sqlWhere();
     QString joinWhere();
 public slots:

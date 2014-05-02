@@ -52,18 +52,6 @@ void Address::load(int aIdObjects, int aNumber)
     }
 }
 
-void Address::setEnable(bool aEnable)
-{
-    if (mpAddressInCity)
-    {
-        mpAddressInCity->setEnable(aEnable);
-    }
-    if (mpAddressInGarden)
-    {
-        mpAddressInGarden->setEnable(aEnable);
-    }
-}
-
 bool Address::canSave()
 {
     return (mpAddressInCity && mpAddressInCity->canSave()) || (mpAddressInGarden && mpAddressInGarden->canSave());

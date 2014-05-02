@@ -68,9 +68,3 @@ void PriceWidget::save()
               .arg(mId));
     MainWidget::save();
 }
-
-void PriceWidget::setEnable(bool aEnable)
-{
-    ui->mpIf->setEnabled(aEnable);
-    ui->mpPrice->setEnabled(aEnable);
-}

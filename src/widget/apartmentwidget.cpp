@@ -109,14 +109,13 @@ void ApartmentWidget::load(int aId)
     ui->mpDateRead->setText(vRecord["read"].toDate().toString(DATEFORMAT));
     ui->mpNumber->setText(QString(TRANSLATE("№%1")).arg(mId));
 
-    mClient.setEnable(vAgent == mAgent);
-    mInformation.setEnable(vAgent == mAgent);
-    mComment.setEnable(vAgent == mAgent);
-    mType.setEnable(vAgent == mAgent);
-    mArea.setEnable(vAgent == mAgent);
-    mPrice.setEnable(vAgent == mAgent);
-    mAddress.setEnable(vAgent == mAgent);
-
+    mClient.setEnabled(vAgent == mAgent);
+    mInformation.setEnabled(vAgent == mAgent);
+    mComment.setEnabled(vAgent == mAgent);
+    mType.setEnabled(vAgent == mAgent);
+    mArea.setEnabled(vAgent == mAgent);
+    mPrice.setEnabled(vAgent == mAgent);
+    mAddress.setEnabled(vAgent == mAgent);
 }
 
 QString ApartmentWidget::name()

@@ -20,7 +20,6 @@ public:
     ~ClientHeaderWidget();
 
     void load(int aAgent, int aIdObjects);
-    void setEnable(bool aEnable);
     bool canSave();
 signals:
     void changed();

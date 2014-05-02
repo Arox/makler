@@ -81,16 +81,3 @@ void PassportWidget::save()
     MainWidget::save();
     back();
 }
-
-void PassportWidget::setEnable(bool aEnable)
-{
-    ui->mpAddress->setEnabled(aEnable);
-    ui->mpBithday->setEnabled(aEnable);
-    ui->mpDate->setEnabled(aEnable);
-    ui->mpFIO->setEnabled(aEnable);
-    ui->mpIssued->setEnabled(aEnable);
-    ui->mpIssueWhen->setEnabled(aEnable);
-    ui->mpNumber->setEnabled(aEnable);
-    ui->mpSeriaPassport->setEnabled(aEnable);
-    ui->mpNumberPassport->setEnabled(aEnable);
-}
