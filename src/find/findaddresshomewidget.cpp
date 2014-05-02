@@ -28,7 +28,7 @@ QString FindAddressHomeWidget::sqlWhere()
 
     vWheres.removeAll(QString(""));
     vWheres.removeAll(QString("()"));
-    return vWheres.join(QString(" AND "));
+    return QString("(%1)").arg(vWheres.join(QString(" AND ")));
 }
 
 QString FindAddressHomeWidget::joinWhere()

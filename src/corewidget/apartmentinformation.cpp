@@ -341,7 +341,7 @@ QString ApartmentInformation::sqlWhere()
     }
     if (vFlag) return QString("objects.id in (%1 %2)").arg(vWhereString).arg(vWhereString2);
     else return "";
-    return vWheres.join(" AND ");
+    return QString("(%1)").arg(vWheres.join(" AND "));
 }
 
 QString ApartmentInformation::joinWhere()

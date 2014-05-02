@@ -31,7 +31,7 @@ QString FindPriceWidget::sqlWhere()
             << (max() > 0 ? QString("price.price <= %1").arg(max()) : QString(""));
 
     vWheres.removeAll(QString(""));
-    return vWheres.join(QString(" AND "));
+    return QString("(%1)").arg(vWheres.join(QString(" AND ")));
 }
 
 QString FindPriceWidget::joinWhere()

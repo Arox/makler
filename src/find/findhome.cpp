@@ -28,7 +28,8 @@ void FindHome::getData()
           << mHomeAddress.sqlWhere()
           << mAddress.sqlWhere();
     vList.removeAll("");
-    setSql(vList.join(" "));
+    vList.removeAll("()");
+    setSql(vList.join(" AND "));
     vList.clear();
 
     vList << mInformation.joinWhere()

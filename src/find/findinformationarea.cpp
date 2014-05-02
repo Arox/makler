@@ -55,7 +55,7 @@ QString FindInformationArea::sqlWhere()
             << (maxFloor() > 0 ? QString("area.floor <= %1").arg(maxFloor()) : QString(""));
 
     vWheres.removeAll(QString(""));
-    return vWheres.join(QString(" AND "));
+    return QString("(%1)").arg(vWheres.join(QString(" AND ")));
 }
 
 QString FindInformationArea::joinWhere()
