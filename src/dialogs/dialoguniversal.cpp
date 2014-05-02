@@ -10,7 +10,7 @@ DialogUniversal::DialogUniversal(QWidget* apChildren, QString aName, QWidget *pa
     MainWidget* vpWidget = (MainWidget*)apChildren;
     ui->mainLayout->addWidget(apChildren);
     connect(vpWidget, SIGNAL(back()), this, SLOT(accept()));
-    resize(apChildren->width(), apChildren->height());
+    //resize(apChildren->width(), apChildren->height());
 }
 
 DialogUniversal::~DialogUniversal()

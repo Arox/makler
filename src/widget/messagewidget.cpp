@@ -1,5 +1,6 @@
 #include "messagewidget.h"
 #include "ui_messagewidget.h"
+#include "language.h"
 
 MessageWidget::MessageWidget(int aUser_fk, QWidget *parent) :
     WidgetForControl(parent),

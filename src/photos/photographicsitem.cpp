@@ -1,5 +1,6 @@
 #include "photographicsitem.h"
 #include "globalsbase.h"
+#include "language.h"
 #include "gallerygrapicsscene.h"
 
 #include <QApplication>

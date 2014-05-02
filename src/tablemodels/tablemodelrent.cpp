@@ -1,5 +1,6 @@
 #include "tablemodelrent.h"
 #include "globalsbase.h"
+#include "language.h"
 
 #include <QApplication>
 #include <QColor>

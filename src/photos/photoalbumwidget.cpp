@@ -3,7 +3,7 @@
 
 #include <QDebug>
 #include <QFileDialog>
-#include "globalsbase.h"
+#include "language.h"
 
 PhotoAlbumWidget::PhotoAlbumWidget(int aIdObject, QWidget *parent) :
     QWidget(parent),

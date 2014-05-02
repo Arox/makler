@@ -7,6 +7,7 @@
 #include <QList>
 
 #include "mainwidget.h"
+#include "clientsphonewidget.h"
 
 namespace Ui {
 class ClientHeaderAlternativeWidget;
@@ -24,21 +25,14 @@ signals:
     void changed();
 public slots:
     void save();
-protected slots:
-    void saveClient(int aNumber);
-
-
 private slots:
     void on_mpDiler_clicked();
 
 private:
     Ui::ClientHeaderAlternativeWidget *ui;
     int mId;
-    int mIdClients[5];
     int mIdObjects;
-    QList<QLineEdit*> mNames;
-    QList<QLineEdit*> mPhones;
-    QSignalMapper mMapper;
+    ClientsPhoneWidget* mpContact;
 };
 
 #endif // CLIENTHEADERALTERNATIVEWIDGET_H

@@ -10,6 +10,7 @@
 #include "apartmentwidget.h"
 #include "rentwidget.h"
 #include "homewidget.h"
+#include "language.h"
 
 FindObjectWidget::FindObjectWidget(int aUser_fk, QWidget *parent) :
     WidgetForControl(parent),

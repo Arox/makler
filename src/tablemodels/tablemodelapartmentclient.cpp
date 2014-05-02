@@ -1,5 +1,7 @@
 #include "tablemodelapartmentclient.h"
 #include <QApplication>
+#include "language.h"
+
 TableModelApartmentClient::TableModelApartmentClient(QObject *apPerent)
     :FindTableModel(apPerent)
 {

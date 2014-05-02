@@ -1,4 +1,5 @@
 #include "basestablemodel.h"
+#include "language.h"
 
 BasesTableModel::BasesTableModel(QObject *parent) :
     TableModel(parent)

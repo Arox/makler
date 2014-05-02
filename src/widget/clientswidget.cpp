@@ -2,6 +2,7 @@
 #include "ui_clientswidget.h"
 
 #include "globalsbase.h"
+#include "language.h"
 #include "dialogaside.h"
 #include "dialogshoot.h"
 

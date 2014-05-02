@@ -12,4 +12,5 @@ HEADERS  += $$PWD/man.h \
     $$PWD/settings.h \
     $$PWD/fastdatabase.h \
     src/general/styles.h \
-    src/general/makler.h
+    src/general/makler.h \
+    src/general/language.h

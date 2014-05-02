@@ -11,6 +11,7 @@
 #include "messagewidget.h"
 #include "viewobjectwidget.h"
 #include "makler.h"
+#include "language.h"
 
 TopMenu::TopMenu(int aUser_fk, QStringList aRoles, QWidget *parent) :
     ui(new Ui::TopMenu),

@@ -2,6 +2,7 @@
 #include "ui_agentwidget.h"
 
 #include "globalsbase.h"
+#include "language.h"
 #include <QMessageBox>
 
 AgentWidget::AgentWidget(QWidget *parent) :

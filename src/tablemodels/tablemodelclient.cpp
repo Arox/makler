@@ -1,4 +1,5 @@
 #include "tablemodelclient.h"
+#include "language.h"
 
 #include <QApplication>
 #include <QColor>

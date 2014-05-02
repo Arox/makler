@@ -4,7 +4,7 @@
 #include "dialogphotoalbum.h"
 #include "passportwidget.h"
 #include "dialoguniversal.h"
-#include "globalsbase.h"
+#include "language.h"
 #include "settings.h"
 
 #include <QDesktopServices>

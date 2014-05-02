@@ -1,6 +1,6 @@
 #include "tablemodelhome.h"
 #include "globalsbase.h"
-
+#include "language.h"
 #include <QApplication>
 
 TableModelHome::TableModelHome(QObject *parent):

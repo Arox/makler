@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QColor>
 #include <QPushButton>
+#include "language.h"
 
 TableModelApartment::TableModelApartment(QObject *parent):
     TableModel(parent)

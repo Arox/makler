@@ -4,6 +4,7 @@
 #include "dialoguniversal.h"
 #include "readpostwidget.h"
 #include "writepost.h"
+#include "language.h"
 
 #include <QApplication>
 #include <QColor>

@@ -2,6 +2,7 @@
 #include "ui_dialogauthentification.h"
 
 #include "globalsbase.h"
+#include "language.h"
 
 #include <QDesktopWidget>
 #include <QSqlQuery>

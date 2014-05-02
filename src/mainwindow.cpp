@@ -9,6 +9,7 @@
 #include "dialogasideup.h"
 #include "styles.h"
 #include "settingswidget.h"
+#include "language.h"
 
 #include <QDebug>
 #include <QDesktopWidget>

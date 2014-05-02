@@ -2,7 +2,7 @@
 #include "ui_phonefinddialog.h"
 
 #include "globalsbase.h"
-
+#include "language.h"
 #include <QSpacerItem>
 #include <QSqlQueryModel>
 

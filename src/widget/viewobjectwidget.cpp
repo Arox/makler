@@ -4,6 +4,7 @@
 #include "dialogaside.h"
 #include "dialogshoot.h"
 #include "phonefinddialog.h"
+#include "language.h"
 
 #include "tablemodelapartment.h"
 #include "tablemodelhome.h"

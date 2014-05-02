@@ -2,6 +2,7 @@
 #include "ui_findtypeapartment.h"
 
 #include "globalsbase.h"
+#include "language.h"
 
 FindTypeApartment::FindTypeApartment(QWidget *parent) :
     QWidget(parent),

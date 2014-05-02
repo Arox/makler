@@ -23,12 +23,6 @@
 #define ResponseRecordType FastDatabaseRecord
 #define ResponseType QVector< ResponseRecordType >
 
-#ifdef WINDOWS_OS
-#define TRANSLATE(x) QApplication::translate("TRANSLATE", x, 0)
-#else
-#define TRANSLATE(x) QApplication::translate("TRANSLATE", x, 0, QApplication::UnicodeUTF8)
-#endif
-
 ResponseType execQuery(QString aQueryText, QString aBaseName = "local");
 
 enum TypeMarkQuery

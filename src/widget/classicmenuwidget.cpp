@@ -16,6 +16,7 @@
 #include "addresseditor.h"
 #include "dialoguniversal.h"
 #include "viewbases.h"
+#include "language.h"
 
 ClassicMenuWidget::ClassicMenuWidget(int aUser_fk, QStringList aRoles, QWidget *parent) :
     WidgetForControl(parent),

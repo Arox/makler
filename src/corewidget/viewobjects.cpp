@@ -1,5 +1,6 @@
 #include "viewobjects.h"
 #include "ui_viewobjects.h"
+#include "language.h"
 
 ViewObjects::ViewObjects(QWidget *parent) :
     MainWidget(parent),

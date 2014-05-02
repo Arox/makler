@@ -1,6 +1,7 @@
 #include "addresseditor.h"
 #include "ui_addresseditor.h"
 #include "globalsbase.h"
+#include "language.h"
 #include <QLineEdit>
 #include <QInputDialog>
 #include <QMessageBox>

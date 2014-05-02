@@ -6,6 +6,7 @@
 
 #include "globalsbase.h"
 #include "globals.h"
+#include "language.h"
 
 RentWidget::RentWidget(int aAgent, QWidget *parent) :
     GeneralWidget(parent),

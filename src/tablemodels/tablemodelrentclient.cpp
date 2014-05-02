@@ -1,5 +1,8 @@
 #include "tablemodelrentclient.h"
+#include "language.h"
+
 #include <QApplication>
+
 TableModelRentClient::TableModelRentClient(QObject *parent) :
     FindTableModel(parent)
 {

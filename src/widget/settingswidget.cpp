@@ -1,6 +1,6 @@
 #include "settingswidget.h"
 #include "ui_settingswidget.h"
-#include "globalsbase.h"
+#include "language.h"
 SettingsWidget::SettingsWidget(int aUser_fk, QStringList aRoles, QWidget *parent) :
     WidgetForControl(parent),
     ui(new Ui::SettingsWidget)

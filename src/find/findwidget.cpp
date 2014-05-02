@@ -1,7 +1,7 @@
 #include "findwidget.h"
 #include "ui_findwidget.h"
 
-#include "globalsbase.h"
+#include "language.h"
 
 FindWidget::FindWidget(QWidget *parent) :
     WidgetForControl(parent),

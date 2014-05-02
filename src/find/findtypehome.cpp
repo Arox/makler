@@ -3,6 +3,8 @@
 
 #include <QStringList>
 #include  "globalsbase.h"
+#include "language.h"
+
 FindTypeHome::FindTypeHome(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FindTypeHome)

@@ -8,6 +8,7 @@
 #include <QTime>
 
 #include "globalsbase.h"
+#include "language.h"
 
 TypeApartment::TypeApartment(QWidget *parent) :
     MainWidget(parent),

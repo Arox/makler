@@ -1,6 +1,7 @@
 #include "viewbases.h"
 #include "ui_viewbases.h"
 #include "globalsbase.h"
+#include "language.h"
 #include "dialoguniversal.h"
 #include "appenddatabase.h"
 #include "easysync.h"

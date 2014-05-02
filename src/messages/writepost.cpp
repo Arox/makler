@@ -2,6 +2,7 @@
 #include "ui_writepost.h"
 
 #include "globalsbase.h"
+#include "language.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTime>

@@ -1,5 +1,7 @@
 #include "tablemodelhomeclient.h"
 #include "globalsbase.h"
+#include "language.h"
+
 #include <QApplication>
 
 TableModelHomeClient::TableModelHomeClient(QObject *parent) :

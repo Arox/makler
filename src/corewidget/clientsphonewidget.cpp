@@ -3,6 +3,7 @@
 
 #include <QHBoxLayout>
 #include "globalsbase.h"
+#include "language.h"
 
 ClientsPhoneWidget::ClientsPhoneWidget(QWidget *parent) :
     QWidget(parent),

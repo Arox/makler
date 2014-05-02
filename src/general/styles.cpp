@@ -5,7 +5,7 @@
 #include <QMessageBox>
 #include <QResource>
 
-#include "globalsbase.h"
+#include "language.h"
 
 QStringList Styles::mStyleNames;
 const QString Styles::vNameDirStyles = "styles";

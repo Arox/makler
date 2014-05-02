@@ -7,6 +7,7 @@
 #include <QDate>
 
 #include "globalsbase.h"
+#include "language.h"
 
 
 BrainComboBox::BrainComboBox(int aId, QWidget *parent):

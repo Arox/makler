@@ -2,6 +2,7 @@
 #include "ui_viewpostwidget.h"
 #include "globals.h"
 #include "globalsbase.h"
+#include "language.h"
 
 #include <QFile>
 #include <QFileInfo>

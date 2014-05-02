@@ -1,6 +1,7 @@
 #include "readpostwidget.h"
 #include "ui_readpostwidget.h"
 #include "globalsbase.h"
+#include "language.h"
 
 #include <QFileDialog>
 #include <QFile>

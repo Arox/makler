@@ -2,6 +2,7 @@
 #include "ui_typehomewidget.h"
 
 #include "globalsbase.h"
+#include "language.h"
 
 TypeHomeWidget::TypeHomeWidget(QWidget *parent) :
     MainWidget(parent),

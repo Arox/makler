@@ -6,6 +6,7 @@
 
 #include "globalsbase.h"
 #include "globals.h"
+#include "language.h"
 
 ApartmentWidget::ApartmentWidget(int aAgent, QWidget *parent) :
     GeneralWidget(parent),

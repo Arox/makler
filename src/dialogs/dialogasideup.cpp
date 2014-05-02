@@ -2,6 +2,7 @@
 #include "ui_dialogasideup.h"
 
 #include "globals.h"
+#include "language.h"
 #include <QSqlQueryModel>
 #include <QDebug>
 

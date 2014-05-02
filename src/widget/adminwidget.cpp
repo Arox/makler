@@ -6,6 +6,7 @@
 #include "findrent.h"
 
 #include "globalsbase.h"
+#include "language.h"
 
 #include "agentwidget.h"
 #include "dialoguniversal.h"

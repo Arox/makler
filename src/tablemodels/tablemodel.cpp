@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QColor>
+#include "language.h"
 
 TableModel::TableModel(QObject *parent):
     QAbstractTableModel(parent)
