@@ -5,18 +5,12 @@
 #include "topmenu.h"
 #include "ui_topmenu.h"
 
-#include "apartmentwidget.h"
-#include "rentwidget.h"
-#include "homewidget.h"
 #include "findobjectwidget.h"
 #include "clientswidget.h"
 #include "adminwidget.h"
 #include "messagewidget.h"
 #include "viewobjectwidget.h"
-
-#include "findapartment.h"
-#include "findhome.h"
-#include "findrent.h"
+#include "makler.h"
 
 TopMenu::TopMenu(int aUser_fk, QStringList aRoles, QWidget *parent) :
     ui(new Ui::TopMenu),
@@ -29,18 +23,9 @@ TopMenu::TopMenu(int aUser_fk, QStringList aRoles, QWidget *parent) :
 
     QList<WidgetForControl*> vWidgets;
     vWidgets.append(new ClientsWidget(mUser_fk,this));
-
-    TableModelApartment* vpModelApartment = new TableModelApartment(this);
-    vWidgets.append(new ViewObjectWidget(vpModelApartment, new ApartmentWidget(mUser_fk), new FindApartment(), this));
-
-    TableModelRent* vpModelRent = new TableModelRent(this);
-    vWidgets.append(new ViewObjectWidget(vpModelRent, new RentWidget(mUser_fk), new FindRent(), this));
-
-    TableModelHome* vpModelHome = new TableModelHome(this);
-    vWidgets.append(new ViewObjectWidget(vpModelHome, new HomeWidget(mUser_fk), new FindHome(), this));
-
-    /*vWidgets.append(new FindObjectWidget(mUser_fk,this));*/
-
+    vWidgets.append(new ViewObjectWidget(APARTMENT, mUser_fk, this));
+    vWidgets.append(new ViewObjectWidget(HOME, mUser_fk, this));
+    vWidgets.append(new ViewObjectWidget(RENT, mUser_fk, this));
     vWidgets.append(new MessageWidget(mUser_fk, this));
 
     if (aRoles.contains("admin"))

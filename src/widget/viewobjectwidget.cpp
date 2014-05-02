@@ -1,23 +1,53 @@
 #include "viewobjectwidget.h"
 #include "ui_viewobjectwidget.h"
-#include "apartmentwidget.h"
 #include "dialoguniversal.h"
 #include "dialogaside.h"
 #include "dialogshoot.h"
 #include "phonefinddialog.h"
 
+#include "tablemodelapartment.h"
+#include "tablemodelhome.h"
+#include "tablemodelrent.h"
+
+#include "apartmentwidget.h"
+#include "homewidget.h"
+#include "rentwidget.h"
+
+#include "findapartment.h"
+#include "findhome.h"
+#include "findrent.h"
+
 #include <QMessageBox>
 
-ViewObjectWidget::ViewObjectWidget(TableModel* apModel, GeneralWidget* apWidgetAdd, FindWidget* apWidgetFind, QWidget *parent):
+ViewObjectWidget::ViewObjectWidget(TypeObject aType, int aAgent_fk, QWidget *parent):
     WidgetForControl(parent),
     ui(new Ui::ViewObjectWidget),
-    mMapper(this),
-    mpModel(apModel)
+    mMapper(this)
+/*    mpModel(aType)
   ,mpWidgetAdd(apWidgetAdd)
-  ,mpWidgetFind(apWidgetFind)
+  ,mpWidgetFind(apWidgetFind)*/
 {
     ui->setupUi(this);
 
+    switch (aType) {
+    case APARTMENT:
+        mpModel = new TableModelApartment();
+        mpWidgetAdd = new ApartmentWidget(aAgent_fk);
+        mpWidgetFind = new FindApartment();
+        break;
+    case HOME:
+        mpModel = new TableModelHome();
+        mpWidgetAdd = new HomeWidget(aAgent_fk);
+        mpWidgetFind = new FindHome();
+        break;
+    case RENT:
+        mpModel = new TableModelRent();
+        mpWidgetAdd = new RentWidget(aAgent_fk);
+        mpWidgetFind = new FindRent();
+        break;
+    default:
+        break;
+    }
     QList<QPushButton*> vListButtons;
     vListButtons << ui->mpButtonActive << ui->mpButtonArchive << ui->mpButtonDeferred;
 
@@ -46,6 +76,9 @@ ViewObjectWidget::ViewObjectWidget(TableModel* apModel, GeneralWidget* apWidgetA
 ViewObjectWidget::~ViewObjectWidget()
 {
     delete ui;
+    if (mpModel) delete mpModel;
+    if (mpWidgetAdd) delete mpWidgetAdd;
+    if (mpWidgetFind) delete mpWidgetFind;
 }
 
 void ViewObjectWidget::on_mpButtonActive_clicked()
@@ -287,7 +320,7 @@ void ViewObjectWidget::clickClearFilter()
     if (mpModel)
     {
         mpWidgetFind->clearFind();
-        mpModel->addFilter("");
+        mpModel->clearFilter();
         reloadModel();
         ui->mpClearFilter->setVisible(false);
         ui->mpView->setProperty("find", "state1");

@@ -57,6 +57,7 @@ public:
     virtual QString status(int aRow);
 
     virtual void addFilter(QString aWhere);
+    virtual void clearFilter();
     QString filter();
 
     void setButtonStatus(bool aStatus);

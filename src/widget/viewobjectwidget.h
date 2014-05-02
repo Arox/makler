@@ -10,6 +10,7 @@
 #include "widgetforcontrol.h"
 #include "phonefinddialog.h"
 #include "findwidget.h"
+#include "makler.h"
 
 namespace Ui {
 class ViewObjectWidget;
@@ -20,7 +21,7 @@ class ViewObjectWidget : public WidgetForControl
     Q_OBJECT
     
 public:
-    explicit ViewObjectWidget(TableModel* apModel, GeneralWidget* apWidgetAdd, FindWidget* apWidgetFind, QWidget *parent = 0);
+    explicit ViewObjectWidget(TypeObject aType, int aAgent_fk, QWidget *parent = 0);
     ~ViewObjectWidget();
     
     virtual QString name();
