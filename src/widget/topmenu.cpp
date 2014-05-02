@@ -14,6 +14,10 @@
 #include "messagewidget.h"
 #include "viewobjectwidget.h"
 
+#include "findapartment.h"
+#include "findhome.h"
+#include "findrent.h"
+
 TopMenu::TopMenu(int aUser_fk, QStringList aRoles, QWidget *parent) :
     ui(new Ui::TopMenu),
     mUser_fk(aUser_fk),
@@ -27,15 +31,15 @@ TopMenu::TopMenu(int aUser_fk, QStringList aRoles, QWidget *parent) :
     vWidgets.append(new ClientsWidget(mUser_fk,this));
 
     TableModelApartment* vpModelApartment = new TableModelApartment(this);
-    vWidgets.append(new ViewObjectWidget(vpModelApartment, new ApartmentWidget(mUser_fk), this));
+    vWidgets.append(new ViewObjectWidget(vpModelApartment, new ApartmentWidget(mUser_fk), new FindApartment(), this));
 
     TableModelRent* vpModelRent = new TableModelRent(this);
-    vWidgets.append(new ViewObjectWidget(vpModelRent, new RentWidget(mUser_fk), this));
+    vWidgets.append(new ViewObjectWidget(vpModelRent, new RentWidget(mUser_fk), new FindRent(), this));
 
     TableModelHome* vpModelHome = new TableModelHome(this);
-    vWidgets.append(new ViewObjectWidget(vpModelHome, new HomeWidget(mUser_fk), this));
+    vWidgets.append(new ViewObjectWidget(vpModelHome, new HomeWidget(mUser_fk), new FindHome(), this));
 
-    vWidgets.append(new FindObjectWidget(mUser_fk,this));
+    /*vWidgets.append(new FindObjectWidget(mUser_fk,this));*/
 
     vWidgets.append(new MessageWidget(mUser_fk, this));
 
@@ -172,22 +176,41 @@ void TopMenu::backWidget(WidgetForControl* apSender)
     WidgetForControl* vpParentWidget = mWidgets.at(vNumber).top();
     connectWidget(vpParentWidget);
     vpParentWidget->reload(vpWidget);
-    //delete vpWidget;
 
     mpStackWidget->insertWidget(vNumber, vpParentWidget);
     mpStackWidget->setCurrentIndex(vNumber);
+}
+
+void TopMenu::reloadMyWidget(WidgetForControl* apSender)
+{
+    int vNumber = numWidget(apSender);
+    Q_ASSERT(vNumber >= 0);
+
+    int vCurrentIndex = mpStackWidget->currentIndex();
+
+    WidgetForControl* vpWidget = mWidgets.at(vNumber).top();
+
+    vpWidget->setParent(0);
+    mpStackWidget->removeWidget(vpWidget);
+
+    vNumber = numWidget(apSender);
+    mpStackWidget->insertWidget(vNumber, vpWidget);
+    vNumber = numWidget(apSender);
+    mpStackWidget->setCurrentIndex(vCurrentIndex);
 }
 
 void TopMenu::disconnectWidget(WidgetForControl* apWidget)
 {
     disconnect(apWidget, SIGNAL(changeWidget(WidgetForControl::SignalWidgetType)), this, SLOT(load(WidgetForControl::SignalWidgetType)));
     disconnect(apWidget, SIGNAL(back(WidgetForControl*)), this, SLOT(backWidget(WidgetForControl*)));
+    disconnect(apWidget, SIGNAL(reloadMe(WidgetForControl*)), this, SLOT(reloadMyWidget(WidgetForControl*)));
 }
 
 void TopMenu::connectWidget(WidgetForControl* apWidget)
 {
     connect(apWidget, SIGNAL(changeWidget(WidgetForControl::SignalWidgetType)), this, SLOT(load(WidgetForControl::SignalWidgetType)));
     connect(apWidget, SIGNAL(back(WidgetForControl*)), this, SLOT(backWidget(WidgetForControl*)));
+    connect(apWidget, SIGNAL(reloadMe(WidgetForControl*)), this, SLOT(reloadMyWidget(WidgetForControl*)));
 }
 
 int TopMenu::numWidget(WidgetForControl* apWidget)

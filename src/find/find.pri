@@ -7,7 +7,8 @@ SOURCES += \
     $$PWD/findrent.cpp \
     src/find/findaddresshomewidget.cpp \
     src/find/findtypehome.cpp \
-    src/find/findhome.cpp
+    src/find/findhome.cpp \
+    src/find/findwidget.cpp
 
 HEADERS  +=  \
     $$PWD/findpricewidget.h \
@@ -18,7 +19,8 @@ HEADERS  +=  \
     $$PWD/findrent.h \
     src/find/findaddresshomewidget.h \
     src/find/findtypehome.h \
-    src/find/findhome.h
+    src/find/findhome.h \
+    src/find/findwidget.h
 
 FORMS    +=  \
     $$PWD/findpricewidget.ui \
@@ -27,4 +29,5 @@ FORMS    +=  \
     $$PWD/findapartment.ui \
     $$PWD/findrent.ui \
     src/find/findtypehome.ui \
-    src/find/findhome.ui
+    src/find/findhome.ui \
+    src/find/findwidget.ui

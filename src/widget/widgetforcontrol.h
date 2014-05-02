@@ -21,6 +21,7 @@ public:
 signals:
     void changeWidget(WidgetForControl::SignalWidgetType);
     void back(WidgetForControl*);
+    void reloadMe(WidgetForControl*);
     //void close();
 public slots:
     virtual void reload(WidgetForControl*);

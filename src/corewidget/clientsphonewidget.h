@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QScrollArea>
 #include <QSignalMapper>
+#include <QPushButton>
 
 #include "mylineedit.h"
 
@@ -35,6 +36,7 @@ private:
     QVector<MyLineEdit*> mpFios;
     QVector<MyLineEdit*> mpPhones;
     QVector<QLayout*> mContainers;
+    QVector<QPushButton*> mpButtons;
     QVector<int> mIds;
     QSignalMapper mDispatcher;
 };

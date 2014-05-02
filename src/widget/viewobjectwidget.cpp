@@ -8,12 +8,13 @@
 
 #include <QMessageBox>
 
-ViewObjectWidget::ViewObjectWidget(TableModel* apModel, GeneralWidget* apWidgetAdd, QWidget *parent) :
+ViewObjectWidget::ViewObjectWidget(TableModel* apModel, GeneralWidget* apWidgetAdd, FindWidget* apWidgetFind, QWidget *parent):
     WidgetForControl(parent),
     ui(new Ui::ViewObjectWidget),
     mMapper(this),
     mpModel(apModel)
   ,mpWidgetAdd(apWidgetAdd)
+  ,mpWidgetFind(apWidgetFind)
 {
     ui->setupUi(this);
 
@@ -35,6 +36,11 @@ ViewObjectWidget::ViewObjectWidget(TableModel* apModel, GeneralWidget* apWidgetA
 
     load();
     connect(&mMapper, SIGNAL(mapped(int)), this, SLOT(reloadObject(int)));
+    connect(ui->mpFilter, SIGNAL(clicked()), this, SLOT(clickFilter()));
+    connect(ui->mpClearFilter, SIGNAL(clicked()), this, SLOT(clickClearFilter()));
+
+    ui->mpClearFilter->setVisible(false);
+    ui->mpView->setProperty("find", "state1");
 }
 
 ViewObjectWidget::~ViewObjectWidget()
@@ -80,6 +86,20 @@ void ViewObjectWidget::on_mpButtonArchive_clicked()
 void ViewObjectWidget::reload(WidgetForControl* apControl)
 {
     Q_UNUSED(apControl);
+    if (mpWidgetFind == apControl)
+    {
+        mpModel->addFilter(mpWidgetFind->sql());
+        if (mpWidgetFind->sql().isEmpty())
+        {
+            ui->mpView->setProperty("find", "state1");
+        }
+        else
+        {
+            ui->mpClearFilter->setVisible(true);
+            ui->mpView->setProperty("find", "state2");
+        }
+    }
+
     load();
 }
 
@@ -254,4 +274,23 @@ void ViewObjectWidget::on_mpButtonView_clicked()
 QString ViewObjectWidget::idName()
 {
     return mpWidgetAdd->idName();
+}
+
+void ViewObjectWidget::clickFilter()
+{
+    emit changeWidget(SignalWidgetType(this, mpWidgetFind));
+
+}
+
+void ViewObjectWidget::clickClearFilter()
+{
+    if (mpModel)
+    {
+        mpWidgetFind->clearFind();
+        mpModel->addFilter("");
+        reloadModel();
+        ui->mpClearFilter->setVisible(false);
+        ui->mpView->setProperty("find", "state1");
+        emit reloadMe(this);
+    }
 }

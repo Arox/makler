@@ -10,40 +10,24 @@
 #include "findtypeapartment.h"
 #include "apartmentinformation.h"
 
-namespace Ui {
-class FindRent;
-}
+#include "findwidget.h"
 
-class FindRent : public WidgetForControl
+class FindRent : public FindWidget
 {
     Q_OBJECT
     
 public:
     explicit FindRent(QWidget *parent = 0);
     ~FindRent();
-    QString sql();
-    QString join();
-    virtual QString name();
-    virtual QSize minSize();
-    virtual QSize maxSize();
-    virtual QSize size();
-    virtual QString idName();
-private slots:
-    void on_mpFind_clicked();
-
-    void on_mpBack_clicked();
-
+protected:
+    virtual void getData();
 private:
-    Ui::FindRent *ui;
     FindAddressWidget mAddress;
     FindAddressHomeWidget mHomeAddress;
     FindInformationArea mArea;
     FindPriceWidget mPrice;
     FindTypeApartment mType;
     ApartmentInformation mInformation;
-
-    QString mSql;
-    QString mJoin;
 };
 
 #endif // FINDRENT_H

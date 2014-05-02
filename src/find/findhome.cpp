@@ -1,39 +1,24 @@
 #include "findhome.h"
-#include "ui_findhome.h"
 
 #include <QStringList>
-#include "globalsbase.h"
 
 FindHome::FindHome(QWidget *parent) :
-    WidgetForControl(parent),
-    ui(new Ui::FindHome)
+    FindWidget(parent)
 {
-    ui->setupUi(this);
     mInformation.setNameDictionary("home", 4, true);
-    ui->mainLayout->insertWidget(0, &mInformation);
-    ui->mainLayout->insertWidget(0, &mArea);
-    ui->mainLayout->insertWidget(0, &mType);
-    ui->mainLayout->insertWidget(0, &mPrice);
-    ui->mainLayout->insertWidget(0, &mHomeAddress);
-    ui->mainLayout->insertWidget(0, &mAddress);
+    addWidget(&mInformation);
+    addWidget(&mArea);
+    addWidget(&mType);
+    addWidget(&mPrice);
+    addWidget(&mHomeAddress);
+    addWidget(&mAddress);
 }
 
 FindHome::~FindHome()
 {
-    delete ui;
 }
 
-QString FindHome::sql()
-{
-    return mSql;
-}
-
-QString FindHome::join()
-{
-    return mJoin;
-}
-
-void FindHome::on_mpFind_clicked()
+void FindHome::getData()
 {
     QStringList vList;
     vList << mInformation.sqlWhere()
@@ -43,8 +28,7 @@ void FindHome::on_mpFind_clicked()
           << mHomeAddress.sqlWhere()
           << mAddress.sqlWhere();
     vList.removeAll("");
-    mSql = vList.join(" ");
-    if (mSql.isEmpty()) mSql = " ";
+    setSql(vList.join(" "));
     vList.clear();
 
     vList << mInformation.joinWhere()
@@ -53,36 +37,5 @@ void FindHome::on_mpFind_clicked()
           << mPrice.joinWhere()
           << mHomeAddress.joinWhere()
           << mAddress.joinWhere();
-    mJoin = vList.join(" ");
-    emit back(this);
-}
-
-void FindHome::on_mpBack_clicked()
-{
-    emit back(this);
-}
-
-QString FindHome::name()
-{
-    return TRANSLATE("Поиск дома/участка");
-}
-
-QSize FindHome::minSize()
-{
-    return QSize(0, 0);
-}
-
-QSize FindHome::size()
-{
-    return QSize(880, 600);
-}
-
-QSize FindHome::maxSize()
-{
-    return QSize(0, 0);
-}
-
-QString FindHome::idName()
-{
-    return "findhome";
+   setJoin(vList.join(" "));
 }

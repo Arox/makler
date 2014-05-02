@@ -15,27 +15,11 @@
 #include "topmenu.h"
 #include "styles.h"
 #include <QDebug>
+#include <QSettings>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
-    /*QString vPath = QString("%1/%2")
-            .arg(a.applicationDirPath())
-            .arg("styles/mainstyle.qss");
-
-    QFile vFile(vPath);
-    if (vFile.open(QIODevice::ReadOnly))
-    {
-        QString vStyle = QString(vFile.readAll());
-        a.setStyleSheet(vStyle);
-    }*/
-
-    /*QDateTime vDate = QDateTime::currentDateTime();
-    if (vDate.date() > QDate(2014, 5, 31)) return -1;*/
-
-    //a.setLibraryPaths(QStringList("C:\\projects\\build-realtor-Desktop_Qt_5_1_1_MinGW_32bit-Release\\release"));
-    //QMessageBox::information(0, "", a.libraryPaths().join(' '));
 
     Styles::inizialize();
     if (Styles::styles().count())

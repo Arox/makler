@@ -9,6 +9,7 @@
 #include "generalwidget.h"
 #include "widgetforcontrol.h"
 #include "phonefinddialog.h"
+#include "findwidget.h"
 
 namespace Ui {
 class ViewObjectWidget;
@@ -19,7 +20,7 @@ class ViewObjectWidget : public WidgetForControl
     Q_OBJECT
     
 public:
-    explicit ViewObjectWidget(TableModel* apModel, GeneralWidget* apWidgetAdd, QWidget *parent = 0);
+    explicit ViewObjectWidget(TableModel* apModel, GeneralWidget* apWidgetAdd, FindWidget* apWidgetFind, QWidget *parent = 0);
     ~ViewObjectWidget();
     
     virtual QString name();
@@ -42,6 +43,9 @@ protected:
     bool isActive(int aRow);
     void load(const QModelIndex &index = QModelIndex());
     void reloadModel();
+private slots:
+    void clickFilter();
+    void clickClearFilter();
 public slots:
     void reloadObject(int aRow);
     void setButton();
@@ -55,6 +59,7 @@ private:
     TableModel* mpModel;
     QList<QPushButton*> mListButtonsTable;
     GeneralWidget* mpWidgetAdd;
+    FindWidget* mpWidgetFind;
     QModelIndex mCurrentIndex;
     PhoneFindDialog mDialog;
 };

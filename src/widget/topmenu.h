@@ -39,6 +39,7 @@ private slots:
 public slots:
     void load(WidgetForControl::SignalWidgetType apControl);
     void backWidget(WidgetForControl* apSender);
+    void reloadMyWidget(WidgetForControl* apSender);
 signals:
     void reloadWidget(WidgetForControl* apControl);
 protected:

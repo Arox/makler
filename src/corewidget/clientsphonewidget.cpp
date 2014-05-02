@@ -36,6 +36,7 @@ void ClientsPhoneWidget::addContact()
     mpFios.append(vpFio);
     mpPhones.append(vpPhone);
     mIds.append(-1);
+    mpButtons.append(vpButton);
     vpLayout->addWidget(vpFio);
     vpLayout->addWidget(vpPhone);
     vpLayout->addWidget(vpButton);
@@ -53,11 +54,17 @@ void ClientsPhoneWidget::load(int aIdHeader)
 {
     while (mIds.count() > 0)
     {
+        //Лайоут сделать отдельным виджетом и функции создания, изменения, доступа и удаления вынести в него
+        disconnect(mpButtons[0], SIGNAL(clicked()), &mDispatcher, SLOT(map()));
+        delete mpButtons[0];
         delete mpFios[0];
         delete mpPhones[0];
+        delete mContainers[0];
+        mpButtons.removeAt(0);
         mpFios.removeAt(0);
         mpPhones.removeAt(0);
         mIds.removeAt(0);
+        mContainers.removeAt(0);
     }
     if (aIdHeader >= 0)
     {
@@ -66,8 +73,8 @@ void ClientsPhoneWidget::load(int aIdHeader)
         int i = 0;
         foreach (vRecord, vQueryClients)
         {
-            mIds.append(vQueryClients[i]["id"].toInt());
             addContact();
+            mIds[i] = vQueryClients[i]["id"].toInt();
             mpFios[i]->setText(vQueryClients[i]["fio"].toString());
             mpPhones[i]->setText(vQueryClients[i]["phone"].toString());
             ++i;

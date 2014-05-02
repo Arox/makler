@@ -109,7 +109,10 @@ void AddressWidget::loadCity()
             vList.insert(0, "");
             ui->mpCity->insertItem(0, "", -1);
         }
-        ui->mpCity->setCurrentIndex(0);
+        if (isState(NORMAL) || isState(MULTISELECT))
+        {
+            ui->mpStreet->setCurrentIndex(0);
+        }
         on_mpCity_currentIndexChanged(0);
     }
     QCompleter* vpComp = new QCompleter(vList, this);
@@ -120,6 +123,7 @@ void AddressWidget::loadCity()
 
 void AddressWidget::loadLocality()
 {
+    ui->mpLocality->blockSignals(true);
     int vCity = ui->mpCity->itemData(ui->mpCity->currentIndex()).toInt();
     ResponseType vResponse = execQuery(QString("select id, name from address_microdistrict where city_fk = %1")
                                        .arg(vCity));
@@ -147,16 +151,20 @@ void AddressWidget::loadLocality()
             vList.insert(0, "");
             ui->mpLocality->insertItem(0, "", -1);
         }
-        ui->mpLocality->setCurrentIndex(0);
+        if (isState(NORMAL) || isState(MULTISELECT))
+        {
+            ui->mpStreet->setCurrentIndex(0);
+        }
     }
     QCompleter* vpComp = new QCompleter(vList, this);
     vpComp->setCaseSensitivity(Qt::CaseInsensitive);
     ui->mpLocality->setCompleter(vpComp);
-
+    ui->mpLocality->blockSignals(false);
 }
 
 void AddressWidget::loadStreet()
 {
+    ui->mpStreet->blockSignals(true);
     int vCity = ui->mpCity->itemData(ui->mpCity->currentIndex()).toInt();
     ResponseType vResponse = execQuery(QString("select id, name from address_street where city_fk = %1")
                                            .arg(vCity));
@@ -190,11 +198,15 @@ void AddressWidget::loadStreet()
             vList.insert(0, "");
             ui->mpStreet->insertItem(0, "", -1);
         }
-        ui->mpStreet->setCurrentIndex(0);
+        if (isState(NORMAL) || isState(MULTISELECT))
+        {
+            ui->mpStreet->setCurrentIndex(0);
+        }
     }
     QCompleter* vpComp = new QCompleter(vList, this);
     vpComp->setCaseSensitivity(Qt::CaseInsensitive);
     ui->mpStreet->setCompleter(vpComp);
+    ui->mpStreet->blockSignals(false);
 
 }
 
@@ -439,7 +451,7 @@ void AddressWidget::setState(int aState)
         for (int i = 0; i < mBoxes.count(); ++i)
         {
             connect(mBoxes[i], SIGNAL(activated(int)), &mMapper, SLOT(map()));
-            connect(mBoxes[i], SIGNAL(currentIndexChanged(int)), &mMapper, SLOT(map()));
+            //connect(mBoxes[i], SIGNAL(currentIndexChanged(int)), &mMapper, SLOT(map()));
             mMapper.setMapping(mBoxes[i], i);
         }
     }
