@@ -181,6 +181,11 @@ void TableModel::addFilter(QString aWhere)
     mWhereFilter = aWhere;
 }
 
+void TableModel::clearFilter()
+{
+    mWhereFilter.clear();
+}
+
 QString TableModel::filter()
 {
     return mWhereFilter;
