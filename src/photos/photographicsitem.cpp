@@ -67,7 +67,7 @@ void PhotoGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
     }
     QRectF vRectImage = imageRect();
     painter->drawImage(vRectImage, mImage);
-    if (isHover)
+    if (isHover && isEnabled())
     {
         QRectF vRectDelete = deleteRect();
         painter->drawImage(vRectDelete, mDeleteImage.scaled(vRectDelete.width(), vRectDelete.height()));
@@ -92,7 +92,7 @@ void	PhotoGraphicsItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
 
 void	PhotoGraphicsItem::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
-    if (deleteRect().contains(event->pos()))
+    if (isEnabled() && deleteRect().contains(event->pos()))
     {
         if (scene())
         {

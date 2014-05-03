@@ -110,3 +110,14 @@ void PhotoAlbumWidget::backImage()
 {
     ((GalleryGrapicsScene*)ui->mpGallery->scene())->back();
 }
+
+void PhotoAlbumWidget::setEnabledChangePhoto(bool aEnabled)
+{
+    mEnabled = aEnabled;
+    ((GalleryGrapicsScene*)ui->mpGallery->scene())->setEnabledChangePhoto(isEnabled());
+}
+
+bool PhotoAlbumWidget::isEnabled() const
+{
+    return mEnabled;
+}

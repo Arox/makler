@@ -27,6 +27,7 @@ void ButtonsWidget::on_mpPhoto_clicked()
 {
     Q_ASSERT(mIdObject > -1);
     DialogPhotoAlbum vAlbum(mIdObject, this);
+    vAlbum.setChangePhotoEnabled(isChangeEnabled());
     vAlbum.exec();
 }
 
@@ -43,6 +44,7 @@ void ButtonsWidget::on_mpBack_clicked()
 void ButtonsWidget::on_mpOrder_clicked()
 {
     PassportWidget vWidget;
+    vWidget.setEnabled(isChangeEnabled());
     vWidget.load(mIdObject);
     DialogUniversal vDialog(&vWidget, TRANSLATE("Договор"), this);
     vDialog.exec();
@@ -52,4 +54,14 @@ void ButtonsWidget::on_mpOrder_clicked()
 void ButtonsWidget::on_mpNoSave_clicked()
 {
     emit noSave();
+}
+
+void ButtonsWidget::setChangeEnabled(bool aEnabled)
+{
+    mEnabled = aEnabled;
+}
+
+bool ButtonsWidget::isChangeEnabled() const
+{
+    return mEnabled;
 }

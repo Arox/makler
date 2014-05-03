@@ -124,6 +124,7 @@ void HomeWidget::load(int aId)
     mPrice.setEnabled(vAgent == mAgent);
     mAddress.setEnabled(vAgent == mAgent);
     mHomeAddress1.setEnabled(vAgent == mAgent);
+    mButtons.setChangeEnabled(vAgent == mAgent);
 
     ResponseRecordType vRecord = execQuery(QString("SELECT \"create\", now() as read FROM objects WHERE id = %1")
                     .arg(mId))[0];

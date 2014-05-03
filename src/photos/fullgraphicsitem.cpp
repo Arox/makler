@@ -106,22 +106,16 @@ QRectF FullGraphicsItem::rightRect()
 
 void	FullGraphicsItem::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
-    if (deleteRect().contains(event->pos()))
+
+    if (leftRect().contains(event->pos()))
     {
-        ((FullGraphicsScene*)scene())->removeElement();
+        emit ((FullGraphicsScene*)scene())->back();
     }
     else
     {
-        if (leftRect().contains(event->pos()))
+        if (rightRect().contains(event->pos()))
         {
-            emit ((FullGraphicsScene*)scene())->back();
-        }
-        else
-        {
-            if (rightRect().contains(event->pos()))
-            {
-                emit ((FullGraphicsScene*)scene())->next();
-            }
+            emit ((FullGraphicsScene*)scene())->next();
         }
     }
 }

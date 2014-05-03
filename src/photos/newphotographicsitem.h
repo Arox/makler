@@ -13,6 +13,7 @@ public:
     explicit NewPhotoGraphicsItem(int aIdObject, int aParts, QGraphicsItem *parent = 0);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
+    QRectF boundingRect() const;
 protected:
     virtual void	mousePressEvent ( QGraphicsSceneMouseEvent * event );
 };

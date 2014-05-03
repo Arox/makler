@@ -14,26 +14,30 @@ const int GalleryGrapicsScene::mCount = 5;
 void GalleryGrapicsScene::inizialisation()
 {
     mCurrentFocus = -1;
-    addItem(&mNewPhoto);
-    mNewPhoto.setPos(sceneRect().width() - mNewPhoto.boundingRect().width(), 0);
+    reset();
+
+    if (isChangeEnabled())
+    {
+        addItem(&mNewPhoto);
+        mNewPhoto.setPos(sceneRect().width() - mNewPhoto.boundingRect().width(), 0);
+    }
     mTimerNext.setFrameRange(0, 100);
     mTimerBack.setFrameRange(0, 100);
 
 
-    for (int i = 0; i < mCount; i++)
+    for (int i = 0; i < countPhotos() + 1; i++)
     {
         QGraphicsItemAnimation* vpAnimation = new QGraphicsItemAnimation();
         vpAnimation->setTimeLine(&mTimerNext);
-        mAnimationsNext[i] = vpAnimation;
+        mAnimationsNext.insert(i, vpAnimation);
 
     }
 
-    for (int i = 0; i < mCount; i++)
+    for (int i = 0; i < countPhotos() + 1; i++)
     {
         QGraphicsItemAnimation* vpAnimation = new QGraphicsItemAnimation();
         vpAnimation->setTimeLine(&mTimerBack);
-        mAnimationsBack[i] = vpAnimation;
-
+        mAnimationsBack.insert(i, vpAnimation);
     }
 
     connect(&mTimerNext, SIGNAL(finished()), this, SLOT(endNext()));
@@ -44,13 +48,12 @@ void GalleryGrapicsScene::inizialisation()
                                        .arg(mIdObject));
     foreach (ResponseRecordType vRecord, vResponse)
     {
-        PhotoGraphicsItem* vpPhoto = new PhotoGraphicsItem(vRecord["id"].toInt(), mCount);
+        PhotoGraphicsItem* vpPhoto = new PhotoGraphicsItem(vRecord["id"].toInt(), count());
         mPhotos.append(vpPhoto);
     }
-    int vCount = mCount - 1;
-    if (vCount < mPhotos.count())
+    if (countPhotos() < mPhotos.count())
     {
-        showPhotos(mPhotos.count() - vCount, mPhotos.count() - 1);
+        showPhotos(mPhotos.count() - countPhotos(), mPhotos.count() - 1);
     }
     else
     {
@@ -60,32 +63,48 @@ void GalleryGrapicsScene::inizialisation()
 
 GalleryGrapicsScene::GalleryGrapicsScene(int aIdObject, QObject *parent) :
     QGraphicsScene(parent)
-  , mNewPhoto(aIdObject, mCount)
+  , mNewPhoto(aIdObject, count())
   , mCurrent(-1)
-  , mAnimationsNext(mCount)
-  , mAnimationsBack(mCount)
+  , mAnimationsNext(count())
+  , mAnimationsBack(count())
   , mTimerNext(1000)
   , mTimerBack(1000)
   ,mIdObject(aIdObject)
+  ,mEnabled(true)
 {
     inizialisation();
 }
 
 GalleryGrapicsScene::GalleryGrapicsScene(int aIdObject, int x, int y, int width, int height, QObject *parent):
     QGraphicsScene(x, y, width, height, parent)
-  , mNewPhoto(aIdObject, mCount)
+  , mNewPhoto(aIdObject, count())
   , mCurrent(-1)
-  , mAnimationsNext(mCount)
-  , mAnimationsBack(mCount)
+  , mAnimationsNext(count())
+  , mAnimationsBack(count())
   , mTimerNext(1000)
   , mTimerBack(1000)
   ,mIdObject(aIdObject)
+  ,mEnabled(true)
 {
     inizialisation();
 }
 
 GalleryGrapicsScene::~GalleryGrapicsScene()
 {
+    reset();
+}
+
+void GalleryGrapicsScene::reset()
+{
+    foreach (QGraphicsItemAnimation* vpItem, mAnimationsBack) {
+        delete vpItem;
+    }
+    mAnimationsBack.clear();
+
+    foreach (QGraphicsItemAnimation* vpItem, mAnimationsNext) {
+        delete vpItem;
+    }
+    mAnimationsNext.clear();
     foreach (PhotoGraphicsItem* vpPhoto, mPhotos)
     {
         delete vpPhoto;
@@ -97,10 +116,10 @@ void GalleryGrapicsScene::resize(int x, int y, int width, int height)
 {
     setSceneRect(x, y, width, height);
     mNewPhoto.setPos(sceneRect().width() - mNewPhoto.boundingRect().width(), 0);
-    for (int i = 0; i < mCount - 1; ++i)
+    for (int i = 0; i < countPhotos(); ++i)
     {
-        int vIndex = mCurrent - mCount + 2 + i;
-        if (mCurrent < (mCount - 1)) vIndex = i;
+        int vIndex = mCurrent - lastIndexPhotos() + i;
+        if (mCurrent < countPhotos()) vIndex = i;
         if (vIndex >= mPhotos.count()) break;
         if (vIndex < 0) continue;
          mPhotos.at(vIndex)->setPos(pos(i));
@@ -123,9 +142,10 @@ void GalleryGrapicsScene::showPhotos(int aStart, int aEnd)
 
 void GalleryGrapicsScene::newItem(int aId)
 {
-    PhotoGraphicsItem* vpPhoto = new PhotoGraphicsItem(aId, mCount);
+    PhotoGraphicsItem* vpPhoto = new PhotoGraphicsItem(aId, count());
+    vpPhoto->setEnabled(isChangeEnabled());
     mPhotos.append(vpPhoto);
-    if (mCurrent < (mCount - 2))
+    if (mCurrent < lastIndexPhotos())
     {
         mCurrent += 1;
     }
@@ -177,7 +197,7 @@ void GalleryGrapicsScene::newItem()
 
 bool GalleryGrapicsScene::canNextStep()
 {
-    if (mPhotos.count() < (mCount - 1))
+    if (mPhotos.count() < countPhotos())
         return false;
     if (mCurrent >= (mPhotos.count() - 1))
         return false;
@@ -196,10 +216,10 @@ bool GalleryGrapicsScene::nextStep()
         endNext();
         return false;
     }
-    mPhotos.at(mCurrent + 1)->setPos(_pos(mCount - 1));
-    for (int i = 0; i < mCount; ++i)
+    mPhotos.at(mCurrent + 1)->setPos(_pos(countPhotos()));
+    for (int i = 0; i < countPhotos() + 1; ++i)
     {
-        mAnimationsNext[i]->setItem(mPhotos.at(mCurrent - mCount + i + 2));
+        mAnimationsNext[i]->setItem(mPhotos.at(mCurrent - lastIndexPhotos() + i));
         mAnimationsNext[i]->setTimeLine(&mTimerNext);
         QPointF vPosBegin = _pos(i);
         QPointF vPosEnd = _pos(i - 1);
@@ -213,7 +233,10 @@ bool GalleryGrapicsScene::nextStep()
         }
 
     }
-    addItem(mPhotos.at(mCurrent + 1));
+    if (!mPhotos.at(mCurrent + 1)->scene())
+    {
+        addItem(mPhotos.at(mCurrent + 1));
+    }
     mTimerNext.start();
     ++mCurrent;
     return true;
@@ -231,11 +254,14 @@ bool GalleryGrapicsScene::backStep()
         endBack();
         return false;
     }
-    mPhotos.at(mCurrent - mCount + 1)->setPos(_pos(-1));
-    addItem(mPhotos.at(mCurrent - mCount + 1));
-    for (int i = 0; i < mCount; ++i)
+    mPhotos.at(mCurrent - countPhotos())->setPos(_pos(-1));
+    if (!mPhotos.at(mCurrent - countPhotos())->scene())
     {
-        mAnimationsBack[i]->setItem(mPhotos.at(mCurrent - mCount + i + 1));
+        addItem(mPhotos.at(mCurrent - countPhotos()));
+    }
+    for (int i = 0; i < countPhotos() + 1; ++i)
+    {
+        mAnimationsBack[i]->setItem(mPhotos.at(mCurrent - countPhotos() + i));
         mAnimationsBack[i]->setTimeLine(&mTimerBack);
         QPointF vPosBegin = _pos(i-1);
         QPointF vPosEnd = _pos(i);
@@ -249,7 +275,10 @@ bool GalleryGrapicsScene::backStep()
         }
 
     }
-    addItem(mPhotos.at(mCurrent - mCount + 2));
+    if (!mPhotos.at(mCurrent - lastIndexPhotos())->scene())
+    {
+        addItem(mPhotos.at(mCurrent - lastIndexPhotos()));
+    }
     mTimerBack.start();
     --mCurrent;
     return true;
@@ -257,14 +286,14 @@ bool GalleryGrapicsScene::backStep()
 
 bool GalleryGrapicsScene::canBackStep()
 {
-    if (mCurrent < (mCount - 1))
+    if (mCurrent < countPhotos())
         return false;
     return true;
 }
 
 void GalleryGrapicsScene::scrollTo(int aIndex)
 {
-    if (aIndex <= (mCount - 2))
+    if (aIndex < countPhotos())
     {
         mPhotos.at(aIndex)->setPos(pos(aIndex));
         addItem(mPhotos.at(aIndex));
@@ -275,21 +304,18 @@ void GalleryGrapicsScene::scrollTo(int aIndex)
     }
     else
     {
-        if (aIndex < (mCurrent - mCount + 2))
-        {
-            while (aIndex < (mCurrent - mCount + 2)) backStep();
-        }
+        while (aIndex < (mCurrent - lastIndexPhotos())) backStep();
     }
 }
 
 QPointF GalleryGrapicsScene::pos(int aIndex)
 {
-    return (aIndex < mCount - 1 ? _pos(aIndex) : _pos(aIndex + 1));
+    return (aIndex < countPhotos() ? _pos(aIndex) : _pos(aIndex + 1));
 }
 
 QPointF GalleryGrapicsScene::_pos(int aIndex)
 {
-    qreal vW = sceneRect().width() / mCount;
+    qreal vW = sceneRect().width() / count();
     qreal x = vW* aIndex + vW*0.05;
     qreal y = 0;
     return QPointF(x, y);
@@ -314,16 +340,19 @@ void GalleryGrapicsScene::step()
 
 void GalleryGrapicsScene::endNext()
 {
-    if ((mCurrent - mCount + 1 > 0))
+    if ((mCurrent - countPhotos() > 0))
     {
-        removeItem(mPhotos.at(mCurrent - mCount + 1));
+        if (mCurrent < (mPhotos.count() - 1))
+        {
+            removeItem(mPhotos.at(mCurrent - countPhotos()));
+        }
     }
     update(sceneRect());
     if (!selectedItems().count())
     {
         if (mCurrent >= 0)
         {
-            mPhotos.at(mCurrent - mCount + 2)->setActive();
+            mPhotos.at(mCurrent - lastIndexPhotos())->setActive();
         }
     }
     step();
@@ -333,7 +362,10 @@ void GalleryGrapicsScene::endBack()
 {
     if (mPhotos.count() > (mCurrent + 1))
     {
-        removeItem(mPhotos.at(mCurrent + 1));
+        if ((mCurrent + 1) < countPhotos())
+        {
+            removeItem(mPhotos.at(mCurrent + 1));
+        }
     }
     update(sceneRect());
     if (!selectedItems().count())
@@ -376,9 +408,9 @@ void GalleryGrapicsScene::remove(int aId)
     mPhotos.removeAt(i);
     if (mCurrent < (mPhotos.count() - 1))
     {
-        for (int i = 0; i < mCount - 1; ++i)
+        for (int i = 0; i < countPhotos(); ++i)
         {
-            mPhotos[mCurrent - (mCount - 2) + i]->setPos(pos(i));
+            mPhotos[mCurrent - lastIndexPhotos() + i]->setPos(pos(i));
         }
         addItem(mPhotos[mCurrent]);
     }
@@ -386,7 +418,7 @@ void GalleryGrapicsScene::remove(int aId)
     {
         mCurrent -= 1;
         int j = 0;
-        for (int i = mCurrent - mCount + 2; i <= mCurrent; ++i)
+        for (int i = mCurrent - lastIndexPhotos(); i <= mCurrent; ++i)
         {
             if (i < 0) continue;
             if (j == 0) addItem(mPhotos[i]);
@@ -407,7 +439,6 @@ void GalleryGrapicsScene::next()
         if ((i>=0) && (i < (mPhotos.count() - 1)))
         {
             PhotoGraphicsItem* vpNewItem = mPhotos.at(i+1);
-            //scrollTo(i+1);
             showPhoto(i + 1);
             vpNewItem->setActive();
         }
@@ -423,7 +454,6 @@ void GalleryGrapicsScene::back()
         if ((i > 0) && (i < mPhotos.count()))
         {
             PhotoGraphicsItem* vpNewItem = mPhotos.at(i-1);
-            //scrollTo(i-1);
             showPhoto(i - 1);
             vpNewItem->setActive();
         }
@@ -441,28 +471,61 @@ void GalleryGrapicsScene::showPhoto(int aIndex)
     }
     if (aIndex < vOldStart)
     {
-        if (aIndex < (mCount - 2))
+        if (aIndex < lastIndexPhotos())
         {
-            showPhotos(0, mCount - 2);
+            showPhotos(0, lastIndexPhotos());
             return;
         }
 
     }
-    showPhotos(aIndex - mCount + 2, aIndex);
+    showPhotos(aIndex - lastIndexPhotos(), aIndex);
     return;
 }
 
 int GalleryGrapicsScene::beginIndexShow()
 {
     if (mCurrent < 0) return -1;
-    if (mCurrent <= (mCount-2))
+    if (mCurrent < countPhotos())
     {
         return 0;
     }
-    return mCurrent - mCount + 2;
+    return mCurrent - lastIndexPhotos();
 }
 
 int GalleryGrapicsScene::endIndexShow()
 {
     return mCurrent;
+}
+
+void GalleryGrapicsScene::setEnabledChangePhoto(bool aEnabled)
+{
+    mEnabled = aEnabled;
+    foreach (PhotoGraphicsItem* vpPhoto, mPhotos)
+    {
+        vpPhoto->setEnabledChangePhoto(isChangeEnabled());
+        if (vpPhoto->scene()) removeItem(vpPhoto);
+    }
+    if (mNewPhoto.scene()) removeItem(&mNewPhoto);
+    inizialisation();
+    mNewPhoto.setEnabledChangePhoto(isChangeEnabled());
+}
+
+bool GalleryGrapicsScene::isChangeEnabled() const
+{
+    return mEnabled;
+}
+
+int GalleryGrapicsScene::countPhotos() const
+{
+    return isChangeEnabled() ? mCount - 1 : mCount;
+}
+
+int GalleryGrapicsScene::lastIndexPhotos() const
+{
+    return isChangeEnabled() ? mCount - 2 : mCount - 1;
+}
+
+int GalleryGrapicsScene::count() const
+{
+    return mCount;
 }

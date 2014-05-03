@@ -16,7 +16,7 @@ class DialogPhotoAlbum : public QDialog
 public:
     explicit DialogPhotoAlbum(int aIdObject, QWidget *parent = 0);
     ~DialogPhotoAlbum();
-    
+    void setChangePhotoEnabled(bool aEnabled);
 private:
     Ui::DialogPhotoAlbum *ui;
     PhotoAlbumWidget mPhotoAlbum;

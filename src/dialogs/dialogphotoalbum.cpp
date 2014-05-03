@@ -14,3 +14,8 @@ DialogPhotoAlbum::~DialogPhotoAlbum()
 {
     delete ui;
 }
+
+void DialogPhotoAlbum::setChangePhotoEnabled(bool aEnabled)
+{
+    mPhotoAlbum.setEnabledChangePhoto(aEnabled);
+}

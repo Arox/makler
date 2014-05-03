@@ -115,6 +115,7 @@ void RentWidget::load(int aId)
     mPrice.setEnabled(vAgent == mAgent);
     mAddress.setEnabled(vAgent == mAgent);
     mHomeAddress.setEnabled(vAgent == mAgent);
+    mButtons.setChangeEnabled(vAgent == mAgent);
 
 
 

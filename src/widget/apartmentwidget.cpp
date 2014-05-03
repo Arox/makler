@@ -117,6 +117,7 @@ void ApartmentWidget::load(int aId)
     mArea.setEnabled(vAgent == mAgent);
     mPrice.setEnabled(vAgent == mAgent);
     mAddress.setEnabled(vAgent == mAgent);
+    mButtons.setChangeEnabled(vAgent == mAgent);
 }
 
 QString ApartmentWidget::name()

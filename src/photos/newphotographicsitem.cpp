@@ -12,6 +12,18 @@ NewPhotoGraphicsItem::NewPhotoGraphicsItem(int aIdObject, int aParts, QGraphicsI
 {
 }
 
+QRectF NewPhotoGraphicsItem::boundingRect() const
+{
+    if (isEnabled())
+    {
+        return GeneralGraphicsItem::boundingRect();
+    }
+    else
+    {
+        return QRectF(0,0,0,0);
+    }
+}
+
 void NewPhotoGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
            QWidget *widget)
 {
@@ -50,5 +62,8 @@ void NewPhotoGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 void	NewPhotoGraphicsItem::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
     Q_UNUSED(event);
-    ((GalleryGrapicsScene*)scene())->newItem();
+    if (isEnabled())
+    {
+        ((GalleryGrapicsScene*)scene())->newItem();
+    }
 }

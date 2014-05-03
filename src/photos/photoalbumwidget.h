@@ -17,6 +17,8 @@ class PhotoAlbumWidget : public QWidget
 public:
     explicit PhotoAlbumWidget(int aIdObject, QWidget *parent = 0);
     ~PhotoAlbumWidget();
+    void setEnabledChangePhoto(bool);
+    bool isEnabled() const;
 protected:
     bool event(QEvent *);
     
@@ -35,6 +37,7 @@ private:
     Ui::PhotoAlbumWidget *ui;
     GalleryGrapicsScene* mpGallery;
     FullGraphicsScene* mpFullScene;
+    bool mEnabled;
 };
 
 #endif // PHOTOALBUMWIDGET_H

@@ -22,6 +22,7 @@ class GalleryGrapicsScene : public QGraphicsScene
     QTimeLine mTimerBack;
     int mCurrentFocus;
     int mIdObject;
+    bool mEnabled;
 
     enum TypeStep
     {
@@ -34,6 +35,7 @@ public:
     explicit GalleryGrapicsScene(int aIdObject, QObject *parent = 0);
     GalleryGrapicsScene(int aIdObject, int x, int y, int width, int height, QObject *parent = 0);
     ~GalleryGrapicsScene();
+    void reset();
     void resize(int x, int y, int width, int height);
     void newItem(int aId);
     void newItem();
@@ -54,6 +56,8 @@ public:
     void showPhoto(int aIndex);
     int beginIndexShow();
     int endIndexShow();
+    void setEnabledChangePhoto(bool);
+    bool isChangeEnabled() const;
 signals:
     void active(int aId);
     void needAdd();
@@ -66,6 +70,10 @@ private slots:
 protected:
     int findPhotoItem(int aId);
     QPointF pos(int aIndex);
+
+    int countPhotos() const;
+    int lastIndexPhotos() const;
+    int count() const;
 private:
     void inizialisation();
     QPointF _pos(int aIndex);

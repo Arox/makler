@@ -7,14 +7,20 @@
 GeneralGraphicsItem::GeneralGraphicsItem(int aParts, QGraphicsItem *parent) :
     QGraphicsItem(parent), mWidth(0),
     mParts(aParts)
+  , mEnabled(true)
 {
     setAcceptHoverEvents(true);
 }
 
 QRectF GeneralGraphicsItem::boundingRect() const
 {
-    qreal vW = scene()->width() / mParts;
-    QRectF vRect = QRectF(0, 0, vW - vW * 0.05, scene()->height());
+    qreal vW = 0;
+    QRectF vRect(0, 0, 0, 0);
+    if(scene())
+    {
+        vW = scene()->width() / mParts;
+        vRect = QRectF(0, 0, vW - vW * 0.05, scene()->height());
+    }
     return vRect;
 }
 
@@ -58,3 +64,16 @@ void	GeneralGraphicsItem::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
     Q_UNUSED(event);
 }
+
+
+
+void GeneralGraphicsItem::setEnabledChangePhoto(bool aEnable)
+{
+    mEnabled = aEnable;
+}
+
+bool GeneralGraphicsItem::isEnabled() const
+{
+    return mEnabled;
+}
+
