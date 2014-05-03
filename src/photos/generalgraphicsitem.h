@@ -14,6 +14,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
     QRectF boundingRect() const;
+    bool isHover() const;
     void setEnabledChangePhoto(bool);
     bool isEnabled() const;
 protected:

@@ -44,7 +44,7 @@ void GeneralGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 void	GeneralGraphicsItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 {
     Q_UNUSED(event);
-    mWidth = 4;
+    mWidth = 2;
     update(boundingRect());
 }
 
@@ -77,3 +77,7 @@ bool GeneralGraphicsItem::isEnabled() const
     return mEnabled;
 }
 
+bool GeneralGraphicsItem::isHover() const
+{
+    return mWidth > 0;
+}

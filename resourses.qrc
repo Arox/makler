@@ -35,4 +35,7 @@
     <qresource prefix="/main">
         <file>idea.png</file>
     </qresource>
+    <qresource prefix="/photo">
+        <file>add.png</file>
+    </qresource>
 </RCC>
