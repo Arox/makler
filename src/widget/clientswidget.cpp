@@ -378,7 +378,7 @@ void ClientsWidget::reloadView()
 
 QString ClientsWidget::name()
 {
-    return TRANSLATE("Клиенты");
+    return TRANSLATE("Покупатели");
 }
 
 QSize ClientsWidget::minSize()

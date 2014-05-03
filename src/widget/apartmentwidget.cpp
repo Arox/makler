@@ -17,16 +17,16 @@ ApartmentWidget::ApartmentWidget(int aAgent, QWidget *parent) :
     mAddress(AddressWidget::NORMAL)
 {
     ui->setupUi(this);
-    ui->mainLayout_2->insertWidget(1, &mClient);
+    ui->mainLayout->addWidget(&mClient);
     ui->mainLayout->addWidget(&mType);
     ui->mainLayout->addWidget(&mAddress);
     ui->mainLayout->addWidget(&mArea);
     ui->mainLayout->addWidget(&mPrice);
     ui->centerLayout->insertWidget(1, &mInformation);
-    ui->mainLayout_2->insertWidget(3, &mComment);
-    ui->mainLayout_2->insertWidget(4, &mButtons);
+    ui->mainLayout->addWidget(&mComment);
+    ui->mainLayout_2->insertWidget(3, &mButtons);
 
-    mInformation.setNameDictionary("apartment", 2);
+    mInformation.setNameDictionary("apartment", 1);
 
     connect(&mButtons, SIGNAL(back()), this, SLOT(backWidget()));
     connect(&mButtons, SIGNAL(noSave()), this, SLOT(noSave()));

@@ -24,11 +24,11 @@ HomeWidget::HomeWidget(int aAgent, QWidget *parent) :
     ui->mainLayout->addWidget(&mHomeAddress1);
     ui->mainLayout->addWidget(&mArea);
     ui->mainLayout->addWidget(&mPrice);
-    ui->mainLayout->addWidget(&mInformation);
+    ui->centerLayout->insertWidget(1, &mInformation);
     ui->mainLayout->addWidget(&mComment);
-    ui->mainLayout->addWidget(&mButtons);
+    ui->mainLayout_2->insertWidget(3, &mButtons);
 
-    mInformation.setNameDictionary("home", 4);
+    mInformation.setNameDictionary("home", 1);
     connect(&mButtons, SIGNAL(back()), this, SLOT(backWidget()));
     connect(&mButtons, SIGNAL(noSave()), this, SLOT(noSave()));
 }
