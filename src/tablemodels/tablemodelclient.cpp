@@ -13,6 +13,7 @@ TableModelClient::TableModelClient(QObject *parent):
              << TRANSLATE("Район")      //2
              << TRANSLATE("Объект")       //3
              << TRANSLATE("Цена")       //4
+             << TRANSLATE("Телефон")       //4
              ;                     //5
 }
 
@@ -36,6 +37,8 @@ QVariant TableModelClient::data(const QModelIndex &index, int role) const
             return mData[index.row()]["type"];
         case 4:
             return QString("%1").arg(mData[index.row()]["price"].toInt());
+        case 5:
+            return mData[index.row()]["phone"];
         default:
             return QVariant();
         }
@@ -97,16 +100,17 @@ void TableModelClient::load()
          << select()
          << ",orders.type_fk as type_fk"
          << ",orders.locations as locations, orders.price as price"
-         << ",min(clients.fio) as fio"
+         << ",main_clients.fio as fio"
+         << ",main_clients.phone as phone"
          << ",orders.type as type"
          << from()
          << "INNER JOIN types ON objects.type_fk = types.id"
          << "LEFT JOIN orders ON orders.object_fk = objects.id"
          << "LEFT JOIN clientheader ON clientheader.object_fk = objects.id"
-         << "INNER JOIN clients ON clientheader.id = clients.header_fk"
+         << "INNER JOIN main_clients ON clientheader.id = main_clients.header_fk"
          << where("types.type = 'client'")
          //<< "AND types.type = 'client'"
-         << "group by objects.id, objects.status, orders.type_fk, orders.locations, orders.price, mans.sername, mans.name, mans.patronymic, orders.type"
+         //<< "group by objects.id, objects.status, orders.type_fk, orders.locations, orders.price, mans.sername, mans.name, mans.patronymic, orders.type"
          << "ORDER BY objects.id desc";
 
      mData = execQuery(vSql.join(" "));

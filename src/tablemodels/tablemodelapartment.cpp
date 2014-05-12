@@ -17,7 +17,9 @@ TableModelApartment::TableModelApartment(QObject *parent):
              << TRANSLATE("Жилая")      //6
              << TRANSLATE("Кухня")      //7
              << TRANSLATE("Состояние")  //8
-             << TRANSLATE("Цена");       //9
+             << TRANSLATE("Цена")       //9
+             << TRANSLATE("ФИО")        //10
+             << TRANSLATE("Телефон");   //11
 }
 
 QVariant TableModelApartment::data(const QModelIndex &index, int role) const
@@ -53,6 +55,10 @@ QVariant TableModelApartment::data(const QModelIndex &index, int role) const
             return mData[index.row()]["option"];
         case 9:
             return QString("%1").arg(mData[index.row()]["price"].toInt());
+        case 10:
+            return mData[index.row()]["fio"];
+        case 11:
+            return mData[index.row()]["phone"];
         default:
             return QVariant();
         }
@@ -74,7 +80,8 @@ void TableModelApartment::load()
          << ",address.city_fk as city_fk, address.number1 as number1, address.number2 as number2"
          << ",address.street_fk as street_fk, address.microdistrict_fk as microdistrict_fk"
          << ",address.city as city, address.street as street, address.number as number"
-         <<                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             from()
+         << ",main_clients.fio as fio, main_clients.phone as phone"
+         << from()
          << "INNER JOIN types ON objects.type_fk = types.id"
          << "LEFT JOIN typeapartment ON typeapartment.object_fk = objects.id"
          << "LEFT JOIN static_dictionaries ON static_dictionaries.id = typeapartment.fund_fk"
@@ -86,7 +93,8 @@ void TableModelApartment::load()
          //<< "LEFT JOIN optionvalue ON objects.id = optionvalue.object_fk"
 
          << "LEFT JOIN price ON price.object_fk = objects.id"
-
+         << "LEFT JOIN clientheader ON clientheader.object_fk = objects.id"
+         << "INNER JOIN main_clients ON clientheader.id = main_clients.header_fk"
          <<  "LEFT JOIN"
          << "(SELECT address_city.id as city_fk, address.number1 as number1, address.number2 as number2"
          << ",address_street.id as street_fk, address_microdistrict.id as microdistrict_fk"

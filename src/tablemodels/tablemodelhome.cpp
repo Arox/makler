@@ -6,18 +6,17 @@
 TableModelHome::TableModelHome(QObject *parent):
     TableModel(parent)
 {
-    mHeaders << TRANSLATE("№")          //0
-             //<< TRANSLATE("Район")    //1
-             << TRANSLATE("Тип")       //3
-             << TRANSLATE("Адрес")      //2
-
-             << TRANSLATE("Соток")       //4
-             << TRANSLATE("год постройки")      //5
-             << TRANSLATE("Общая")      //6
-             << TRANSLATE("Жилая")      //7
-             << TRANSLATE("Кухня")  //8
-             << TRANSLATE("Цена")       //9
-             ;                     //10
+    mHeaders << TRANSLATE("№")              //0
+             << TRANSLATE("Тип")            //1
+             << TRANSLATE("Адрес")          //2
+             << TRANSLATE("Соток")          //3
+             << TRANSLATE("год постройки")  //4
+             << TRANSLATE("Общая")          //5
+             << TRANSLATE("Жилая")          //6
+             << TRANSLATE("Кухня")          //7
+             << TRANSLATE("Цена")           //8
+             << TRANSLATE("ФИО")            //9
+             << TRANSLATE("Телефон");       //10
 }
 
 QVariant TableModelHome::data(const QModelIndex &index, int role) const
@@ -54,6 +53,10 @@ QVariant TableModelHome::data(const QModelIndex &index, int role) const
             return mData[index.row()]["kitchen"];
         case 8:
             return QString("%1").arg(mData[index.row()]["price"].toInt());
+        case 9:
+            return mData[index.row()]["fio"];
+        case 10:
+            return mData[index.row()]["phone"];
         default:
             return QVariant();
         }
@@ -76,13 +79,15 @@ void TableModelHome::load()
          << ",address.city_fk as city_fk, address.number1 as number1, address.number2 as number2"
          << ",address.street_fk as street_fk, address.microdistrict_fk as microdistrict_fk"
          << ",address.city as city, address.street as street, address.number as number"
+         << ",main_clients.fio as fio, main_clients.phone as phone"
          << from()
          << "INNER JOIN types ON objects.type_fk = types.id"
          << "LEFT JOIN typeapartment ON typeapartment.object_fk = objects.id"
          << "LEFT JOIN area ON area.object_fk = objects.id"
          << "LEFT JOIN price ON price.object_fk = objects.id"
          << "LEFT JOIN typehome ON typehome.object_fk = objects.id"
-
+         << "LEFT JOIN clientheader ON clientheader.object_fk = objects.id"
+         << "INNER JOIN main_clients ON clientheader.id = main_clients.header_fk"
          <<  "LEFT JOIN"
          << "(SELECT address_city.id as city_fk, address.number1 as number1, address.number2 as number2"
          << ",address_street.id as street_fk, address_microdistrict.id as microdistrict_fk"

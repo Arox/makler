@@ -47,12 +47,12 @@ QString FindInformationArea::sqlWhere()
 {
     QStringList vWheres;
     vWheres
-            << (minTotal() > 0 ? QString("area.total >= %1").arg(minTotal()) : QString(""))
-            << (maxTotal() > 0 ? QString("area.total <= %1").arg(maxTotal()) : QString(""))
-            << (minKitchen() > 0 ? QString("area.kitchen >= %1").arg(minKitchen()) : QString(""))
-            << (maxKitchen() > 0 ? QString("area.kitchen <= %1").arg(maxKitchen()) : QString(""))
-            << (minFloor() > 0 ? QString("area.floor >= %1").arg(minFloor()) : QString(""))
-            << (maxFloor() > 0 ? QString("area.floor <= %1").arg(maxFloor()) : QString(""));
+            << (minTotal() > 0 ? QString("total >= %1").arg(minTotal()) : QString(""))
+            << (maxTotal() > 0 ? QString("total <= %1").arg(maxTotal()) : QString(""))
+            << (minKitchen() > 0 ? QString("kitchen >= %1").arg(minKitchen()) : QString(""))
+            << (maxKitchen() > 0 ? QString("kitchen <= %1").arg(maxKitchen()) : QString(""))
+            << (minFloor() > 0 ? QString("floor >= %1").arg(minFloor()) : QString(""))
+            << (maxFloor() > 0 ? QString("floor <= %1").arg(maxFloor()) : QString(""));
 
     vWheres.removeAll(QString(""));
     return QString("(%1)").arg(vWheres.join(QString(" AND ")));
