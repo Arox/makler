@@ -79,3 +79,14 @@ void ClientHeaderAlternativeWidget::on_mpDiler_clicked()
     vDialog.exec();
     vWidget.setParent(this);
 }
+
+void ClientHeaderAlternativeWidget::on_mpCancel_clicked()
+{
+    emit back();
+}
+
+void ClientHeaderAlternativeWidget::on_mpSave_clicked()
+{
+    save();
+    emit back();
+}

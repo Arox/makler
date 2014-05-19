@@ -2,6 +2,8 @@
 #define MESSAGEWIDGET_H
 
 #include <QWidget>
+#include <QTimer>
+
 #include "widgetforcontrol.h"
 #include "../messages/viewpostswidget.h"
 
@@ -21,10 +23,13 @@ public:
     virtual QSize maxSize();
     virtual QSize size();
     virtual QString idName();
+private slots:
+    void countMail();
 private:
     Ui::MessageWidget *ui;
     int mUser_fk;
     ViewPostsWidget mViewPost;
+    QTimer mTimer;
 };
 
 #endif // MESSAGEWIDGET_H

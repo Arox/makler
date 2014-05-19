@@ -7,7 +7,7 @@
 #include "viewbases.h"
 #include "addresseditor.h"
 #include "widgetforcontrol.h"
-
+#include "editorsettingsdatabase.h"
 namespace Ui {
 class SettingsWidget;
 }
@@ -32,6 +32,7 @@ private:
     AdminWidget* mpAdmin;
     AddressEditor* mpAddressEditor;
     ViewBases* mpSync;
+    EditorSettingsDatabase mEditorDatabase;
 };
 
 #endif // SETTINGSWIDGET_H

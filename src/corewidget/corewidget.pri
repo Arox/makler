@@ -7,17 +7,25 @@ SUBDIRS = address
 SOURCES += \
     $$PWD/address/addresswidget.cpp \
     $$PWD/address/addresshomewidget.cpp \
-    $$PWD/address/address.cpp
+    $$PWD/address/address.cpp \
+    src/corewidget/mytableview.cpp \
+    src/corewidget/connecttodatabase.cpp \
+    src/corewidget/editorsettingsdatabase.cpp
 
 HEADERS  +=  \
     $$PWD/address/addresswidget.h \
     $$PWD/address/addresshomewidget.h \
-    $$PWD/address/address.h
+    $$PWD/address/address.h \
+    src/corewidget/mytableview.h \
+    src/corewidget/connecttodatabase.h \
+    src/corewidget/editorsettingsdatabase.h
 
 FORMS    +=  \
     $$PWD/address/addresswidget.ui \
     $$PWD/address/addresshomewidget.ui \
-    $$PWD/address/address.ui
+    $$PWD/address/address.ui \
+    src/corewidget/connecttodatabase.ui \
+    src/corewidget/editorsettingsdatabase.ui
 
 #ALL OTHER
 SOURCES += \

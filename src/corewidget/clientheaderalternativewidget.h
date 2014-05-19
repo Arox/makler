@@ -28,6 +28,10 @@ public slots:
 private slots:
     void on_mpDiler_clicked();
 
+    void on_mpCancel_clicked();
+
+    void on_mpSave_clicked();
+
 private:
     Ui::ClientHeaderAlternativeWidget *ui;
     int mId;

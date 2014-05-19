@@ -7,7 +7,7 @@ TARGET = Makler
 TEMPLATE = app
 VERSION = 1.0.1
 
-DEFINES += WINDOWS_OS FORFILL
+DEFINES += WINDOWS_OS
 
 QT       += core gui sql
 

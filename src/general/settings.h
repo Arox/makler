@@ -23,6 +23,14 @@ public:
     static QString databaseLocalName() ;
     static QString databaseType() ;
     static QString site() ;
+
+    static void setDatabaseName(QString) ;
+    static void setDatabaseHost(QString) ;
+    static void setDatabaseLogin(QString) ;
+    static void setDatabasePassword(QString) ;
+    static void setDatabasePort(int) ;
+    static void setDatabaseType(QString) ;
+    static void setSite(QString aSite) ;
 signals:
     
 public slots:

@@ -6,6 +6,7 @@ AboutProducerWidget::AboutProducerWidget(QWidget *parent) :
     ui(new Ui::AboutProducerWidget)
 {
     ui->setupUi(this);
+    ui->mpVersion->setText(QString("%1 %2").arg(ui->mpVersion->text()).arg(qApp->applicationVersion()));
 }
 
 AboutProducerWidget::~AboutProducerWidget()

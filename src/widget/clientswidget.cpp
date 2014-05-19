@@ -23,7 +23,8 @@ ClientsWidget::ClientsWidget(int aAgent, QWidget *parent) :
     WidgetForControl(parent),
     ui(new Ui::ClientsWidget),
     mMapper(this),
-    mAgent(aAgent)
+    mAgent(aAgent),
+    mView(this)
 {
     ui->setupUi(this);
 
@@ -37,6 +38,12 @@ ClientsWidget::ClientsWidget(int aAgent, QWidget *parent) :
             mValuesTypeObject.append(QPair<QString, int>(vResponse[i]["name"].toString(), vResponse[i]["id"].toInt()));
         }
     }
+
+    ui->verticalLayout->insertWidget(1, &mView);
+    connect(&mView, SIGNAL(activated(QModelIndex)), this, SLOT(on_mpView_activated(QModelIndex)));
+    connect(&mView, SIGNAL(clicked(QModelIndex)), this, SLOT(on_mpView_clicked(QModelIndex)));
+    connect(&mView, SIGNAL(currentSelectionChanged(QModelIndex)), this, SLOT(on_mpView_clicked(QModelIndex)));
+
     mClientModel.addFilter(QString("agent_fk = %1").arg(aAgent));
     mClientWidget.setVisible(false);
     ui->verticalLayout_2->addWidget(&mFindObject);
@@ -63,7 +70,7 @@ ClientsWidget::ClientsWidget(int aAgent, QWidget *parent) :
 
     mFindObject.setEnabled(false);
 
-    ui->mpView->setObjectName("viewclient");
+    mView.setObjectName("viewclient");
     mFindObject.setObjectName("viewresultclient");
 }
 
@@ -174,10 +181,10 @@ bool ClientsWidget::isActive(int aRow)
 
 void ClientsWidget::on_mpButtonAside_clicked()
 {
-    if (ui->mpView->currentIndex().row() >= 0)
+    if (mView.currentIndex().row() >= 0)
     {
-        int vIdObject = mClientModel.id(ui->mpView->currentIndex().row());
-        if (isActive(ui->mpView->currentIndex().row()))
+        int vIdObject = mClientModel.id(mView.currentIndex().row());
+        if (isActive(mView.currentIndex().row()))
         {
             DialogAside vDialog(vIdObject, this);
             vDialog.exec();
@@ -188,10 +195,10 @@ void ClientsWidget::on_mpButtonAside_clicked()
 
 void ClientsWidget::on_mpButtonShoot_clicked()
 {
-    if (ui->mpView->currentIndex().row() >= 0)
+    if (mView.currentIndex().row() >= 0)
     {
-        int vIdObject = mClientModel.id(ui->mpView->currentIndex().row());
-        if (isActive(ui->mpView->currentIndex().row()))
+        int vIdObject = mClientModel.id(mView.currentIndex().row());
+        if (isActive(mView.currentIndex().row()))
         {
             DialogShoot vDialog(vIdObject, this);
             vDialog.exec();
@@ -214,8 +221,8 @@ void ClientsWidget::setButton()
     {
         if (!mClientModel.status(i).isEmpty())
         {
-            vpButton = new QPushButton(TRANSLATE("восстановить"), ui->mpView);
-            ui->mpView->setIndexWidget(mClientModel.index(i,vCount - 1), vpButton);
+            vpButton = new QPushButton(TRANSLATE("восстановить"), &mView);
+            mView.setIndexWidget(mClientModel.index(i,vCount - 1), vpButton);
             connect(vpButton, SIGNAL(clicked()), &mMapper, SLOT(map()));
             mMapper.setMapping(vpButton, i);
             mListButtonsTable.append(vpButton);
@@ -236,9 +243,9 @@ void ClientsWidget::setComboBox()
 
     for (int i = 0; i < mClientModel.rowCount(); ++i)
     {
-        vpBox = new QComboBox(ui->mpView);
+        vpBox = new QComboBox(&mView);
         vpBox->addItem(TRANSLATE("не выбрано"), -1);
-        ui->mpView->setIndexWidget(mClientModel.index(i, 3), vpBox);
+        mView.setIndexWidget(mClientModel.index(i, 3), vpBox);
         connect(vpBox, SIGNAL(currentIndexChanged(int)), &mMapperBoxes, SLOT(map()));
         mMapperBoxes.setMapping(vpBox, i);
         mListBoxesTable.append(vpBox);
@@ -270,7 +277,7 @@ void ClientsWidget::load(const QModelIndex &index)
     mClientModel.load();
     if (index.isValid())
     {
-        ui->mpView->update(index);
+        mView.update(index);
     }
     else
     {
@@ -295,7 +302,7 @@ void ClientsWidget::reloadObject(int aRow)
     load();
 }
 
-void ClientsWidget::on_mpView_activated(const QModelIndex &index)
+void ClientsWidget::on_mpView_clicked(const QModelIndex &index)
 {
     mFindObject.setObjectId(mClientModel.id(index.row()));
     if (!mFindObject.isEnabled()) mFindObject.setEnabled(true);
@@ -303,25 +310,30 @@ void ClientsWidget::on_mpView_activated(const QModelIndex &index)
     {
         return;
     }
+    mView.blockSignals(true);
+    mView.setCurrentIndex(index);
+    mView.blockSignals(false);
+}
 
+void ClientsWidget::on_mpView_activated(const QModelIndex &index)
+{
+    on_mpView_clicked(index);
     ClientHeaderAlternativeWidget* vpWidget = new ClientHeaderAlternativeWidget(this);
     vpWidget->load(mAgent, mClientModel.id(index.row()));
     //if (!mClientWidget.isVisible()) mClientWidget.setVisible(true);
     //mClientWidget.load(mAgent, mClientModel.id(index.row()));
-    ui->mpView->blockSignals(true);
-    ui->mpView->setCurrentIndex(index);
-    ui->mpView->blockSignals(false);
 
     DialogUniversal vDialog(vpWidget, "", this);
     vDialog.exec();
+    reloadView();
 }
 void ClientsWidget::loadView()
 {
-    QModelIndex vIndex = ui->mpView->currentIndex();
+    QModelIndex vIndex = mView.currentIndex();
     load();
-    ui->mpView->blockSignals(true);
-    ui->mpView->setCurrentIndex(vIndex);
-    ui->mpView->blockSignals(false);
+    mView.blockSignals(true);
+    mView.setCurrentIndex(vIndex);
+    mView.blockSignals(false);
 }
 
 void ClientsWidget::findObject(FindObjectsWidget::TypeObject aObject)
@@ -366,14 +378,12 @@ void ClientsWidget::reload(WidgetForControl* apControlFind)
 
 void ClientsWidget::reloadView()
 {
-    ui->mpView->setModel(0);
+    mView.setModel(0);
     mClientModel.load();
-    ui->mpView->setModel(&mClientModel);
-    ui->mpView->resizeColumnsToContents();
-    ui->mpView->resizeRowsToContents();
-    ui->mpView->resizeColumnToContents(mClientModel.columnCount(QModelIndex()));
-    //setButton();
-    //setComboBox();
+    mView.setModel(&mClientModel);
+    mView.resizeColumnsToContents();
+    mView.resizeRowsToContents();
+    mView.resizeColumnToContents(mClientModel.columnCount(QModelIndex()));
 }
 
 QString ClientsWidget::name()

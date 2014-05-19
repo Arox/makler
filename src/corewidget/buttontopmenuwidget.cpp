@@ -21,3 +21,8 @@ void ButtonTopMenuWidget::setActive(bool aFlag)
 {
     ui->pushButton->setChecked(aFlag);
 }
+
+void ButtonTopMenuWidget::setText(QString aText)
+{
+    ui->label->setText(aText);
+}

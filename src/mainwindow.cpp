@@ -43,10 +43,10 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     mStatus = WORK;
-    mTimer.setSingleShot(false);
-    mTimer.setInterval(5 * 1000);
-    connect(&mTimer, SIGNAL(timeout()), this, SLOT(countMail()));
-    mTimer.start();
+//    mTimer.setSingleShot(false);
+//    mTimer.setInterval(5 * 1000);
+//    connect(&mTimer, SIGNAL(timeout()), this, SLOT(countMail()));
+//    mTimer.start();
 
     //ui->widget_2->setStyleSheet("border: 0px;");
 
@@ -266,7 +266,7 @@ void MainWindow::on_mpHelp_clicked()
 void MainWindow::on_mpInformation_clicked()
 {
     AboutProducerWidget* vWidget = new AboutProducerWidget();
-    DialogUniversal vDialog(vWidget, TRANSLATE("Справка"), this);
+    DialogUniversal vDialog(vWidget, TRANSLATE("О нас"), this);
     vDialog.exec();
 }
 

@@ -76,3 +76,38 @@ QString Settings::site()
 {
     return mBaseSettings.value("site", "").toString();
 }
+
+void Settings::setDatabaseName(QString aName)
+{
+    mBaseSettings.setValue("database/name", aName);
+}
+
+void Settings::setDatabaseHost(QString aHost)
+{
+    mBaseSettings.setValue("database/host", aHost);
+}
+
+void Settings::setDatabaseLogin(QString aLogin)
+{
+    mBaseSettings.setValue("database/login", aLogin);
+}
+
+void Settings::setDatabasePassword(QString aPassword)
+{
+    mBaseSettings.setValue("database/password", aPassword);
+}
+
+void Settings::setDatabasePort(int aPort)
+{
+    mBaseSettings.setValue("database/port", aPort);
+}
+
+void Settings::setDatabaseType(QString aType)
+{
+    mBaseSettings.setValue("database/type", aType);
+}
+
+void Settings::setSite(QString aSite)
+{
+    mBaseSettings.setValue("site", aSite);
+}

@@ -14,6 +14,7 @@ class ButtonTopMenuWidget : public QWidget
 public:
     explicit ButtonTopMenuWidget(QString aText, QWidget *parent = 0);
     ~ButtonTopMenuWidget();
+    void setText(QString aText);
 signals:
     void activated();
 public slots:

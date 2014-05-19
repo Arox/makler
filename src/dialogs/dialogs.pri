@@ -6,7 +6,8 @@ SOURCES += \
     $$PWD/dialogaside.cpp \
     $$PWD/dialogshoot.cpp \
     src/dialogs/dialogasideup.cpp \
-    src/dialogs/phonefinddialog.cpp
+    src/dialogs/phonefinddialog.cpp \
+    src/dialogs/dialogconnectdatabase.cpp
 
 HEADERS  +=  \
     $$PWD/dialogauthentification.h \
@@ -15,7 +16,8 @@ HEADERS  +=  \
     $$PWD/dialogaside.h \
     $$PWD/dialogshoot.h \
     src/dialogs/dialogasideup.h \
-    src/dialogs/phonefinddialog.h
+    src/dialogs/phonefinddialog.h \
+    src/dialogs/dialogconnectdatabase.h
 
 FORMS    += $$PWD/dialogauthentification.ui \
     $$PWD/dialogphotoalbum.ui \
@@ -23,4 +25,5 @@ FORMS    += $$PWD/dialogauthentification.ui \
     $$PWD/dialogaside.ui \
     $$PWD/dialogshoot.ui \
     src/dialogs/dialogasideup.ui \
-    src/dialogs/phonefinddialog.ui
+    src/dialogs/phonefinddialog.ui \
+    src/dialogs/dialogconnectdatabase.ui

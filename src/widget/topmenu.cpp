@@ -185,11 +185,19 @@ void TopMenu::reloadMyWidget(WidgetForControl* apSender)
     mpStackWidget->setCurrentIndex(vCurrentIndex);
 }
 
+void TopMenu::reloadNameWidget(WidgetForControl* apSender, QString aName)
+{
+    int vNumber = numWidget(apSender);
+    Q_ASSERT(vNumber >= 0);
+    mpButtons[vNumber]->setText(aName);
+}
+
 void TopMenu::disconnectWidget(WidgetForControl* apWidget)
 {
     disconnect(apWidget, SIGNAL(changeWidget(WidgetForControl::SignalWidgetType)), this, SLOT(load(WidgetForControl::SignalWidgetType)));
     disconnect(apWidget, SIGNAL(back(WidgetForControl*)), this, SLOT(backWidget(WidgetForControl*)));
     disconnect(apWidget, SIGNAL(reloadMe(WidgetForControl*)), this, SLOT(reloadMyWidget(WidgetForControl*)));
+    disconnect(apWidget, SIGNAL(changeName(WidgetForControl*,QString)), this, SLOT(reloadNameWidget(WidgetForControl*,QString)));
 }
 
 void TopMenu::connectWidget(WidgetForControl* apWidget)
@@ -197,6 +205,7 @@ void TopMenu::connectWidget(WidgetForControl* apWidget)
     connect(apWidget, SIGNAL(changeWidget(WidgetForControl::SignalWidgetType)), this, SLOT(load(WidgetForControl::SignalWidgetType)));
     connect(apWidget, SIGNAL(back(WidgetForControl*)), this, SLOT(backWidget(WidgetForControl*)));
     connect(apWidget, SIGNAL(reloadMe(WidgetForControl*)), this, SLOT(reloadMyWidget(WidgetForControl*)));
+    connect(apWidget, SIGNAL(changeName(WidgetForControl*,QString)), this, SLOT(reloadNameWidget(WidgetForControl*,QString)));
 }
 
 int TopMenu::numWidget(WidgetForControl* apWidget)

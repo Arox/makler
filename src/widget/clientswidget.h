@@ -13,10 +13,12 @@
 #include "widgetforcontrol.h"
 #include "findobjectswidget.h"
 #include "clientheaderalternativewidget.h"
+#include "mytableview.h"
 
 namespace Ui {
 class ClientsWidget;
 }
+
 
 class ClientsWidget : public WidgetForControl
 {
@@ -62,9 +64,8 @@ private slots:
     void findObject(FindObjectsWidget::TypeObject aObject);
     void activateObject(FindObjectsWidget::TypeObject aType, int aId);
     void on_mpFilterPhone_textChanged(const QString &arg1);
-
     void on_mpClearFilter_clicked();
-
+    void on_mpView_clicked(const QModelIndex &index);
 private:
     Ui::ClientsWidget *ui;
     QSignalMapper mMapper;
@@ -77,6 +78,7 @@ private:
     ClientHeaderAlternativeWidget mClientWidget;
     FindObjectsWidget mFindObject;
     int mAgent;
+    MyTableView mView;
 
     QList< QPair<QString, int> >  mValuesTypeObject;
 };
