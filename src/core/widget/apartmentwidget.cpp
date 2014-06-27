@@ -14,7 +14,7 @@ ApartmentWidget::ApartmentWidget(int aAgent, QWidget *parent) :
     mId(-1),
     mAgent(aAgent),
     mIsLoad(false),
-    mAddress(AddressWidget::NORMAL)
+    mAddress(location::NORMAL)
 {
     ui->setupUi(this);
     ui->mainLayout->addWidget(&mClient);

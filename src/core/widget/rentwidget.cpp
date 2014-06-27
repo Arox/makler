@@ -14,7 +14,7 @@ RentWidget::RentWidget(int aAgent, QWidget *parent) :
     mId(-1),
     mAgent(aAgent),
     mIsLoad(false),
-    mAddress(AddressWidget::NORMAL),
+    mAddress(location::NORMAL),
     mHomeAddress(AddressHomeWidget::NORMAL)
 {
     ui->setupUi(this);

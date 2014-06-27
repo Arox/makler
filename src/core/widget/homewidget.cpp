@@ -14,8 +14,8 @@ HomeWidget::HomeWidget(int aAgent, QWidget *parent) :
     mId(-1),
     mAgent(aAgent),
     mIsLoad(false),
-    mAddress(AddressWidget::NORMAL),
-    mHomeAddress1(AddressWidget::NORMAL)
+    mAddress(location::NORMAL),
+    mHomeAddress1(location::NORMAL)
 {
     ui->setupUi(this);
     ui->mainLayout->addWidget(&mClient);

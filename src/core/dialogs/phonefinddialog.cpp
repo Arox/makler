@@ -153,7 +153,7 @@ PhoneFindDialog::PhoneFindDialog(QWidget *parent) :
     mPhone(TRANSLATE("Телефон"), MyLineEdit::Normal),
     mNumber(TRANSLATE("Номер заявки"), MyLineEdit::Normal),
     mId(-1),
-    mAddress(AddressWidget::FINDROOM),
+    mAddress(location::FINDROOM),
     mHomeAddress(AddressHomeWidget::FINDHOME)
 {
     ui->setupUi(this);

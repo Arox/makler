@@ -18,8 +18,8 @@ AdminWidget::AdminWidget(QWidget *parent) :
     ui(new Ui::AdminWidget)
 {
     ui->setupUi(this);
-    mpViewObjects = new ViewObjects(this);
-    connect(mpViewObjects, SIGNAL(changeModel(ViewObjects::TypeObject)), this, SLOT(changeObject(ViewObjects::TypeObject)));
+    mpViewObjects = new ConsalidatorObjects(this);
+    connect(mpViewObjects, SIGNAL(changeModel(ConsalidatorObjects::TypeObject)), this, SLOT(changeObject(ConsalidatorObjects::TypeObject)));
     connect(mpViewObjects, SIGNAL(isSelect(bool)), this, SLOT(changeSelect(bool)));
     ui->mainLayout->insertWidget(0, mpViewObjects);
     loadAgents();
@@ -53,17 +53,17 @@ void AdminWidget::reload(WidgetForControl* apControl)
     FindRent* vpRent = dynamic_cast<FindRent*>(apControl);
     if (vpApartment)
     {
-        mpViewObjects->load(ViewObjects::APARTMENT, vpApartment->sql());
+        mpViewObjects->load(ConsalidatorObjects::APARTMENT, vpApartment->sql());
         return;
     }
     if (vpHome)
     {
-        mpViewObjects->load(ViewObjects::HOME, vpHome->sql());
+        mpViewObjects->load(ConsalidatorObjects::HOME, vpHome->sql());
         return;
     }
     if (vpRent)
     {
-        mpViewObjects->load(ViewObjects::RENT, vpRent->sql());
+        mpViewObjects->load(ConsalidatorObjects::RENT, vpRent->sql());
         return;
     }
 }
@@ -73,23 +73,23 @@ void AdminWidget::on_mpFind_clicked()
 
     FindWidget* vpFind = 0;
     QString vName;
-    ViewObjects::TypeObject vType;
+    ConsalidatorObjects::TypeObject vType;
     switch(mpViewObjects->type())
     {
-    case ViewObjects::APARTMENT:
+    case ConsalidatorObjects::APARTMENT:
         vpFind = new FindApartment(this);
         vName = TRANSLATE("Поиск квартиры");
-        vType = ViewObjects::APARTMENT;
+        vType = ConsalidatorObjects::APARTMENT;
         break;
-    case ViewObjects::HOME:
+    case ConsalidatorObjects::HOME:
         vpFind = new FindHome(this);
         vName = TRANSLATE("Поиск дома");
-        vType = ViewObjects::HOME;
+        vType = ConsalidatorObjects::HOME;
         break;
-    case ViewObjects::RENT:
+    case ConsalidatorObjects::RENT:
         vpFind = new FindRent(this);
         vName = TRANSLATE("Поиск аренды");
-        vType = ViewObjects::RENT;
+        vType = ConsalidatorObjects::RENT;
         break;
     default:
         break;
@@ -102,12 +102,12 @@ void AdminWidget::on_mpFind_clicked()
     }
 }
 
-void AdminWidget::changeObject(ViewObjects::TypeObject aType)
+void AdminWidget::changeObject(ConsalidatorObjects::TypeObject aType)
 {
     changeSelect(mpViewObjects->isSelected());
-    if ((aType == ViewObjects::APARTMENT)
-            || (aType == ViewObjects::HOME)
-            || (aType == ViewObjects::RENT))
+    if ((aType == ConsalidatorObjects::APARTMENT)
+            || (aType == ConsalidatorObjects::HOME)
+            || (aType == ConsalidatorObjects::RENT))
     {
         ui->mpFind->setVisible(true);
     }

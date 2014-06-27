@@ -41,7 +41,7 @@ private:
     InformationArea mArea;
     PriceWidget mPrice;
     TypeHomeWidget mType;
-    ApartmentInformation mInformation;
+    OptionForApartment mInformation;
     CommentWidget mComment;
     ButtonsWidget mButtons;
     AddressHomeWidget mHomeAddress1;

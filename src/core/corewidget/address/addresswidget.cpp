@@ -6,17 +6,30 @@
 #include <QCompleter>
 #include "../general/globalsbase.h"
 
+#include "microdistrictwidget.h"
+#include "streetwidget.h"
+#include "citywidget.h"
+
 AddressWidget::AddressWidget(int aState, QWidget *parent) :
     MainWidget(parent),
     ui(new Ui::AddressWidget),
     mId(-1),
     mEnabled(true),
-    mState(NORMAL)
+    mState(aState)
+  ,mCityBox(tr("город"), new CityWidget(CityModel::City, this), this)
+  ,mMicrodistrictBox(tr("район"), new MicrodistrictWidget(this), this)
+  ,mStreetBox(tr("улица"), new StreetWidget(this), this)
 {
     ui->setupUi(this);
-    connect(ui->mpCity, SIGNAL(currentIndexChanged(int)), this, SLOT(on_mpCity_currentIndexChanged(int)));
-    mBoxes << ui->mpCity << ui->mpLocality << ui->mpStreet;
+    connect(mCityBox.data(), SIGNAL(currentIndexChanged(int)), this, SLOT(on_mpCity_currentIndexChanged(int)));
+    mBoxes << mCityBox.data() << mMicrodistrictBox.data() << mStreetBox.data();
     setState(aState);
+
+    ui->horizontalLayout_3->insertWidget(0,&mCityBox);
+    ui->horizontalLayout_3->insertWidget(1,&mMicrodistrictBox);
+    ui->horizontalLayout_3->insertWidget(2,&mStreetBox);
+
+    on_mpCity_currentIndexChanged(mCityBox.data()->currentIndex());
 }
 
 AddressWidget::~AddressWidget()
@@ -33,7 +46,7 @@ void AddressWidget::setEnabledWidgets(bool aEnable)
     ui->mpRoom->setEnabled(aEnable);
 }
 
-void AddressWidget::saveCity()
+/*void AddressWidget::saveCity()
 {
     QString vName= ui->mpCity->currentText();
     if (vName.isEmpty()) return;
@@ -83,156 +96,24 @@ void AddressWidget::saveStreet()
               .arg(vLocality));
     loadStreet();
     ui->mpStreet->setCurrentIndex(ui->mpStreet->findText(vName));
-}
+}*/
 
 bool AddressWidget::isState(int aState)
 {
     return mState & aState;
 }
 
-void AddressWidget::loadCity()
-{
-    ResponseType vResponse = execQuery(QString("select id, name from address_city where type_fk IN (select id from typecity where name='city')"));
-    ui->mpCity->blockSignals(true);
-    ui->mpCity->clear();
-    QStringList vList;
-    for (int i = 0; i < vResponse.count(); ++i)
-    {
-        ui->mpCity->addItem(vResponse[i]["name"].toString(), vResponse[i]["id"]);
-        vList << vResponse[i]["name"].toString();
-    }
-
-    if (ui->mpCity->count())
-    {
-        if (isState(FIND) && !isState(MULTISELECT))
-        {
-            vList.insert(0, "");
-            ui->mpCity->insertItem(0, "", -1);
-        }
-        if (isState(NORMAL) || isState(MULTISELECT))
-        {
-            ui->mpStreet->setCurrentIndex(0);
-        }
-        on_mpCity_currentIndexChanged(0);
-    }
-    else
-    {
-        ui->mpCity->setEnabled(false);
-    }
-    QCompleter* vpComp = new QCompleter(vList, this);
-    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->mpCity->setCompleter(vpComp);
-    ui->mpCity->blockSignals(false);
-}
-
-void AddressWidget::loadLocality()
-{
-    ui->mpLocality->blockSignals(true);
-    int vCity = ui->mpCity->itemData(ui->mpCity->currentIndex()).toInt();
-    ResponseType vResponse = execQuery(QString("select id, name from address_microdistrict where city_fk = %1")
-                                       .arg(vCity));
-    ui->mpLocality->clear();
-    QStringList vList;
-    for (int i = 0; i < vResponse.count(); ++i)
-    {
-        ui->mpLocality->addItem(vResponse[i]["name"].toString(), vResponse[i]["id"]);
-        vList << vResponse[i]["name"].toString();
-    }
-
-
-    if (ui->mpCity->count())
-    {
-        ui->mpLocality->setEnabled(mEnabled);
-    }
-    else
-    {
-        ui->mpLocality->setEnabled(false);
-    }
-    if (ui->mpLocality->count())
-    {
-        if (isState(FIND) && !isState(MULTISELECT))
-        {
-            vList.insert(0, "");
-            ui->mpLocality->insertItem(0, "", -1);
-        }
-        if (isState(NORMAL) || isState(MULTISELECT))
-        {
-            ui->mpStreet->setCurrentIndex(0);
-        }
-    }
-    else
-    {
-        ui->mpLocality->setEnabled(false);
-    }
-    QCompleter* vpComp = new QCompleter(vList, this);
-    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->mpLocality->setCompleter(vpComp);
-    ui->mpLocality->blockSignals(false);
-}
-
-void AddressWidget::loadStreet()
-{
-    ui->mpStreet->blockSignals(true);
-    int vCity = ui->mpCity->itemData(ui->mpCity->currentIndex()).toInt();
-    ResponseType vResponse = execQuery(QString("select id, name from address_street where city_fk = %1")
-                                           .arg(vCity));
-    ui->mpStreet->clear();
-    QStringList vList;
-    QList<int> vData;
-    ui->mpStreet->addItems(QStringList::fromVector(QVector<QString>(vResponse.count(), "")));
-    for (int i = 0; i < vResponse.count(); ++i)
-    {
-        QString s1 = vResponse[i]["name"].toString();
-        int s2 = vResponse[i]["id"].toInt();
-        ui->mpStreet->setItemText(i, s1);
-        ui->mpStreet->setItemData(i, s2);
-        vList << s1;
-    }
-
-
-    if (ui->mpCity->count())
-    {
-        ui->mpStreet->setEnabled(mEnabled);
-    }
-    else
-    {
-        ui->mpStreet->setEnabled(false);
-    }
-
-    if (ui->mpStreet->count())
-    {
-        if (isState(FIND) && !isState(MULTISELECT))
-        {
-            vList.insert(0, "");
-            ui->mpStreet->insertItem(0, "", -1);
-        }
-        if (isState(NORMAL) || isState(MULTISELECT))
-        {
-            ui->mpStreet->setCurrentIndex(0);
-        }
-    }
-    else
-    {
-        ui->mpStreet->setEnabled(false);
-    }
-    QCompleter* vpComp = new QCompleter(vList, this);
-    vpComp->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->mpStreet->setCompleter(vpComp);
-    ui->mpStreet->blockSignals(false);
-
-}
-
 void AddressWidget::load(int aIdObjects, int aNumber)
 {
     MainWidget::load();
 
-    ui->mpLandMark->blockSignals(true);
+    /*ui->mpLandMark->blockSignals(true);
     ui->mpNumber1->blockSignals(true);
     ui->mpNumber2->blockSignals(true);
     ui->mpRoom->blockSignals(true);
     ui->mpStreet->blockSignals(true);
     ui->mpLocality->blockSignals(true);
-
+*/
     mIdObjects = aIdObjects;
 
 
@@ -249,9 +130,9 @@ void AddressWidget::load(int aIdObjects, int aNumber)
         ui->mpRoom->setText(vQuery["room"].toString());
         mId = vQuery["id"].toInt();
 
-        if (!vQuery["city_fk"].isNull()) ui->mpCity->setCurrentIndex(ui->mpCity->findData(vQuery["city_fk"].toInt())); else ui->mpCity->setCurrentIndex(ui->mpCity->findData(-1));
-        if (!vQuery["microdistrict_fk"].isNull()) ui->mpLocality->setCurrentIndex(ui->mpLocality->findData(vQuery["microdistrict_fk"].toInt())); else ui->mpLocality->setCurrentIndex(ui->mpLocality->findData(-1));
-        if (!vQuery["street_fk"].isNull()) ui->mpStreet->setCurrentIndex(ui->mpStreet->findData(vQuery["street_fk"].toInt())); else ui->mpStreet->setCurrentIndex(ui->mpStreet->findData(-1));
+        if (!vQuery["city_fk"].isNull()) mCityBox.data()->setCurrentIndex(mCityBox.data()->findData(vQuery["city_fk"].toInt())); else mCityBox.data()->setCurrentIndex(-1);
+        if (!vQuery["microdistrict_fk"].isNull()) mMicrodistrictBox.data()->setCurrentIndex(mMicrodistrictBox.data()->findData(vQuery["microdistrict_fk"].toInt())); else mMicrodistrictBox.data()->setCurrentIndex(-1);
+        if (!vQuery["street_fk"].isNull()) mStreetBox.data()->setCurrentIndex(mStreetBox.data()->findData(vQuery["street_fk"].toInt())); else mStreetBox.data()->setCurrentIndex(mStreetBox.data()->findData(-1));
 
         MainWidget::save();
     }
@@ -262,26 +143,23 @@ void AddressWidget::load(int aIdObjects, int aNumber)
         ui->mpNumber2->setText("");
         ui->mpRoom->setText("");
 
-        ui->mpCity->setCurrentIndex(-1);
-        ui->mpLocality->setCurrentIndex(-1);
-        ui->mpStreet->setCurrentIndex(-1);
+        mCityBox.data()->setCurrentIndex(-1);
+        mMicrodistrictBox.data()->setCurrentIndex(-1);
+        mStreetBox.data()->setCurrentIndex(-1);
     }
 
-    ui->mpLandMark->blockSignals(false);
+/*    ui->mpLandMark->blockSignals(false);
     ui->mpNumber1->blockSignals(false);
     ui->mpNumber2->blockSignals(false);
     ui->mpRoom->blockSignals(false);
 
     ui->mpStreet->blockSignals(false);
-    ui->mpLocality->blockSignals(false);
-    /*ui->mpCity->blockSignals(false);
-    ui->mpLocality->blockSignals(false);
-    ui->mpStreet->blockSignals(false);*/
+    ui->mpLocality->blockSignals(false);*/
 }
 
 void AddressWidget::save()
 {
-    if (ui->mpStreet->currentIndex() < 0)
+    if (mStreetBox.data()->currentIndex() < 0)
     {
         return;
     }
@@ -298,8 +176,8 @@ void AddressWidget::save()
     }
 
     execQuery(QString("UPDATE address SET street_fk = %1, microdistrict_fk = %2, number1 = '%3', number2 = '%4', room = %5, landmark = '%6' WHERE id = %7")
-              .arg(ui->mpStreet->currentIndex() < 0 ? "NULL" : ui->mpStreet->itemData(ui->mpStreet->currentIndex()).toString())
-              .arg(ui->mpLocality->currentIndex() < 0 ? "NULL" : ui->mpLocality->itemData(ui->mpLocality->currentIndex()).toString())
+              .arg(mStreetBox.data()->currentIndex() < 0 ? "NULL" : mStreetBox.data()->itemData(mStreetBox.data()->currentIndex()).toString())
+              .arg(mMicrodistrictBox.data()->currentIndex() < 0 ? "NULL" : mMicrodistrictBox.data()->itemData(mMicrodistrictBox.data()->currentIndex()).toString())
               .arg(ui->mpNumber1->text())
               .arg(ui->mpNumber2->text())
               .arg(ui->mpRoom->text().isEmpty() ? "NULL" : ui->mpRoom->text())
@@ -310,29 +188,16 @@ void AddressWidget::save()
 
 QList<int> AddressWidget::city()
 {
-    if (isState(MULTISELECT))
-    {
-        return idsComboBox(ui->mpCity);
-    }
-    return  idComboBox(ui->mpCity);
-}
+    return mCityBox.data()->values();}
 
 QList<int> AddressWidget::locality()
 {
-    if (isState(MULTISELECT))
-    {
-        return idsComboBox(ui->mpLocality);
-    }
-    return  idComboBox(ui->mpLocality);
+    return mMicrodistrictBox.data()->values();
 }
 
 QList<int> AddressWidget::street()
 {
-    if (isState(MULTISELECT))
-    {
-        return idsComboBox(ui->mpStreet);
-    }
-    return  idComboBox(ui->mpStreet);
+    return mStreetBox.data()->values();
 }
 
 int AddressWidget::number1()
@@ -395,130 +260,85 @@ void AddressWidget::setState(int aState)
 {
     mState = aState;
 
-    if (isState(NORMAL))
+    mCityBox.data()->setType(aState);
+    mMicrodistrictBox.data()->setType(aState);
+    mStreetBox.data()->setType(aState);
+
+    if (isState(location::NORMAL))
     {
-        ui->mpCity->setVisible(true);
+        mCityBox.setVisible(true);
         ui->mpLandMark->setVisible(true);
-        ui->mpLocality->setVisible(true);
+        mMicrodistrictBox.setVisible(true);
         ui->mpNumber1->setVisible(true);
         ui->mpNumber2->setVisible(true);
         ui->mpRoom->setVisible(true);
-        ui->mpStreet->setVisible(true);
+        mStreetBox.setVisible(true);
         ui->label->setVisible(true);
         ui->label_2->setVisible(true);
         ui->label_3->setVisible(true);
         ui->label_6->setVisible(true);
     }
-    if (isState(FIND))
+    if (isState(location::FIND))
     {
-        ui->mpCity->setVisible(true);
+        mCityBox.setVisible(true);
         ui->mpLandMark->setVisible(false);
-        ui->mpLocality->setVisible(true);
-        ui->mpStreet->setVisible(true);
+        mMicrodistrictBox.setVisible(true);
+        mStreetBox.setVisible(true);
 
 
-        ui->label_2->setVisible(false);
-        ui->label_3->setVisible(false);
-        ui->label_6->setVisible(false);
+        mCityBox.data()->setEditable(true);
+        mStreetBox.data()->setEditable(true);
+        mMicrodistrictBox.data()->setEditable(true);
 
-        ui->mpCity->setEditable(true);
-        ui->mpStreet->setEditable(true);
-        ui->mpLocality->setEditable(true);
-
-        if (isState(FINDROOM))
+        if (isState(location::FINDROOM))
         {
+            ui->label_2->setVisible(true);
+            ui->label_3->setVisible(true);
+            ui->label_6->setVisible(true);
             ui->mpNumber1->setVisible(true);
             ui->mpNumber2->setVisible(true);
             ui->mpRoom->setVisible(true);
-
             ui->label->setVisible(true);
         }
         else
         {
+            ui->label_2->setVisible(false);
+            ui->label_3->setVisible(false);
+            ui->label_6->setVisible(false);
             ui->mpNumber1->setVisible(false);
             ui->mpNumber2->setVisible(false);
             ui->mpRoom->setVisible(false);
             ui->label->setVisible(false);
         }
     }
-
-    if (isState(MULTISELECT))
-    {
-        connect(&mMapper, SIGNAL(mapped(int)), this, SLOT(selectComboBox(int)));
-        for (int i = 0; i < mBoxes.count(); ++i)
-        {
-            connect(mBoxes[i], SIGNAL(activated(int)), &mMapper, SLOT(map()));
-            //connect(mBoxes[i], SIGNAL(currentIndexChanged(int)), &mMapper, SLOT(map()));
-            mMapper.setMapping(mBoxes[i], i);
-        }
-    }
-
-    loadCity();
 }
 
 void AddressWidget::on_mpCity_currentIndexChanged(int index)
 {
     if (index >= 0)
     {
-        ui->mpLocality->setEnabled(mEnabled);
-        ui->mpStreet->setEnabled(mEnabled);
-        loadStreet();
-        loadLocality();
+        mMicrodistrictBox.data()->setEnabled(mEnabled);
+        mStreetBox.data()->setEnabled(mEnabled);
+
+        MicrodistrictWidget* vpMicrodistrict = dynamic_cast<MicrodistrictWidget*>(mMicrodistrictBox.data());
+        if (vpMicrodistrict) vpMicrodistrict->load(mCityBox.data()->itemData(mCityBox.data()->currentIndex()).toInt());
+
+        StreetWidget* vpStreet = dynamic_cast<StreetWidget*>(mStreetBox.data());
+        if (vpStreet) vpStreet->load(mCityBox.data()->itemData(mCityBox.data()->currentIndex()).toInt());
     }
     else
     {
-        ui->mpLocality->setEnabled(false);
-        ui->mpStreet->setEnabled(false);
+        mMicrodistrictBox.data()->setEnabled(false);
+        mStreetBox.data()->setEnabled(false);
     }
 }
 
 bool AddressWidget::canSave()
 {
-    return (ui->mpStreet->currentIndex() >= 0) && (ui->mpNumber1->text().length());
+    return (mStreetBox.data()->currentIndex() >= 0) && (ui->mpNumber1->text().length());
 }
 
-QList<int> AddressWidget::idComboBox(QComboBox* apBox)
+void AddressWidget::selectComboBox(int aIndex)
 {
-    QList<int> vResult;
-    if (apBox->currentIndex() >= 0)
-    {
-        if (apBox->itemData(apBox->currentIndex()).toInt() >= 0)
-        {
-            vResult.append(apBox->itemData(apBox->currentIndex()).toInt());
-        }
-    }
-    return vResult;
+    mBoxes[aIndex]->clickItemComboBox(mBoxes[aIndex]->currentIndex());
 }
-
-QList<int> AddressWidget::idsComboBox(QComboBox* apBox)
-{
-    QList<int> vResult;
-    for (int i = 0; i < apBox->count(); ++i)
-    {
-        if (!apBox->itemIcon(i).isNull())
-        {
-            vResult.append(apBox->itemData(i).toInt());
-        }
-    }
-    return vResult;
-}
-
-void AddressWidget::clickItemComboBox(QComboBox *apBox, int aIndex)
-{
-    if (apBox->count() > aIndex && aIndex >= 0)
-    {
-        if (apBox->itemIcon(aIndex).isNull())
-        {
-            apBox->setItemIcon(aIndex, QIcon(":/select/select-ok.png"));
-        }
-        else
-        {
-            apBox->setItemIcon(aIndex, QIcon());
-        }
-    }
-}
-
- void AddressWidget::selectComboBox(int aIndex)
- {
-     clickItemComboBox(mBoxes[aIndex], mBoxes[aIndex]->currentIndex());
- }

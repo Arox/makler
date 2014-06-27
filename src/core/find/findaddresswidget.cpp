@@ -1,7 +1,7 @@
 #include "findaddresswidget.h"
 
 FindAddressWidget::FindAddressWidget(QWidget *parent) :
-    AddressWidget(FIND | MULTISELECT, parent)
+    AddressWidget(location::FIND | location::MULTISELECT, parent)
 {
 }
 

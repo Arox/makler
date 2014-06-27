@@ -10,7 +10,7 @@
 #include "language.h"
 
 
-BrainComboBox::BrainComboBox(int aId, QWidget *parent):
+SelectForOptionForApartment::SelectForOptionForApartment(int aId, QWidget *parent):
     QComboBox(parent)
   ,mId(aId)
   , mIdValue(-1)
@@ -62,12 +62,12 @@ BrainComboBox::BrainComboBox(int aId, QWidget *parent):
     setConnect();
 }
 
-BrainComboBox::~BrainComboBox()
+SelectForOptionForApartment::~SelectForOptionForApartment()
 {
 
 }
 
-void BrainComboBox::load(int aIdObject)
+void SelectForOptionForApartment::load(int aIdObject)
 {
     setDisconnect();
     mIdValue = -1;
@@ -109,7 +109,7 @@ void BrainComboBox::load(int aIdObject)
     setConnect();
 }
 
-void BrainComboBox::save()
+void SelectForOptionForApartment::save()
 {
     setDisconnect();
     int vNewId = itemData(currentIndex()).toInt();
@@ -140,18 +140,18 @@ void BrainComboBox::save()
     setConnect();
 }
 
-void BrainComboBox::setMultiSelect(bool aFlag)
+void SelectForOptionForApartment::setMultiSelect(bool aFlag)
 {
     mMultiSelect = aFlag;
     setConnect();
 }
 
-bool BrainComboBox::isMultiSelect()
+bool SelectForOptionForApartment::isMultiSelect()
 {
     return mMultiSelect;
 }
 
-QList<int> BrainComboBox::values()
+QList<int> SelectForOptionForApartment::values()
 {
     QList<int> vResult;
     for (int i = 1; i < count(); ++i)
@@ -181,7 +181,7 @@ QList<int> BrainComboBox::values()
     return vResult;
 }
 
-void BrainComboBox::setItem(int aIndex)
+void SelectForOptionForApartment::setItem(int aIndex)
 {
     if (count() > aIndex && aIndex > 0)
     {
@@ -196,7 +196,7 @@ void BrainComboBox::setItem(int aIndex)
     }
 }
 
-void BrainComboBox::setConnect()
+void SelectForOptionForApartment::setConnect()
 {
     //connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(save()));
     if (mMultiSelect)
@@ -205,7 +205,7 @@ void BrainComboBox::setConnect()
     }
 }
 
-void BrainComboBox::setDisconnect()
+void SelectForOptionForApartment::setDisconnect()
 {
     //disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(save()));
     if (mMultiSelect)
@@ -214,7 +214,7 @@ void BrainComboBox::setDisconnect()
     }
 }
 
-int BrainComboBox::value()
+int SelectForOptionForApartment::value()
 {
     return itemData(currentIndex()).toInt();
 }
@@ -222,7 +222,7 @@ int BrainComboBox::value()
 
 
 
-ApartmentInformation::ApartmentInformation(QWidget *parent) :
+OptionForApartment::OptionForApartment(QWidget *parent) :
     MainWidget(parent),
     ui(new Ui::ApartmentInformation)
   ,mIdObject(-1)
@@ -230,12 +230,12 @@ ApartmentInformation::ApartmentInformation(QWidget *parent) :
     ui->setupUi(this);
 }
 
-ApartmentInformation::~ApartmentInformation()
+OptionForApartment::~OptionForApartment()
 {
     delete ui;
 }
 
-void ApartmentInformation::setNameDictionary(QString aName, int aCountColumn, bool aMultiSelect)
+void OptionForApartment::setNameDictionary(QString aName, int aCountColumn, bool aMultiSelect)
 {
     ResponseType vQuery = execQuery(QString("SELECT d.id as \"id\", d.name as \"name\", sort FROM dictionaries as d INNER JOIN modules_dictionaries as md ON md.fk_dictionaries = d.id INNER JOIN modules as m ON md.fk_modules = m.id WHERE m.name = '%1' ORDER BY sort").arg(aName));
 
@@ -265,7 +265,7 @@ void ApartmentInformation::setNameDictionary(QString aName, int aCountColumn, bo
             QString vName = vQuery[i*vCountRow + j]["name"].toString();
 
             QLabel* vpLabel = new QLabel(vName);
-            BrainComboBox* vpBox = new BrainComboBox(vId, this);
+            SelectForOptionForApartment* vpBox = new SelectForOptionForApartment(vId, this);
             mBoxes.append(vpBox);
             vpBox->setObjectName(QString("%1").arg(vId));
             vpBox->setMultiSelect(aMultiSelect);
@@ -278,36 +278,36 @@ void ApartmentInformation::setNameDictionary(QString aName, int aCountColumn, bo
     }
 }
 
-void ApartmentInformation::load(int aIdObject)
+void OptionForApartment::load(int aIdObject)
 {
     mIdObject = aIdObject;
-    foreach (BrainComboBox* vpBox, mBoxes)
+    foreach (SelectForOptionForApartment* vpBox, mBoxes)
     {
         vpBox->load(aIdObject);
     }
 }
 
-void ApartmentInformation::save()
+void OptionForApartment::save()
 {
-    foreach (BrainComboBox* vpBox, mBoxes)
+    foreach (SelectForOptionForApartment* vpBox, mBoxes)
     {
         vpBox->save();
     }
 }
 
-bool ApartmentInformation::isSave()
+bool OptionForApartment::isSave()
 {
     return execQuery(QString("SELECT * FROM optionvalue WHERE object_fk = %1").arg(mIdObject)).count();
 }
 
-QString ApartmentInformation::sqlWhere()
+QString OptionForApartment::sqlWhere()
 {
     QStringList vWheres;
     int i = 0;
     bool vFlag = false;
     QString vWhereString = QString("SELECT ov0.object_fk FROM ");
     QString vWhereString2;
-    foreach (BrainComboBox* vpBox, mBoxes)
+    foreach (SelectForOptionForApartment* vpBox, mBoxes)
     {
         QList<int> vIds = vpBox->values();
         if (vIds.count())
@@ -337,7 +337,7 @@ QString ApartmentInformation::sqlWhere()
     return QString("(%1)").arg(vWheres.join(" AND "));
 }
 
-QString ApartmentInformation::joinWhere()
+QString OptionForApartment::joinWhere()
 {
     return QString("INNER JOIN optionvalue ON objects.id = optionvalue.object_fk");
 }

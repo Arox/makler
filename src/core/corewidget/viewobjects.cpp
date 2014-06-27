@@ -2,7 +2,7 @@
 #include "ui_viewobjects.h"
 #include "language.h"
 
-ViewObjects::ViewObjects(QWidget *parent) :
+ConsalidatorObjects::ConsalidatorObjects(QWidget *parent) :
     MainWidget(parent),
     ui(new Ui::ViewObjects)
 {
@@ -25,12 +25,12 @@ ViewObjects::ViewObjects(QWidget *parent) :
     loadAgents();
 }
 
-ViewObjects::~ViewObjects()
+ConsalidatorObjects::~ConsalidatorObjects()
 {
     delete ui;
 }
 
-void ViewObjects::load(ViewObjects::TypeObject aObject, QString aFilter)
+void ConsalidatorObjects::load(ConsalidatorObjects::TypeObject aObject, QString aFilter)
 {
     TableModel* vpModel = 0;
     mOldFilter = aFilter;
@@ -75,7 +75,7 @@ void ViewObjects::load(ViewObjects::TypeObject aObject, QString aFilter)
     }
 }
 
-ViewObjects::TypeObject ViewObjects::type()
+ConsalidatorObjects::TypeObject ConsalidatorObjects::type()
 {
     if (ui->mpView->model() == &mApartmnet) return APARTMENT;
     if (ui->mpView->model() == &mHome) return HOME;
@@ -84,7 +84,7 @@ ViewObjects::TypeObject ViewObjects::type()
     return UNDEFINED;
 }
 
-void ViewObjects::setCheckStatus(QPushButton* apButton)
+void ConsalidatorObjects::setCheckStatus(QPushButton* apButton)
 {
     ui->mpActive->setChecked(false);
     ui->mpArchive->setChecked(false);
@@ -108,22 +108,22 @@ void ViewObjects::setCheckStatus(QPushButton* apButton)
     }
 }
 
-void ViewObjects::on_mpActive_clicked()
+void ConsalidatorObjects::on_mpActive_clicked()
 {
     setCheckStatus(ui->mpActive);
 }
 
-void ViewObjects::on_mpAside_clicked()
+void ConsalidatorObjects::on_mpAside_clicked()
 {
     setCheckStatus(ui->mpAside);
 }
 
-void ViewObjects::on_mpArchive_clicked()
+void ConsalidatorObjects::on_mpArchive_clicked()
 {
     setCheckStatus(ui->mpArchive);
 }
 
-void ViewObjects::on_mpApartment_clicked()
+void ConsalidatorObjects::on_mpApartment_clicked()
 {
     ui->mpApartment->setChecked(true);
     ui->mpRent->setChecked(false);
@@ -136,7 +136,7 @@ void ViewObjects::on_mpApartment_clicked()
     selectChange();
 }
 
-void ViewObjects::on_mpRent_clicked()
+void ConsalidatorObjects::on_mpRent_clicked()
 {
     ui->mpApartment->setChecked(false);
     ui->mpRent->setChecked(true);
@@ -149,7 +149,7 @@ void ViewObjects::on_mpRent_clicked()
     selectChange();
 }
 
-void ViewObjects::on_mpHome_clicked()
+void ConsalidatorObjects::on_mpHome_clicked()
 {
     ui->mpApartment->setChecked(false);
     ui->mpRent->setChecked(false);
@@ -162,7 +162,7 @@ void ViewObjects::on_mpHome_clicked()
     selectChange();
 }
 
-void ViewObjects::on_mpClient_clicked()
+void ConsalidatorObjects::on_mpClient_clicked()
 {
     ui->mpApartment->setChecked(false);
     ui->mpRent->setChecked(false);
@@ -175,7 +175,7 @@ void ViewObjects::on_mpClient_clicked()
     selectChange();
 }
 
-void ViewObjects::changeAgent(int aIdAgent)
+void ConsalidatorObjects::changeAgent(int aIdAgent)
 {
     TableModel* vpModel = dynamic_cast<TableModel*>(ui->mpView->model());
     if (!vpModel) return;
@@ -188,7 +188,7 @@ void ViewObjects::changeAgent(int aIdAgent)
     load(type(), mOldFilter);
 }
 
-void ViewObjects::selectChange()
+void ConsalidatorObjects::selectChange()
 {
     TableModel* vpModel = dynamic_cast<TableModel*>(ui->mpView->model());
     if (!vpModel) return;
@@ -203,14 +203,14 @@ void ViewObjects::selectChange()
     emit isSelect(vpModel->isChecked());
 }
 
-bool ViewObjects::isSelected()
+bool ConsalidatorObjects::isSelected()
 {
     TableModel* vpModel = dynamic_cast<TableModel*>(ui->mpView->model());
     if (!vpModel) return false;
     return vpModel->isChecked();
 }
 
-void ViewObjects::removeSelected()
+void ConsalidatorObjects::removeSelected()
 {
     TableModel* vpModel = dynamic_cast<TableModel*>(ui->mpView->model());
     if (!vpModel) return;
@@ -221,7 +221,7 @@ void ViewObjects::removeSelected()
 
 }
 
-void ViewObjects::on_mpSelectAll_clicked()
+void ConsalidatorObjects::on_mpSelectAll_clicked()
 {
     TableModel* vpModel = dynamic_cast<TableModel*>(ui->mpView->model());
     if (!vpModel) return;
@@ -233,7 +233,7 @@ void ViewObjects::on_mpSelectAll_clicked()
     ui->mpView->reset();
 }
 
-void ViewObjects::loadAgents()
+void ConsalidatorObjects::loadAgents()
 {
     ui->mpAgents->clear();
     ResponseType vResponse = execQuery(QString("SELECT mans.id as id, mans.sername as sername, mans.name as name, mans.patronymic as patronymic FROM users INNER JOIN mans ON users.man_fk = mans.id WHERE users.is_active = TRUE ORDER BY sername, name, patronymic"));
@@ -250,13 +250,13 @@ void ViewObjects::loadAgents()
     }
 }
 
-void ViewObjects::on_mpAgents_currentIndexChanged(int index)
+void ConsalidatorObjects::on_mpAgents_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     load(type(), mOldFilter);
 }
 
-void ViewObjects::reload()
+void ConsalidatorObjects::reload()
 {
     load(type(), mOldFilter);
 }

@@ -14,7 +14,7 @@ namespace Ui {
 class ViewObjects;
 }
 
-class ViewObjects : public MainWidget
+class ConsalidatorObjects : public MainWidget
 {
     Q_OBJECT
 
@@ -29,16 +29,16 @@ public:
         UNDEFINED
     };
 
-    explicit ViewObjects(QWidget *parent = 0);
-    ~ViewObjects();
-    void load(ViewObjects::TypeObject aObject, QString aFilter);
-    ViewObjects::TypeObject type();
+    explicit ConsalidatorObjects(QWidget *parent = 0);
+    ~ConsalidatorObjects();
+    void load(ConsalidatorObjects::TypeObject aObject, QString aFilter);
+    ConsalidatorObjects::TypeObject type();
     void changeAgent(int aIdAgent);
     bool isSelected();
     void reload();
     void removeSelected();
 signals:
-    void changeModel(ViewObjects::TypeObject);
+    void changeModel(ConsalidatorObjects::TypeObject);
     void isSelect(bool);
 protected:
     void setCheckStatus(QPushButton* apButton);

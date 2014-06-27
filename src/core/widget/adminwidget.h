@@ -23,7 +23,7 @@ public:
 private slots:
     void on_mpFind_clicked();
     virtual void reload(WidgetForControl*apControl);
-    void changeObject(ViewObjects::TypeObject);
+    void changeObject(ConsalidatorObjects::TypeObject);
     void loadAgents();
     void changeSelect(bool aState);
     void on_mpAddAgent_clicked();
@@ -34,7 +34,7 @@ private slots:
     void on_mpRemove_clicked();
 private:
     Ui::AdminWidget *ui;
-    ViewObjects* mpViewObjects;
+    ConsalidatorObjects* mpViewObjects;
 };
 
 #endif // ADMINWIDGET_H

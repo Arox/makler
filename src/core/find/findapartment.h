@@ -24,7 +24,7 @@ private:
     FindInformationArea mArea;
     FindPriceWidget mPrice;
     FindTypeApartment mType;
-    ApartmentInformation mInformation;
+    OptionForApartment mInformation;
 };
 
 #endif // FINDAPARTMENT_H

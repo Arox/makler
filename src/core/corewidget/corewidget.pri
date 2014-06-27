@@ -10,7 +10,16 @@ SOURCES += \
     $$PWD/address/address.cpp \
     $$PWD/mytableview.cpp \
     $$PWD/connecttodatabase.cpp \
-    $$PWD/editorsettingsdatabase.cpp
+    $$PWD/editorsettingsdatabase.cpp \
+    corewidget/address/citywidget.cpp \
+    corewidget/address/citymodel.cpp \
+    corewidget/address/locationselect.cpp \
+    corewidget/address/locationmodel.cpp \
+    corewidget/address/verticalcontanerwidget.cpp \
+    corewidget/address/microdistrictmodel.cpp \
+    corewidget/address/streetmodel.cpp \
+    corewidget/address/microdistrictwidget.cpp \
+    corewidget/address/streetwidget.cpp
 
 HEADERS  +=  \
     $$PWD/address/addresswidget.h \
@@ -18,14 +27,25 @@ HEADERS  +=  \
     $$PWD/address/address.h \
     $$PWD/mytableview.h \
     $$PWD/connecttodatabase.h \
-    $$PWD/editorsettingsdatabase.h
+    $$PWD/editorsettingsdatabase.h \
+    corewidget/address/citywidget.h \
+    corewidget/address/citymodel.h \
+    corewidget/address/locationselect.h \
+    corewidget/address/locationmodel.h \
+    corewidget/address/generalsettingslocation.h \
+    corewidget/address/verticalcontanerwidget.h \
+    corewidget/address/microdistrictmodel.h \
+    corewidget/address/streetmodel.h \
+    corewidget/address/microdistrictwidget.h \
+    corewidget/address/streetwidget.h
 
 FORMS    +=  \
     $$PWD/address/addresswidget.ui \
     $$PWD/address/addresshomewidget.ui \
     $$PWD/address/address.ui \
     $$PWD/connecttodatabase.ui \
-    $$PWD/editorsettingsdatabase.ui
+    $$PWD/editorsettingsdatabase.ui \
+    corewidget/address/verticalcontanerwidget.ui
 
 #ALL OTHER
 SOURCES += \

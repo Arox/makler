@@ -6,6 +6,7 @@
 #include <QResource>
 
 #include "language.h"
+#include "sizescreensettings.h"
 
 QStringList Styles::mStyleNames;
 const QString Styles::vNameDirStyles = "styles";
@@ -43,6 +44,7 @@ void Styles::loadStyles(QStringList aFiles)
 {
     QFile* vpFile = 0;
     QStringList vStyles;
+    vStyles << SizeScreenSettings::screenSettings(SizeScreenSettings::fileForCurrentScreen());
     foreach (QString vFileName, aFiles)
     {
         if (vpFile)

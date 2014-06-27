@@ -88,14 +88,13 @@ void AgentWidget::save()
         return;
     }
 
-    if (execQuery(QString("SELECT id FROM users WHERE login = '%1'").arg(ui->mpLogin->text())).count())
-    {
-        QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Пользователь с таим логином уже существует"));
-        return;
-    }
-
     if (mId < 0)
     {
+        if (execQuery(QString("SELECT id FROM users WHERE login = '%1'").arg(ui->mpLogin->text())).count())
+        {
+            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Пользователь с таим логином уже существует"));
+            return;
+        }
         execQuery(QString("INSERT INTO mans (name, sername, patronymic) VALUES ('%1', '%2', '%3')")
                   .arg(ui->mpName->text())
                   .arg(ui->mpSername->text())
@@ -110,7 +109,7 @@ void AgentWidget::save()
         }
         else
         {
-            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные"));
+            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные о пользователе"));
             return;
         }
 
@@ -119,17 +118,18 @@ void AgentWidget::save()
     ResponseType vResponse = execQuery(QString("SELECT id as id from users WHERE man_fk = %1").arg(mId));
     if (!vResponse.count())
     {
-
-        if (!execQuery(QString("INSERT INTO users (login, password, man_fk) VALUES ('%1', md5('%2'), %3)")
-                  .arg(ui->mpLogin->text())
-                  .arg(ui->mpPassword1->text())
-                  .arg(mId)).count())
+        execQuery(QString("INSERT INTO users (login, password, man_fk) VALUES ('%1', md5('%2'), %3)")
+                          .arg(ui->mpLogin->text())
+                          .arg(ui->mpPassword1->text())
+                          .arg(mId));
+        vResponse = execQuery(QString("SELECT id as id FROM users WHERE login = '%1'").arg(ui->mpLogin->text()));
+        if (!vResponse.count())
         {
-            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные"));
+            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные логина"));
             return;
         }
 
-        vIdUser = execQuery(QString("SELECT id FROM users WHERE login = '%1'").arg(ui->mpLogin->text()))[0]["id"].toInt();
+        vIdUser = vResponse[0]["id"].toInt();
 
     }
     else
@@ -139,16 +139,32 @@ void AgentWidget::save()
 
     int vIdMan = mId;
 
+    vResponse = execQuery(QString("SELECT '1' as id FROM users WHERE login = '%1'")
+                          .arg(ui->mpLogin->text()));
+    if (vResponse.count())
+    {
+        vResponse = execQuery(QString("SELECT '1' as id FROM users WHERE login = '%1' AND NOT id = '%2'")
+                              .arg(ui->mpLogin->text())
+                              .arg(vIdUser));
+        if (vResponse.count())
+        {
+            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Такой логин уже существует"));
+            return;
+        }
+    }
+    execQuery(QString("UPDATE users SET login = '%1', is_active = %2 WHERE id = %3")
+              .arg(ui->mpLogin->text())
+              .arg(ui->mpActive->isChecked() ? "TRUE" : "FALSE")
+              .arg(vIdUser));
+
     execQuery(QString("UPDATE mans SET name = '%1', sername = '%2', patronymic = '%3' WHERE id = %4")
               .arg(ui->mpName->text())
               .arg(ui->mpSername->text())
               .arg(ui->mpPatronymic->text())
               .arg(vIdMan)
               );
-    execQuery(QString("UPDATE users SET login = '%1', is_active = %2 WHERE id = %3")
-              .arg(ui->mpLogin->text())
-              .arg(ui->mpActive->isChecked() ? "TRUE" : "FALSE")
-              .arg(vIdUser));
+
+
     if (!ui->mpPassword1->text().isEmpty())
     {
         execQuery(QString("UPDATE users SET password = md5('%1') WHERE id = %2")

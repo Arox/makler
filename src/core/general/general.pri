@@ -4,7 +4,8 @@ SOURCES += \
     $$PWD/globalsbase.cpp \
     $$PWD/settings.cpp \
     $$PWD/fastdatabase.cpp \
-    $$PWD/styles.cpp
+    $$PWD/styles.cpp \
+    general/sizescreensettings.cpp
 
 HEADERS  += $$PWD/man.h \
     $$PWD/globalsbase.h \
@@ -13,4 +14,5 @@ HEADERS  += $$PWD/man.h \
     $$PWD/fastdatabase.h \
     $$PWD/styles.h \
     $$PWD/makler.h \
-    $$PWD/language.h
+    $$PWD/language.h \
+    general/sizescreensettings.h

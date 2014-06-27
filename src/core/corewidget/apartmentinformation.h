@@ -10,12 +10,12 @@ namespace Ui {
 class ApartmentInformation;
 }
 
-class BrainComboBox: public QComboBox
+class SelectForOptionForApartment: public QComboBox
 {
     Q_OBJECT
 public:
-    explicit BrainComboBox(int aId, QWidget *parent = 0);
-    ~BrainComboBox();
+    explicit SelectForOptionForApartment(int aId, QWidget *parent = 0);
+    ~SelectForOptionForApartment();
     void load(int aIdObject);
     int value();
     QList<int> values();
@@ -53,13 +53,13 @@ private:
     int mIdObject;
 };
 */
-class ApartmentInformation : public MainWidget
+class OptionForApartment : public MainWidget
 {
     Q_OBJECT
 
 public:
-    explicit ApartmentInformation(QWidget *parent = 0);
-    ~ApartmentInformation();
+    explicit OptionForApartment(QWidget *parent = 0);
+    ~OptionForApartment();
     void setNameDictionary(QString aName, int aCountColumn, bool aMultiSelect = false);
     void load(int aIdObject);
     virtual bool isSave();
@@ -70,7 +70,7 @@ public slots:
 private:
     Ui::ApartmentInformation *ui;
     int mIdObject;
-    QList<BrainComboBox*> mBoxes;
+    QList<SelectForOptionForApartment*> mBoxes;
 };
 
 #endif // APARTMENTINFORMATION_H

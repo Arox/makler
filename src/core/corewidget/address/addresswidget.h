@@ -7,6 +7,8 @@
 #include <QSignalMapper>
 #include "../mainwidget.h"
 
+#include "verticalcontanerwidget.h"
+
 namespace Ui {
 class AddressWidget;
 }
@@ -16,13 +18,6 @@ class AddressWidget : public MainWidget
     Q_OBJECT
     
 public:
-    enum StateWidget
-    {
-        NORMAL = 1,
-        FIND = 128,
-        FINDROOM = 192,
-        MULTISELECT = 8
-    };
     explicit AddressWidget(int aState, QWidget *parent = 0);
     ~AddressWidget();
     void load(int aIdObjects, int aNumber);
@@ -48,20 +43,9 @@ public:
 
 
 public slots:
-    void loadCity();
-    void loadLocality();
-    void loadStreet();
     void save();
-    void saveCity();
-    void saveLocality();
-    void saveStreet();
 private slots:
     void on_mpCity_currentIndexChanged(int index);
-protected:
-    QList<int> idsComboBox(QComboBox* apBox);
-    QList<int> idComboBox(QComboBox* apBox);
-    void clickItemComboBox(QComboBox* apBox, int aIndex);
-
 protected slots:
     void selectComboBox(int aIndex);
 private:
@@ -73,9 +57,14 @@ private:
     int mId;
     int mIdObjects;
     bool mEnabled;
+
     int mState;
     QSignalMapper mMapper;
-    QList<QComboBox*> mBoxes;
+    QList<LocationSelect*> mBoxes;
+
+    VerticalContanerWidget mCityBox;
+    VerticalContanerWidget mMicrodistrictBox;
+    VerticalContanerWidget mStreetBox;
 };
 
 #endif // ADDRESSWIDGET_H
