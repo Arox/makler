@@ -101,7 +101,7 @@ void ApartmentWidget::load(int aId)
     mType.load(mId);
     mArea.load(mId);
     mPrice.load(mId);
-    mAddress.load(mId, 1);
+    mAddress.load(mId);
     mButtons.setId(mId);
 
     ResponseRecordType vRecord = execQuery(QString("SELECT \"create\", now() as read FROM objects WHERE id = %1")

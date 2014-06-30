@@ -2,8 +2,7 @@
 #define PHONEFINDDIALOG_H
 
 #include <QDialog>
-#include "address/addresswidget.h"
-#include "address/addresshomewidget.h"
+#include "address/address.h"
 #include "mylineedit.h"
 
 namespace Ui {
@@ -21,19 +20,13 @@ public:
 private slots:
     void on_mpFind_clicked();
     void on_mpCancel_clicked();
-
     void on_mpNext_clicked();
-
-    void selectCity();
-    void selectNoCity();
-
 private:
     void showResults(QString aWhere);
     void showEmptyResult();
 private:
     Ui::PhoneFindDialog *ui;
-    AddressWidget mAddress;
-    AddressHomeWidget mHomeAddress;
+    Address mAddress;
     MyLineEdit mFio;
     MyLineEdit mPhone;
     MyLineEdit mNumber;

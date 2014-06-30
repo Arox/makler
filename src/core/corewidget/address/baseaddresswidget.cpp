@@ -1,4 +1,4 @@
-#include "addresswidget.h"
+#include "baseaddresswidget.h"
 #include "ui_addresswidget.h"
 
 #include <QMessageBox>
@@ -10,13 +10,13 @@
 #include "streetwidget.h"
 #include "citywidget.h"
 
-AddressWidget::AddressWidget(int aState, QWidget *parent) :
+BaseAddressWidget::BaseAddressWidget(CityModel::TypeCity aType, int aState, QWidget *parent) :
     MainWidget(parent),
     ui(new Ui::AddressWidget),
     mId(-1),
     mEnabled(true),
     mState(aState)
-  ,mCityBox(tr("город"), new CityWidget(CityModel::City, this), this)
+  ,mCityBox(tr("город"), new CityWidget(aType, this), this)
   ,mMicrodistrictBox(tr("район"), new MicrodistrictWidget(this), this)
   ,mStreetBox(tr("улица"), new StreetWidget(this), this)
 {
@@ -32,12 +32,12 @@ AddressWidget::AddressWidget(int aState, QWidget *parent) :
     on_mpCity_currentIndexChanged(mCityBox.data()->currentIndex());
 }
 
-AddressWidget::~AddressWidget()
+BaseAddressWidget::~BaseAddressWidget()
 {
     delete ui;
 }
 
-void AddressWidget::setEnabledWidgets(bool aEnable)
+void BaseAddressWidget::setEnabledWidgets(bool aEnable)
 {
     if (aEnable) aEnable = mEnabled;
     ui->mpLandMark->setEnabled(aEnable);
@@ -98,31 +98,31 @@ void AddressWidget::saveStreet()
     ui->mpStreet->setCurrentIndex(ui->mpStreet->findText(vName));
 }*/
 
-bool AddressWidget::isState(int aState)
+bool BaseAddressWidget::isState(int aState)
 {
     return mState & aState;
 }
 
-void AddressWidget::load(int aIdObjects, int aNumber)
+void BaseAddressWidget::load(int aIdObjects)
 {
     MainWidget::load();
 
-    /*ui->mpLandMark->blockSignals(true);
-    ui->mpNumber1->blockSignals(true);
-    ui->mpNumber2->blockSignals(true);
-    ui->mpRoom->blockSignals(true);
-    ui->mpStreet->blockSignals(true);
-    ui->mpLocality->blockSignals(true);
-*/
     mIdObjects = aIdObjects;
 
+    QString vType ="city";
+    CityWidget* vpCity = dynamic_cast<CityWidget*>(mCityBox.data());
+    if (vpCity)
+    {
+        vType = vpCity->type() == CityModel::City ? "city" : "garden";
+    }
 
     ResponseType vResponseAddress = execQuery(
-                QString("SELECT address.id as id, street_fk, address.microdistrict_fk as microdistrict_fk, number1, number2, room, landmark, address_city.id as city_fk FROM address LEFT JOIN address_street ON address.street_fk = address_street.id LEFT JOIN address_microdistrict ON address_microdistrict.id = address.microdistrict_fk LEFT JOIN address_city ON address_city.id = address_street.city_fk OR address_city.id = address_microdistrict.city_fk LEFT JOIN typecity ON typecity.id = address_city.type_fk AND  typecity.name = 'city' WHERE  object_fk = %1")
-                .arg(mIdObjects));
-    if (vResponseAddress.count() >= aNumber)
+                QString("SELECT address.id as id, street_fk, address.microdistrict_fk as microdistrict_fk, number1, number2, room, landmark, address_city.id as city_fk FROM address LEFT JOIN address_street ON address.street_fk = address_street.id LEFT JOIN address_microdistrict ON address_microdistrict.id = address.microdistrict_fk LEFT JOIN address_city ON address_city.id = address_street.city_fk OR address_city.id = address_microdistrict.city_fk LEFT JOIN typecity ON typecity.id = address_city.type_fk AND  typecity.name = '%2' WHERE  object_fk = %1")
+                .arg(mIdObjects)
+                .arg(vType));
+    if (vResponseAddress.count())
     {
-        ResponseRecordType vQuery = vResponseAddress[aNumber - 1];
+        ResponseRecordType vQuery = vResponseAddress[0];
 
         ui->mpLandMark->setText(vQuery["landmark"].toString());
         ui->mpNumber1->setText(vQuery["number1"].toString());
@@ -147,17 +147,9 @@ void AddressWidget::load(int aIdObjects, int aNumber)
         mMicrodistrictBox.data()->setCurrentIndex(-1);
         mStreetBox.data()->setCurrentIndex(-1);
     }
-
-/*    ui->mpLandMark->blockSignals(false);
-    ui->mpNumber1->blockSignals(false);
-    ui->mpNumber2->blockSignals(false);
-    ui->mpRoom->blockSignals(false);
-
-    ui->mpStreet->blockSignals(false);
-    ui->mpLocality->blockSignals(false);*/
 }
 
-void AddressWidget::save()
+void BaseAddressWidget::save()
 {
     if (mStreetBox.data()->currentIndex() < 0)
     {
@@ -186,77 +178,102 @@ void AddressWidget::save()
     MainWidget::save();
 }
 
-QList<int> AddressWidget::city()
+QList<int> BaseAddressWidget::city()
 {
     return mCityBox.data()->values();}
 
-QList<int> AddressWidget::locality()
+QList<int> BaseAddressWidget::locality()
 {
     return mMicrodistrictBox.data()->values();
 }
 
-QList<int> AddressWidget::street()
+QList<int> BaseAddressWidget::street()
 {
     return mStreetBox.data()->values();
 }
 
-int AddressWidget::number1()
+int BaseAddressWidget::number1()
 {
     return ui->mpNumber1->text().toInt();
 }
 
-int AddressWidget::number2()
+int BaseAddressWidget::number2()
 {
     return ui->mpNumber2->text().toInt();
 }
 
-int AddressWidget::room()
+int BaseAddressWidget::room()
 {
     return ui->mpRoom->text().toInt();
 }
 
-QString AddressWidget::landmark()
+QString BaseAddressWidget::landmark()
 {
     return ui->mpLandMark->text();
 }
 
-bool AddressWidget::isCity()
+bool BaseAddressWidget::isCity()
 {
     return city().count() > 0;
 }
 
-bool AddressWidget::isLocality()
+bool BaseAddressWidget::isLocality()
 {
     return locality().count() > 0;
 }
 
-bool AddressWidget::isStreet()
+bool BaseAddressWidget::isStreet()
 {
 
     return street().count() > 0;
 }
 
-bool AddressWidget::isNumber1()
+bool BaseAddressWidget::isNumber1()
 {
     return number1() > 0;
 }
 
-bool AddressWidget::isNumber2()
+bool BaseAddressWidget::isNumber2()
 {
     return number2() > 0;
 }
 
-bool AddressWidget::isRoom()
+bool BaseAddressWidget::isRoom()
 {
     return room() > 0;
 }
 
-bool AddressWidget::isLandmark()
+bool BaseAddressWidget::isLandmark()
 {
     return !landmark().isEmpty();
 }
 
-void AddressWidget::setState(int aState)
+void BaseAddressWidget::setNormalVisible()
+{
+    mCityBox.setVisible(true);
+    mStreetBox.setVisible(true);
+    ui->mpHomeNumberContainer->setVisible(true);
+    ui->mpLandMark->setVisible(true);
+
+    CityWidget* vpCityWidget = dynamic_cast<CityWidget*>(mCityBox.data());
+    if (vpCityWidget)
+    {
+        switch (vpCityWidget->type()) {
+        case CityModel::City:
+                mMicrodistrictBox.setVisible(true);
+                ui->mpRoomContainer->setVisible(true);
+            break;
+        case CityModel::Garden:
+                mMicrodistrictBox.setVisible(false);
+                ui->mpRoomContainer->setVisible(false);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void BaseAddressWidget::setState(int aState)
 {
     mState = aState;
 
@@ -266,25 +283,12 @@ void AddressWidget::setState(int aState)
 
     if (isState(location::NORMAL))
     {
-        mCityBox.setVisible(true);
-        ui->mpLandMark->setVisible(true);
-        mMicrodistrictBox.setVisible(true);
-        ui->mpNumber1->setVisible(true);
-        ui->mpNumber2->setVisible(true);
-        ui->mpRoom->setVisible(true);
-        mStreetBox.setVisible(true);
-        ui->label->setVisible(true);
-        ui->label_2->setVisible(true);
-        ui->label_3->setVisible(true);
-        ui->label_6->setVisible(true);
+        setNormalVisible();
     }
     if (isState(location::FIND))
     {
-        mCityBox.setVisible(true);
+        setNormalVisible();
         ui->mpLandMark->setVisible(false);
-        mMicrodistrictBox.setVisible(true);
-        mStreetBox.setVisible(true);
-
 
         mCityBox.data()->setEditable(true);
         mStreetBox.data()->setEditable(true);
@@ -292,28 +296,16 @@ void AddressWidget::setState(int aState)
 
         if (isState(location::FINDROOM))
         {
-            ui->label_2->setVisible(true);
-            ui->label_3->setVisible(true);
-            ui->label_6->setVisible(true);
-            ui->mpNumber1->setVisible(true);
-            ui->mpNumber2->setVisible(true);
-            ui->mpRoom->setVisible(true);
-            ui->label->setVisible(true);
+            ui->mpRoomContainer->setVisible(true);
         }
         else
         {
-            ui->label_2->setVisible(false);
-            ui->label_3->setVisible(false);
-            ui->label_6->setVisible(false);
-            ui->mpNumber1->setVisible(false);
-            ui->mpNumber2->setVisible(false);
-            ui->mpRoom->setVisible(false);
-            ui->label->setVisible(false);
+            ui->mpRoomContainer->setVisible(false);
         }
     }
 }
 
-void AddressWidget::on_mpCity_currentIndexChanged(int index)
+void BaseAddressWidget::on_mpCity_currentIndexChanged(int index)
 {
     if (index >= 0)
     {
@@ -333,12 +325,12 @@ void AddressWidget::on_mpCity_currentIndexChanged(int index)
     }
 }
 
-bool AddressWidget::canSave()
+bool BaseAddressWidget::canSave()
 {
     return (mStreetBox.data()->currentIndex() >= 0) && (ui->mpNumber1->text().length());
 }
 
-void AddressWidget::selectComboBox(int aIndex)
+void BaseAddressWidget::selectComboBox(int aIndex)
 {
     mBoxes[aIndex]->clickItemComboBox(mBoxes[aIndex]->currentIndex());
 }

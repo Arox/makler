@@ -1,14 +1,17 @@
 #include "address.h"
 #include "ui_address.h"
 
-Address::Address(int aType, int aState, QWidget *parent) :
+Address::Address(int aState, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Address)
-  ,mpAddressInCity(0)
-  ,mpAddressInGarden(0)
+  ,mAddressInCity(aState, this)
+  ,mAddressInGarden(aState, this)
 {
     ui->setupUi(this);
-    setType(aType, aState);
+    ui->verticalLayout->insertWidget(1, &mAddressInCity);
+    ui->verticalLayout->insertWidget(1, &mAddressInGarden);
+
+    mAddressInGarden.setVisible(false);
 }
 
 Address::~Address()
@@ -16,55 +19,51 @@ Address::~Address()
     delete ui;
 }
 
-void Address::setType(int aType, int aState)
+BaseAddressWidget &Address::data()
 {
-    if (aType & CITY)
+    if (mAddressInGarden.isHidden())
     {
-        if (mpAddressInCity) {delete mpAddressInCity;}
-        mpAddressInCity =new AddressWidget(aState, this);
-        ui->mpCityLayout->addWidget(mpAddressInCity);
+        return mAddressInCity;
     }
-
-    if (aType & GARDEN)
-    {
-        if (mpAddressInGarden) {delete mpAddressInGarden;}
-        mpAddressInGarden =new AddressHomeWidget(aState, this);
-        ui->mpGardenLayout->addWidget(mpAddressInGarden);
-    }
-
-    if (!(mpAddressInCity && mpAddressInGarden))
-    {
-        ui->mpCity->setVisible(false);
-        ui->mpGarden->setVisible(false);
-    }
-}
-
-
-void Address::load(int aIdObjects, int aNumber)
-{
-    if (mpAddressInCity)
-    {
-        mpAddressInCity->load(aIdObjects, aNumber);
-    }
-    if (mpAddressInGarden)
-    {
-        mpAddressInGarden->load(aIdObjects, aNumber);
-    }
+    return mAddressInGarden;
 }
 
 bool Address::canSave()
 {
-    return (mpAddressInCity && mpAddressInCity->canSave()) || (mpAddressInGarden && mpAddressInGarden->canSave());
+    return mAddressInCity.canSave() || mAddressInGarden.canSave();
 }
 
 void Address::save()
 {
-    if (mpAddressInCity)
-    {
-        mpAddressInCity->save();
-    }
-    if (mpAddressInGarden)
-    {
-        mpAddressInGarden->save();
-    }
+    if (mAddressInCity.canSave()) mAddressInCity.save();
+    if (mAddressInGarden.canSave()) mAddressInGarden.save();
+}
+
+void Address::load(int aId)
+{
+    mAddressInCity.load(aId);
+    mAddressInGarden.load(aId);
+}
+
+void Address::on_mpCity_clicked()
+{
+    mAddressInCity.setVisible(true);
+    mAddressInGarden.setVisible(false);
+}
+
+void Address::on_mpGarden_clicked()
+{
+    mAddressInCity.setVisible(false);
+    mAddressInGarden.setVisible(true);
+}
+
+void Address::setEnabled(bool aFlag)
+{
+    mAddressInCity.setEnabled(aFlag);
+    mAddressInGarden.setEnabled(aFlag);
+}
+
+bool Address::isEnabled() const
+{
+    return mAddressInCity.isEnabled() || mAddressInGarden.isEnabled();
 }

@@ -1,7 +1,8 @@
 #include "citymodel.h"
 
 CityModel::CityModel(TypeCity aType, QObject *parent) :
-    LocationModel(parent)
+    LocationModel(parent),
+    mType(aType)
 {
     if (aType == City)
     {
@@ -17,4 +18,9 @@ CityModel::CityModel(TypeCity aType, QObject *parent) :
 QString CityModel::query()
 {
     return mSql;
+}
+
+CityModel::TypeCity CityModel::type()
+{
+    return mType;
 }

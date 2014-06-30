@@ -5,47 +5,48 @@ SUBDIRS = address
 
 #ADDRESS
 SOURCES += \
-    $$PWD/address/addresswidget.cpp \
-    $$PWD/address/addresshomewidget.cpp \
+    $$PWD/address/baseaddresswidget.cpp \
     $$PWD/address/address.cpp \
     $$PWD/mytableview.cpp \
     $$PWD/connecttodatabase.cpp \
     $$PWD/editorsettingsdatabase.cpp \
-    corewidget/address/citywidget.cpp \
-    corewidget/address/citymodel.cpp \
-    corewidget/address/locationselect.cpp \
-    corewidget/address/locationmodel.cpp \
-    corewidget/address/verticalcontanerwidget.cpp \
-    corewidget/address/microdistrictmodel.cpp \
-    corewidget/address/streetmodel.cpp \
-    corewidget/address/microdistrictwidget.cpp \
-    corewidget/address/streetwidget.cpp
+    $$PWD/address/citywidget.cpp \
+    $$PWD/address/citymodel.cpp \
+    $$PWD/address/locationselect.cpp \
+    $$PWD/address/locationmodel.cpp \
+    $$PWD/address/verticalcontanerwidget.cpp \
+    $$PWD/address/microdistrictmodel.cpp \
+    $$PWD/address/streetmodel.cpp \
+    $$PWD/address/microdistrictwidget.cpp \
+    $$PWD/address/streetwidget.cpp \
+    corewidget/address/addresscity.cpp \
+    corewidget/address/addresshome.cpp
 
 HEADERS  +=  \
-    $$PWD/address/addresswidget.h \
-    $$PWD/address/addresshomewidget.h \
+    $$PWD/address/baseaddresswidget.h \
     $$PWD/address/address.h \
     $$PWD/mytableview.h \
     $$PWD/connecttodatabase.h \
     $$PWD/editorsettingsdatabase.h \
-    corewidget/address/citywidget.h \
-    corewidget/address/citymodel.h \
-    corewidget/address/locationselect.h \
-    corewidget/address/locationmodel.h \
-    corewidget/address/generalsettingslocation.h \
-    corewidget/address/verticalcontanerwidget.h \
-    corewidget/address/microdistrictmodel.h \
-    corewidget/address/streetmodel.h \
-    corewidget/address/microdistrictwidget.h \
-    corewidget/address/streetwidget.h
+    $$PWD/address/citywidget.h \
+    $$PWD/address/citymodel.h \
+    $$PWD/address/locationselect.h \
+    $$PWD/address/locationmodel.h \
+    $$PWD/address/generalsettingslocation.h \
+    $$PWD/address/verticalcontanerwidget.h \
+    $$PWD/address/microdistrictmodel.h \
+    $$PWD/address/streetmodel.h \
+    $$PWD/address/microdistrictwidget.h \
+    $$PWD/address/streetwidget.h \
+    corewidget/address/addresscity.h \
+    corewidget/address/addresshome.h
 
 FORMS    +=  \
-    $$PWD/address/addresswidget.ui \
-    $$PWD/address/addresshomewidget.ui \
+    $$PWD/address/baseaddresswidget.ui \
     $$PWD/address/address.ui \
     $$PWD/connecttodatabase.ui \
     $$PWD/editorsettingsdatabase.ui \
-    corewidget/address/verticalcontanerwidget.ui
+    $$PWD/address/verticalcontanerwidget.ui
 
 #ALL OTHER
 SOURCES += \

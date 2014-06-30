@@ -11,6 +11,7 @@ class CityWidget : public LocationSelect
     CityModel mModel;
 public:
     explicit CityWidget(CityModel::TypeCity aType, QWidget *parent = 0);
+    CityModel::TypeCity type();
 protected:
     virtual LocationModel* modelSelect();
     virtual LocationModel* modelCompleter();

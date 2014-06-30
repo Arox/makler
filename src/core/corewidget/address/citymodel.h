@@ -13,8 +13,9 @@ public:
         City,
         Garden
     };
-
+    TypeCity mType;
     explicit CityModel(TypeCity aType, QObject *parent = 0);
+    TypeCity type();
 protected:
     virtual QString query();
 signals:

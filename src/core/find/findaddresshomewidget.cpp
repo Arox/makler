@@ -1,7 +1,7 @@
 #include "findaddresshomewidget.h"
 
 FindAddressHomeWidget::FindAddressHomeWidget(QWidget *parent) :
-    AddressHomeWidget(FIND|MULTISELECT, parent)
+    AddressHome(location::FIND | location::MULTISELECT, parent)
 {
 }
 
@@ -10,7 +10,7 @@ QString FindAddressHomeWidget::sqlWhere()
     QStringList vCity;
     QStringList vStreet;
 
-    foreach (int vId, garden()) {
+    foreach (int vId, city()) {
         vCity << QString("address.city_fk = %1").arg(vId);
     }
     foreach (int vId, street()) {
@@ -18,8 +18,6 @@ QString FindAddressHomeWidget::sqlWhere()
     }
     QStringList vWheres;
     vWheres
-            //<< (isGarden() ? QString("address.city_fk = %1").arg(garden()) : QString(""))
-            //<< (isStreet() ? QString("address.street_fk = %1").arg(street()) : QString(""))
             << "(" + vCity.join(" OR ") + ")"
             << "(" + vStreet.join(" OR ") + ")"
             << (isNumber1() ? QString("address.number1 = %1").arg(number1()) : QString(""))

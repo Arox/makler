@@ -153,8 +153,7 @@ PhoneFindDialog::PhoneFindDialog(QWidget *parent) :
     mPhone(TRANSLATE("Телефон"), MyLineEdit::Normal),
     mNumber(TRANSLATE("Номер заявки"), MyLineEdit::Normal),
     mId(-1),
-    mAddress(location::FINDROOM),
-    mHomeAddress(AddressHomeWidget::FINDHOME)
+    mAddress(location::FINDROOM, this)
 {
     ui->setupUi(this);
 
@@ -162,53 +161,13 @@ PhoneFindDialog::PhoneFindDialog(QWidget *parent) :
     ui->contactLayout->insertWidget(0, &mPhone);
     ui->contactLayout->insertWidget(0, &mFio);
 
-    ui->mpCity->setObjectName("city");
-    ui->mpNoCity->setObjectName("nocity");
-
-    ui->horizontalLayout_4->addWidget(&mAddress);
-    ui->horizontalLayout_6->addWidget(&mHomeAddress);
-    mHomeAddress.setVisible(false);
-    QSpacerItem* vpSpaser = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    ui->horizontalLayout_6->addItem(vpSpaser);
-
-    connect(ui->mpCity, SIGNAL(clicked()), this, SLOT(selectCity()));
-    connect(ui->mpNoCity, SIGNAL(clicked()), this, SLOT(selectNoCity()));
+    ui->verticalLayout->insertWidget(1, &mAddress);
 }
 
 PhoneFindDialog::~PhoneFindDialog()
 {
     delete ui;
 }
-
-void PhoneFindDialog::selectCity()
-{
-    ui->mpNoCity->setChecked(false);
-    ui->mpCity->setChecked(true);
-    if (!mAddress.isVisible())
-    {
-        mAddress.setVisible(true);
-    }
-    if (mHomeAddress.isVisible())
-    {
-        mHomeAddress.setVisible(false);
-    }
-}
-
-void PhoneFindDialog::selectNoCity()
-{
-    ui->mpCity->setChecked(false);
-    ui->mpNoCity->setChecked(true);
-    if (!mHomeAddress.isVisible())
-    {
-        mHomeAddress.setVisible(true);
-    }
-    if (mAddress.isVisible())
-    {
-        mAddress.setVisible(false);
-    }
-}
-
-
 
 int PhoneFindDialog::resultId()
 {
@@ -273,42 +232,16 @@ void PhoneFindDialog::on_mpFind_clicked()
 
     //ADD ADDRESS
     QStringList vWheres;
-    if (mAddress.isVisible())
+    vWheres
+            << (mAddress.data().isLocality() ? QString("microdistrict_fk = %1").arg(mAddress.data().locality().at(0)) : QString(""))
+            << (mAddress.data().isStreet() ? QString("street_fk = %1").arg(mAddress.data().street().at(0)) : QString(""))
+            << (mAddress.data().isNumber1() ? QString("number1 = '%1'").arg(mAddress.data().number1()) : QString(""))
+            << (mAddress.data().isNumber2() ? QString("number2 = '%1'").arg(mAddress.data().number2()) : QString(""))
+            << (mAddress.data().isRoom() ? QString("room = '%1'").arg(mAddress.data().room()) : QString(""));
+    vWheres.removeAll("");
+    if (vWheres.count())
     {
-        //if (mAddress.isNumber1())
-        //{
-
-        vWheres
-                << (mAddress.isLocality() ? QString("microdistrict_fk = %1").arg(mAddress.locality().at(0)) : QString(""))
-                << (mAddress.isStreet() ? QString("street_fk = %1").arg(mAddress.street().at(0)) : QString(""))
-                << (mAddress.isNumber1() ? QString("number1 = '%1'").arg(mAddress.number1()) : QString(""))
-                << (mAddress.isNumber2() ? QString("number2 = '%1'").arg(mAddress.number2()) : QString(""))
-                << (mAddress.isRoom() ? QString("room = '%1'").arg(mAddress.room()) : QString(""));
-        vWheres.removeAll("");
-        if (vWheres.count())
-        {
-
-            vConstraints << QString("(%1)").arg(vWheres.join(" AND "));
-        }
-        //}
-    }
-
-    if (mHomeAddress.isVisible())
-    {
-        //if (mHomeAddress.isNumber1())
-        //{
-        vWheres.clear();
-        vWheres
-                << (mHomeAddress.isStreet() ? QString("street_fk = %1").arg(mHomeAddress.street().at(0)) : QString(""))
-                << (mHomeAddress.isNumber1() ? QString("number1 = '%1'").arg(mHomeAddress.number1()) : QString(""))
-                << (mHomeAddress.isNumber2() ? QString("number2 = '%1'").arg(mHomeAddress.number2()) : QString(""));
-        vWheres.removeAll("");
-        if (vWheres.count())
-        {
-
-            vConstraints << QString("(%1)").arg(vWheres.join(" AND "));
-        }
-        //}
+        vConstraints << QString("(%1)").arg(vWheres.join(" AND "));
     }
     if (vConstraints.count())
     {

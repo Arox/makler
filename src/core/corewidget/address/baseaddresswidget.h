@@ -1,5 +1,5 @@
-#ifndef ADDRESSWIDGET_H
-#define ADDRESSWIDGET_H
+#ifndef BASEADDRESSWIDGET_H
+#define BASEADDRESSWIDGET_H
 
 #include <QWidget>
 #include <QList>
@@ -8,19 +8,20 @@
 #include "../mainwidget.h"
 
 #include "verticalcontanerwidget.h"
+#include "citymodel.h"
 
 namespace Ui {
 class AddressWidget;
 }
 
-class AddressWidget : public MainWidget
+class BaseAddressWidget : public MainWidget
 {
     Q_OBJECT
     
 public:
-    explicit AddressWidget(int aState, QWidget *parent = 0);
-    ~AddressWidget();
-    void load(int aIdObjects, int aNumber);
+    explicit BaseAddressWidget(CityModel::TypeCity aType, int aState, QWidget *parent = 0);
+    ~BaseAddressWidget();
+    void load(int aIdObjects);
      bool canSave();
 public:
 
@@ -52,6 +53,7 @@ private:
     void setEnabledWidgets(bool aEnable);
     void setState(int aState);
     bool isState(int aState);
+    void setNormalVisible();
 private:
     Ui::AddressWidget *ui;
     int mId;
@@ -67,4 +69,4 @@ private:
     VerticalContanerWidget mStreetBox;
 };
 
-#endif // ADDRESSWIDGET_H
+#endif // BASEADDRESSWIDGET_H

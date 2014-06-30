@@ -1,8 +1,10 @@
 #ifndef ADDRESS_H
 #define ADDRESS_H
 
-#include "addresswidget.h"
-#include "addresshomewidget.h"
+#include "addresscity.h"
+#include "addresshome.h"
+
+#include "baseaddresswidget.h"
 
 #include <QWidget>
 
@@ -15,34 +17,22 @@ class Address : public QWidget
     Q_OBJECT
 
 public:
-    enum TypeAddress
-    {
-        CITY = 1,
-        GARDEN = 2
-    };
-
-    enum StateWidget
-    {
-        NORMAL = 1,
-        FIND = 128,
-        FINDROOM = 192,
-        FINDHOME = 160,
-        MULTISELECT = 8
-    };
-
-    explicit Address(int aType, int aState, QWidget *parent = 0);
+    Address(int aState, QWidget *parent = 0);
     ~Address();
-    void load(int aIdObjects, int aNumber);
+    BaseAddressWidget& data();
     bool canSave();
-
+    void setEnabled(bool);
+    bool isEnabled() const;
 public slots:
     void save();
-private:
-    void setType(int aType, int aState);
+    void load(int aId);
+private slots:
+    void on_mpCity_clicked();
+    void on_mpGarden_clicked();
 private:
     Ui::Address *ui;
-    AddressWidget* mpAddressInCity;
-    AddressHomeWidget*mpAddressInGarden;
+    AddressCity mAddressInCity;
+    AddressHome mAddressInGarden;
 };
 
 #endif // ADDRESS_H

@@ -18,3 +18,8 @@ LocationModel* CityWidget::modelCompleter()
 {
     return &mModel;
 }
+
+CityModel::TypeCity CityWidget::type()
+{
+    return mModel.type();
+}

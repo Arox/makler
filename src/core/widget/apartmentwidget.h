@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "generalwidget.h"
 #include "clientheaderwidget.h"
-#include "address/addresswidget.h"
+#include "address/addresscity.h"
 #include "informationarea.h"
 #include "pricewidget.h"
 #include "typeapartment.h"
@@ -35,7 +35,7 @@ private slots:
 private:
     Ui::ApartmentWidget *ui;
     ClientHeaderWidget mClient;
-    AddressWidget mAddress;
+    AddressCity mAddress;
     InformationArea mArea;
     PriceWidget mPrice;
     TypeApartment mType;

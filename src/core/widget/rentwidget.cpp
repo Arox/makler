@@ -14,14 +14,12 @@ RentWidget::RentWidget(int aAgent, QWidget *parent) :
     mId(-1),
     mAgent(aAgent),
     mIsLoad(false),
-    mAddress(location::NORMAL),
-    mHomeAddress(AddressHomeWidget::NORMAL)
+    mAddress(location::NORMAL)
 {
     ui->setupUi(this);
     ui->mainLayout->addWidget(&mClient);
     ui->mainLayout->addWidget(&mType);
     ui->mainLayout->addWidget(&mAddress);
-    ui->mainLayout->addWidget(&mHomeAddress);
     ui->mainLayout->addWidget(&mArea);
     ui->mainLayout->addWidget(&mPrice);
     ui->centerLayout->insertWidget(1, &mInformation);
@@ -40,7 +38,7 @@ RentWidget::~RentWidget()
 
 void RentWidget::backWidget()
 {
-    if (mClient.canSave() && (mHomeAddress.canSave() || mAddress.canSave()))
+    if (mClient.canSave() && mAddress.canSave())
     {
 
         mClient.save();
@@ -50,7 +48,6 @@ void RentWidget::backWidget()
         mArea.save();
         mPrice.save();
         mAddress.save();
-        mHomeAddress.save();
         emit back(this);
     }
     else
@@ -103,8 +100,7 @@ void RentWidget::load(int aId)
     mType.load(mId);
     mArea.load(mId);
     mPrice.load(mId);
-    mAddress.load(mId, 1);
-    mHomeAddress.load(mId, 1);
+    mAddress.load(mId);
     mButtons.setId(mId);
 
     mClient.setEnabled(vAgent == mAgent);
@@ -114,7 +110,6 @@ void RentWidget::load(int aId)
     mArea.setEnabled(vAgent == mAgent);
     mPrice.setEnabled(vAgent == mAgent);
     mAddress.setEnabled(vAgent == mAgent);
-    mHomeAddress.setEnabled(vAgent == mAgent);
     mButtons.setChangeEnabled(vAgent == mAgent);
 
 

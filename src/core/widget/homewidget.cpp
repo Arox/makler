@@ -14,14 +14,12 @@ HomeWidget::HomeWidget(int aAgent, QWidget *parent) :
     mId(-1),
     mAgent(aAgent),
     mIsLoad(false),
-    mAddress(location::NORMAL),
-    mHomeAddress1(location::NORMAL)
+    mAddress(location::NORMAL)
 {
     ui->setupUi(this);
     ui->mainLayout->addWidget(&mClient);
     ui->mainLayout->addWidget(&mType);
     ui->mainLayout->addWidget(&mAddress);
-    ui->mainLayout->addWidget(&mHomeAddress1);
     ui->mainLayout->addWidget(&mArea);
     ui->mainLayout->addWidget(&mPrice);
     ui->centerLayout->insertWidget(1, &mInformation);
@@ -35,7 +33,7 @@ HomeWidget::HomeWidget(int aAgent, QWidget *parent) :
 
 void HomeWidget::backWidget()
 {
-    if (mClient.canSave() && (mHomeAddress1.canSave() || /*mHomeAddress2.canSave() ||*/ mAddress.canSave()))
+    if (mClient.canSave() && mAddress.canSave())
     {
         mClient.save();
         mInformation.save();
@@ -43,17 +41,7 @@ void HomeWidget::backWidget()
         mType.save();
         mArea.save();
         mPrice.save();
-        if (mAddress.canSave())
-        {
-            mAddress.save();
-        }
-        else
-        {
-            if (mHomeAddress1.canSave())
-            {
-                mHomeAddress1.save();
-            }
-        }
+        mAddress.save();
         emit back(this);
     }
     else
@@ -112,8 +100,7 @@ void HomeWidget::load(int aId)
     mType.load(mId);
     mArea.load(mId);
     mPrice.load(mId);
-    mAddress.load(mId, 1);
-    mHomeAddress1.load(mId,1);
+    mAddress.load(mId);
     mButtons.setId(mId);
 
     mClient.setEnabled(vAgent == mAgent);
@@ -123,7 +110,6 @@ void HomeWidget::load(int aId)
     mArea.setEnabled(vAgent == mAgent);
     mPrice.setEnabled(vAgent == mAgent);
     mAddress.setEnabled(vAgent == mAgent);
-    mHomeAddress1.setEnabled(vAgent == mAgent);
     mButtons.setChangeEnabled(vAgent == mAgent);
 
     ResponseRecordType vRecord = execQuery(QString("SELECT \"create\", now() as read FROM objects WHERE id = %1")
