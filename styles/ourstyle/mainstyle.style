@@ -1,0 +1,361 @@
+QWidget
+{
+	background-color: rgba(230, 230, 230, 255);
+}
+
+DialogAuthentification
+{
+	background-color: rgba(230, 230, 230, 255); 
+}
+
+DialogAuthentification QLabel#mpImage
+{
+	min-width: 124px;
+	min-height: 124px;
+	max-width: 124px;
+	max-height: 124px;
+	image: url(:/main/idea.png);
+}
+
+DialogAuthentification QPushButton#mpOk
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(30, 162, 232, 50), stop:0.517073 rgba(30, 162, 232, 255), stop:1 rgba(30, 162, 232, 50));
+}
+
+MyLineEdit
+{
+	border-style: outset;
+    border-width: 1px;
+    border-radius: 8px;
+    padding: 1px;
+    text-align: center;
+	background-color: rgba(255, 255, 255, 255);
+	font: 18px;
+}
+
+QTableView
+{
+	background-color: rgba(255, 255, 255, 255);
+}
+
+QPushButton
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(249, 249, 249, 255), stop:0.517073 rgba(218, 218, 218, 255), stop:1 rgba(249, 249, 249, 255));
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px;
+    padding: 6px;
+    color: rgb(0, 0, 0);
+	min-width: 100px;
+	max-height: 13px;
+}
+
+QPushButton:!enabled
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(249, 249, 249, 50), stop:0.517073 rgba(218, 218, 218, 50), stop:1 rgba(249, 249, 249, 50));
+}
+
+QMainWindow QPushButton#mpSettings
+{
+	min-width: 24px;
+	min-height: 24px;
+	max-width: 24px;
+	max-height: 24px;
+	image: url(:/buttons/settings.png);
+}
+
+QMainWindow QPushButton#mpInformation
+{
+	min-width: 24px;
+	min-height: 24px;
+	max-width: 24px;
+	max-height: 24px;
+	image: url(:/buttons/info.png);
+}
+
+QMainWindow QPushButton#mpHelp
+{
+	min-width: 24px;
+	min-height: 24px;
+	max-width: 24px;
+	max-height: 24px;
+	image: url(:/buttons/help.png);
+}
+
+QPushButton#mpFilter
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(187, 200, 232, 255), stop:0.517073 rgba(80, 157, 233, 255), stop:1 rgba(179, 195, 227, 255));
+}
+
+QPushButton#mpButtonAdd
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(30, 162, 232, 50), stop:0.517073 rgba(30, 162, 232, 255), stop:1 rgba(30, 162, 232, 50));
+}
+
+ClientsWidget QPushButton#mpClearFilter
+{
+	min-width: 20px;
+	min-height: 20px;
+	max-width: 20px;
+	max-height: 20px;
+	image: url(:/styles/delete.png);
+}
+
+ClientsWidget QLineEdit#mpFilterPhone
+{
+	min-width: 200px;
+}
+
+ViewPostsWidget QPushButton#mpWrite
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(30, 162, 232, 50), stop:0.517073 rgba(30, 162, 232, 255), stop:1 rgba(30, 162, 232, 50));
+}
+
+ViewPostsWidget QPushButton#mpBack
+{
+	min-width: 24px;
+	min-height: 24px;
+	max-width: 24px;
+	max-height: 24px;
+	image: url(:/image/resource/back.png);
+}
+
+ViewPostsWidget QPushButton#mpNext
+{
+	min-width: 24px;
+	min-height: 24px;
+	max-width: 24px;
+	max-height: 24px;
+	image: url(:/image/resource/next.png);
+}
+
+QPushButton:checked
+{
+	/*background-color: qlineargradient(spread:pad, x1:0.51295, y1:0.006, x2:0.498, y2:1, stop:0 rgba(0, 152, 0, 175), stop:0.303483 rgba(0, 145, 0, 237), stop:0.736318 rgba(0, 147, 0, 214), stop:1 rgba(0, 161, 0, 255));*/
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(249, 249, 249, 255), stop:0.517073 rgba(246, 116, 9, 221), stop:1 rgba(249, 249, 249, 255));
+}
+
+QPushButton:pressed
+{
+    border-style: outset;
+    border-width: 2px;
+}
+
+QWidget[mainmenu="true"] QPushButton
+{
+	background-color: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.505, fy:0.5, stop:0 rgba(3, 69, 190, 221), stop:1 rgba(140, 180, 253, 255));
+	min-width: 72px;
+	min-height: 72px;
+	max-width: 72px;
+	max-height: 72px;
+	border-radius: 40px;
+}
+
+QWidget[mainmenu="true"] QPushButton:checked
+{
+	background-color: qradialgradient(spread:reflect, cx:0.5, cy:0.5, radius:0.5, fx:0.505, fy:0.5, stop:0 rgba(246, 116, 9, 221), stop:1 rgba(255, 255, 255, 255));
+	min-width: 72px;
+	min-height: 72px;
+	max-width: 72px;
+	max-height: 72px;
+	border-radius: 40px;
+}
+
+QWidget[mainmenu="true"]#clients QPushButton
+{
+	image: url(:/menu/family.png);
+}
+
+QWidget[mainmenu="true"]#apartment QPushButton
+{
+	image: url(:/menu/apartment.png);
+}
+
+QWidget[mainmenu="true"]#rent QPushButton
+{
+	image: url(:/menu/rent.png);
+}
+
+QWidget[mainmenu="true"]#home QPushButton
+{
+	image: url(:/menu/home.png);
+}
+
+QWidget[mainmenu="true"]#find QPushButton
+{
+	image: url(:/menu/find.png);
+}
+
+QWidget[mainmenu="true"]#messages QPushButton
+{
+	image: url(:/menu/mailmenu.png);
+}
+
+QWidget[mainmenu="true"]#exit QPushButton
+{
+	image: url(:/menu/exit.png);
+}
+
+QWidget[mainmenu="true"] QLabel
+{
+	font: 8.5em;
+}
+
+PhoneFindDialog QPushButton#city
+{
+	border-top-left-radius: 10px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 10px;
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 246), stop:1 rgba(255, 255, 255, 255));;
+}
+
+PhoneFindDialog QPushButton#city:checked
+{
+	background-color: qlineargradient(spread:pad, x1:0.51295, y1:0.006, x2:0.498, y2:1, stop:0 rgba(0, 152, 0, 175), stop:0.303483 rgba(0, 145, 0, 237), stop:0.736318 rgba(0, 147, 0, 214), stop:1 rgba(0, 161, 0, 255));
+}
+
+PhoneFindDialog QPushButton#nocity
+{
+	border-top-left-radius: 0px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 0px;
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 246), stop:1 rgba(255, 255, 255, 255));
+}
+
+PhoneFindDialog QPushButton#nocity:checked
+{
+	background-color: qlineargradient(spread:pad, x1:0.51295, y1:0.006, x2:0.498, y2:1, stop:0 rgba(0, 152, 0, 175), stop:0.303483 rgba(0, 145, 0, 237), stop:0.736318 rgba(0, 147, 0, 214), stop:1 rgba(0, 161, 0, 255));
+}
+
+PhoneFindDialog AddressWidget
+{
+	min-height:120px;
+	max-height:120px;
+}
+
+PhoneFindDialog AddressHomeWidget
+{
+	min-height:120px;
+	max-height:120px;
+}
+
+QLineEdit
+{
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 6px;
+    padding: 1px;
+    text-align: center;
+	background-color: rgba(255, 255, 255, 255);
+
+}
+
+ClientsPhoneWidget
+{
+	max-width: 620px;
+	min-width: 620px;
+	/*min-height:200px;*/
+}
+
+ClientHeaderAlternativeWidget ClientsPhoneWidget
+{
+	min-height: 0px;
+	min-width: 0px;
+	max-height: 16777215px;
+	max-width: 16777215px;
+}
+
+ClientsPhoneWidget QWidget
+{
+	border-style: outset;
+    border-width: 0px;
+	border-radius: 6px;
+}
+
+ClientsPhoneWidget QPushButton#addcontactbutton
+{
+	max-width: 100px;
+	min-width: 100px;
+}
+
+ClientsPhoneWidget QPushButton#deletecontactbutton
+{
+	image: url(:/styles/delete.png);
+	max-width: 20px;
+	min-width: 20px;
+}
+
+ClientsPhoneWidget MyLineEdit
+{
+	border-style: outset;
+    border-width: 1px;
+    border-radius: 6px;
+    padding: 1px;
+    text-align: center;
+	background-color: rgba(255, 255, 255, 255);
+	font: 16px;
+	max-width: 250px;
+	min-width: 250px;
+}
+
+QTableView#viewclient
+{
+	min-height: 200px;
+}
+
+ViewObjectWidget QTableView[find="state1"]
+{
+	background-color: rgb(255, 255, 255);
+}
+
+ViewObjectWidget QTableView[find="state2"]
+{
+	background-color: rgb(170, 170, 255);
+}
+
+QComboBox
+{
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 6px;
+    padding: 3px;
+    text-align: center;
+}
+
+QComboBox::down-arrow {
+    image: url(:/styles/styles-image/down2.png);
+    height: 40px;
+}
+
+QComboBox::drop-down {
+    subcontrol-position: center right;
+    width: 15px;
+    right:3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background:rgb(250, 250, 250); /*none;*/
+}
+
+QComboBox:editable {
+    background: rgb(250, 250, 250); /*#ffffff;*/
+}
+
+QComboBox:!editable {
+    background: rgb(250, 250, 250); /*#d7d4d1;*/
+}
+
+QMessageBox QPushButton
+{
+	min-width: 70px;
+	max-width: 70px;
+	
+}
+
+QMessageBox QPushButton
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(30, 162, 232, 50), stop:0.517073 rgba(30, 162, 232, 255), stop:1 rgba(30, 162, 232, 50));
+}

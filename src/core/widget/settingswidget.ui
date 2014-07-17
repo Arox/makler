@@ -20,15 +20,15 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>795</width>
-        <height>414</height>
+        <width>791</width>
+        <height>404</height>
        </rect>
       </property>
       <attribute name="label">
@@ -40,13 +40,55 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>795</width>
-        <height>414</height>
+        <width>791</width>
+        <height>404</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Page 2</string>
       </attribute>
+      <widget class="QToolBox" name="mpContainer_2">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>180</y>
+         <width>791</width>
+         <height>464</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="page_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>100</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Page 1</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="page_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>791</width>
+          <height>404</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Page 2</string>
+        </attribute>
+       </widget>
+      </widget>
      </widget>
     </widget>
    </item>

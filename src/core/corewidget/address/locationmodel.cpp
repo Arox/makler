@@ -27,7 +27,7 @@ QVariant LocationModel::data(const QModelIndex & index, int role) const
         {
             if (mData.count() > index.row())
             {
-                return mData[index.row()]["name"];
+                return QString("  %1  ").arg(mData[index.row()]["name"].toString());
             }
         }
     }

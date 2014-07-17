@@ -1,5 +1,5 @@
 #include "baseaddresswidget.h"
-#include "ui_addresswidget.h"
+#include "ui_baseaddresswidget.h"
 
 #include <QMessageBox>
 #include <QTime>
@@ -25,9 +25,9 @@ BaseAddressWidget::BaseAddressWidget(CityModel::TypeCity aType, int aState, QWid
     mBoxes << mCityBox.data() << mMicrodistrictBox.data() << mStreetBox.data();
     setState(aState);
 
-    ui->horizontalLayout_3->insertWidget(0,&mCityBox);
-    ui->horizontalLayout_3->insertWidget(1,&mMicrodistrictBox);
-    ui->horizontalLayout_3->insertWidget(2,&mStreetBox);
+    ui->horizontalLayout_4->insertWidget(0,&mCityBox);
+    ui->horizontalLayout_4->insertWidget(1,&mMicrodistrictBox);
+    ui->horizontalLayout_4->insertWidget(2,&mStreetBox);
 
     on_mpCity_currentIndexChanged(mCityBox.data()->currentIndex());
 }

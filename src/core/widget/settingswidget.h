@@ -10,6 +10,8 @@
 #include "addresseditor.h"
 #include "widgetforcontrol.h"
 #include "editorsettingsdatabase.h"
+#include "styleswidget.h"
+
 namespace Ui {
 class SettingsWidget;
 }
@@ -50,6 +52,7 @@ private:
     AddressEditor* mpAddressEditor;
     ViewBases* mpSync;
     EditorSettingsDatabase mEditorDatabase;
+    StylesWidget mStyles;
 
     //QList<QStack <WidgetForControl*>> mListWidgets;
 };

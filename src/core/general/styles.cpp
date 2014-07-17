@@ -10,6 +10,8 @@
 
 QStringList Styles::mStyleNames;
 const QString Styles::vNameDirStyles = "styles";
+QString Styles::mCurrentStyleName;
+
 void Styles::inizialize()
 {
     mStyleNames.clear();
@@ -33,6 +35,7 @@ bool Styles::setStyle(QString aStyleName)
     if (vPath.cd(vNameDirStyles))
     {
         QSettings vStyleFile(vPath.filePath(aStyleName), QSettings::IniFormat);
+        mCurrentStyleName = aStyleName;
         loadStyles(vStyleFile.value("files").toStringList());
         registerResources(vStyleFile.value("resources").toStringList());
     }
@@ -79,4 +82,41 @@ void Styles::registerResources(QStringList aFiles)
         QResource::registerResource(vFileName);
         Styles::mResources.append(vFileName);
     }
+}
+
+QString Styles::style(QString aStyleName)
+{
+    QDir vPath(QApplication::applicationDirPath());
+    if (vPath.cd(vNameDirStyles))
+    {
+        QSettings vStyleFile(vPath.filePath(aStyleName), QSettings::IniFormat);
+        QFile* vpFile = 0;
+        QStringList vStyles;
+        vStyles << SizeScreenSettings::screenSettings(SizeScreenSettings::fileForCurrentScreen());
+        foreach (QString vFileName, vStyleFile.value("files").toStringList())
+        {
+            if (vpFile)
+            {
+                delete vpFile;
+            }
+            vpFile = new QFile(vFileName);
+            if (vpFile->exists())
+            {
+                if (vpFile->open(QIODevice::ReadOnly))
+                {
+                    vStyles.append(QString(vpFile->readAll()));
+                }
+                else
+                {
+                    QMessageBox::warning(0, TRANSLATE("Предупреждение"), QString("%1 %2").arg(TRANSLATE("Не удалось загрузить файл ").arg(vFileName)));
+                }
+            }
+        }
+        return vStyles.join('\n');
+    }
+}
+
+QString Styles::currentStyleName()
+{
+    return mCurrentStyleName;
 }

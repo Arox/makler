@@ -50,6 +50,7 @@ TopMenu::TopMenu(int aUser_fk, QStringList aRoles, QWidget *parent) :
     ui->verticalLayout->addWidget(mpStackWidget);
 
     connect(&mMapper, SIGNAL(mapped(int)), this, SLOT(menuActivated(int)));
+    setObjectName("topmenu");
 }
 
 void TopMenu::inizialize()

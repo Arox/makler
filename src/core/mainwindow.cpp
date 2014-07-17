@@ -22,13 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //ui->mpInformation->setVisible(false);
     mStatus = INIZIALIZE;
     DialogAuthentification v;
     if (v.exec() == QDialog::Rejected) exit(0);
     countMail();
     mUser_fk = execQuery(QString("SELECT mans.id as id FROM mans INNER JOIN users ON users.man_fk = mans.id WHERE users.id = %1").arg(v.idAgent()))[0]["id"].toInt();
-    //mUser_fk = v.idAgent();
     mRoles = v.roles();
 
     DialogAsideUp vAsideUp(mUser_fk, this);
@@ -43,21 +41,14 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     mStatus = WORK;
-//    mTimer.setSingleShot(false);
-//    mTimer.setInterval(5 * 1000);
-//    connect(&mTimer, SIGNAL(timeout()), this, SLOT(countMail()));
-//    mTimer.start();
 
-    //ui->widget_2->setStyleSheet("border: 0px;");
-
-    QString vStyleMenuButton = "background-color: #dad7d5; border-width: 0px;";
-    ui->mpMialView->setStyleSheet(vStyleMenuButton);
-    ui->mpInformation->setStyleSheet(vStyleMenuButton);
-    ui->mpHelp->setStyleSheet(vStyleMenuButton);
+//    QString vStyleMenuButton = "background-color: #dad7d5; border-width: 0px;";
+//    ui->mpMialView->setStyleSheet(vStyleMenuButton);
+//    ui->mpInformation->setStyleSheet(vStyleMenuButton);
+//    ui->mpHelp->setStyleSheet(vStyleMenuButton);
 
     mpArea = new QScrollArea(ui->centralWidget);
     mpArea->setBackgroundRole(QPalette::NoRole);
-    //mpArea->setStyleSheet("background-color: #dad7d5; border-width: 0px;");
     mpArea->setWidget(ui->widget_2);
     mpArea->setWidgetResizable(true);
 

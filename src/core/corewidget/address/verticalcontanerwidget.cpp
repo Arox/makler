@@ -9,8 +9,8 @@ VerticalContanerWidget::VerticalContanerWidget(QString vText, LocationSelect *ap
     ui->setupUi(this);
     QLabel* vpLabel = new QLabel(vText);
     vpLabel->setAlignment(Qt::AlignHCenter);
-    ui->mainLayout->addWidget(vpLabel);
-    ui->mainLayout->addWidget(apSelect);
+    ui->verticalLayout->addWidget(vpLabel);
+    ui->verticalLayout->addWidget(apSelect);
 }
 
 VerticalContanerWidget::~VerticalContanerWidget()

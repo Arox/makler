@@ -16,6 +16,9 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>10</number>
+     </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
@@ -25,6 +28,9 @@
          </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="spacing">
+            <number>16</number>
+           </property>
            <item>
             <spacer name="horizontalSpacer">
              <property name="orientation">
@@ -44,10 +50,10 @@
               <string>Активные</string>
              </property>
              <property name="checkable">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="checked">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -57,7 +63,7 @@
               <string>Отложенные</string>
              </property>
              <property name="checkable">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="checked">
               <bool>false</bool>
@@ -73,7 +79,7 @@
               <string>Архивные</string>
              </property>
              <property name="checkable">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="checked">
               <bool>false</bool>
@@ -97,10 +103,6 @@
             <widget class="QPushButton" name="mpClearFilter">
              <property name="text">
               <string/>
-             </property>
-             <property name="icon">
-              <iconset>
-               <normaloff>:/image/resource/delete.png</normaloff>:/image/resource/delete.png</iconset>
              </property>
             </widget>
            </item>
