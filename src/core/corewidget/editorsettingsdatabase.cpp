@@ -2,7 +2,7 @@
 #include "ui_editorsettingsdatabase.h"
 #include "language.h"
 
-#include <QMessageBox>
+#include "messages.h"
 EditorSettingsDatabase::EditorSettingsDatabase(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EditorSettingsDatabase)
@@ -11,6 +11,8 @@ EditorSettingsDatabase::EditorSettingsDatabase(QWidget *parent) :
     ui->setupUi(this);
     mConnectWidget.readSettings();
     ui->mainLayout->insertWidget(1, &mConnectWidget);
+
+    ui->mpSave->setProperty("color", "true");
 
     connect(ui->mpTry, SIGNAL(clicked()), &mConnectWidget, SLOT(showisConnect()));
     connect(ui->mpRestore, SIGNAL(clicked()), &mConnectWidget, SLOT(readSettings()));
@@ -29,7 +31,7 @@ void EditorSettingsDatabase::on_mpSave_clicked()
     if (!mConnectWidget.isConnect())
     {
         vSave = false;
-        if (QMessageBox::question(this, TRANSLATE("Ошибка подключения"), TRANSLATE("Не удалось подключиться к базе данных. Все равно сохранить данные?")) == QMessageBox::Yes)
+        if (question(this, TRANSLATE("Ошибка подключения"), TRANSLATE("Не удалось подключиться к базе данных. Все равно сохранить данные?")))
         {
             vSave = true;
         }
@@ -37,6 +39,6 @@ void EditorSettingsDatabase::on_mpSave_clicked()
     if (vSave)
     {
         mConnectWidget.saveSettings();
-        QMessageBox::information(this, TRANSLATE("Данные сохранены"), TRANSLATE("Данные успешно сохранены"));
+        information(this, TRANSLATE("Данные сохранены"), TRANSLATE("Данные успешно сохранены"));
     }
 }

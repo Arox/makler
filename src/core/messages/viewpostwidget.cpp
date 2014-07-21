@@ -7,7 +7,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QTime>
-#include <QMessageBox>
+#include "messages.h"
 
 ViewPostWidget::ViewPostWidget(int aUser_fk, bool aRemoveElement, QWidget *parent) :
     QWidget(parent),
@@ -45,7 +45,7 @@ void ViewPostWidget::save()
     int vCount = mUsers.countData();
     if (!vCount)
     {
-        QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Должен быть хотя бы один адресат"));
+        warning(this, TRANSLATE("Ошибка"), TRANSLATE("Должен быть хотя бы один адресат"));
     }
     qsrand(QTime::currentTime().msec());
     int vRnd = qrand() % 1000000;
@@ -73,7 +73,7 @@ void ViewPostWidget::save()
 
         if (!vFile.open(QIODevice::ReadOnly))
         {
-            QMessageBox::warning(this, TRANSLATE("невозможно добавить файл"), TRANSLATE("Ошибка при попытке открыт файл"));
+            warning(this, TRANSLATE("невозможно добавить файл"), TRANSLATE("Ошибка при попытке открыт файл"));
             continue;
         }
         QFileInfo vInfoFile(vNameFile);

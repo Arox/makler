@@ -8,6 +8,8 @@ Address::Address(int aState, QWidget *parent) :
   ,mAddressInGarden(aState, this)
 {
     ui->setupUi(this);
+    ui->mpCity->setChecked(true);
+    ui->mpGarden->setChecked(false);
     ui->verticalLayout->insertWidget(1, &mAddressInCity);
     ui->verticalLayout->insertWidget(1, &mAddressInGarden);
 
@@ -47,12 +49,16 @@ void Address::load(int aId)
 
 void Address::on_mpCity_clicked()
 {
+    ui->mpCity->setChecked(true);
+    ui->mpGarden->setChecked(false);
     mAddressInCity.setVisible(true);
     mAddressInGarden.setVisible(false);
 }
 
 void Address::on_mpGarden_clicked()
 {
+    ui->mpCity->setChecked(false);
+    ui->mpGarden->setChecked(true);
     mAddressInCity.setVisible(false);
     mAddressInGarden.setVisible(true);
 }

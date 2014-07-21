@@ -30,12 +30,65 @@ MyLineEdit
     padding: 1px;
     text-align: center;
 	background-color: rgba(255, 255, 255, 255);
-	font: 18px;
+	font: 16px;
+}
+
+QLabel
+{
+	font: bold 11px;
+}
+
+QLabel[title="true"]
+{
+	font: bold 14px;
 }
 
 QTableView
 {
 	background-color: rgba(255, 255, 255, 255);
+}
+
+QPlainTextEdit
+{
+	background-color: rgb(255, 255, 255);
+	border-radius: 6px;
+}
+
+QTextEdit
+{
+	background-color: rgb(255, 255, 255);
+	border-radius: 6px;
+}
+
+QComboBox
+{
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 6px;
+    padding: 3px;
+    text-align: center;
+}
+
+QComboBox::down-arrow {
+    image: url(:/styles/styles-image/down2.png);
+    height: 40px;
+}
+
+QComboBox::drop-down {
+    subcontrol-position: center right;
+    width: 15px;
+    right:3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background:rgb(250, 250, 250); /*none;*/
+}
+
+QComboBox:editable {
+    background: rgb(250, 250, 250); /*#ffffff;*/
+}
+
+QComboBox:!editable {
+    background: rgb(250, 250, 250); /*#d7d4d1;*/
 }
 
 QPushButton
@@ -55,6 +108,11 @@ QPushButton
 QPushButton:!enabled
 {
 	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(249, 249, 249, 50), stop:0.517073 rgba(218, 218, 218, 50), stop:1 rgba(249, 249, 249, 50));
+}
+
+QPushButton[color="true"]
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(30, 162, 232, 50), stop:0.517073 rgba(30, 162, 232, 255), stop:1 rgba(30, 162, 232, 50));
 }
 
 QMainWindow QPushButton#mpSettings
@@ -84,16 +142,6 @@ QMainWindow QPushButton#mpHelp
 	image: url(:/buttons/help.png);
 }
 
-QPushButton#mpFilter
-{
-	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(187, 200, 232, 255), stop:0.517073 rgba(80, 157, 233, 255), stop:1 rgba(179, 195, 227, 255));
-}
-
-QPushButton#mpButtonAdd
-{
-	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(30, 162, 232, 50), stop:0.517073 rgba(30, 162, 232, 255), stop:1 rgba(30, 162, 232, 50));
-}
-
 ClientsWidget QPushButton#mpClearFilter
 {
 	min-width: 20px;
@@ -108,9 +156,9 @@ ClientsWidget QLineEdit#mpFilterPhone
 	min-width: 200px;
 }
 
-ViewPostsWidget QPushButton#mpWrite
+QPushButton[remove="true"]
 {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(30, 162, 232, 50), stop:0.517073 rgba(30, 162, 232, 255), stop:1 rgba(30, 162, 232, 50));
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(244, 44, 48, 50), stop:0.517073 rgba(244, 44, 48, 255), stop:1 rgba(244, 44, 48, 50));
 }
 
 ViewPostsWidget QPushButton#mpBack
@@ -133,7 +181,6 @@ ViewPostsWidget QPushButton#mpNext
 
 QPushButton:checked
 {
-	/*background-color: qlineargradient(spread:pad, x1:0.51295, y1:0.006, x2:0.498, y2:1, stop:0 rgba(0, 152, 0, 175), stop:0.303483 rgba(0, 145, 0, 237), stop:0.736318 rgba(0, 147, 0, 214), stop:1 rgba(0, 161, 0, 255));*/
 	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(249, 249, 249, 255), stop:0.517073 rgba(246, 116, 9, 221), stop:1 rgba(249, 249, 249, 255));
 }
 
@@ -203,46 +250,6 @@ QWidget[mainmenu="true"] QLabel
 	font: 8.5em;
 }
 
-PhoneFindDialog QPushButton#city
-{
-	border-top-left-radius: 10px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
-	border-bottom-left-radius: 10px;
-	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 246), stop:1 rgba(255, 255, 255, 255));;
-}
-
-PhoneFindDialog QPushButton#city:checked
-{
-	background-color: qlineargradient(spread:pad, x1:0.51295, y1:0.006, x2:0.498, y2:1, stop:0 rgba(0, 152, 0, 175), stop:0.303483 rgba(0, 145, 0, 237), stop:0.736318 rgba(0, 147, 0, 214), stop:1 rgba(0, 161, 0, 255));
-}
-
-PhoneFindDialog QPushButton#nocity
-{
-	border-top-left-radius: 0px;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 0px;
-	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 246), stop:1 rgba(255, 255, 255, 255));
-}
-
-PhoneFindDialog QPushButton#nocity:checked
-{
-	background-color: qlineargradient(spread:pad, x1:0.51295, y1:0.006, x2:0.498, y2:1, stop:0 rgba(0, 152, 0, 175), stop:0.303483 rgba(0, 145, 0, 237), stop:0.736318 rgba(0, 147, 0, 214), stop:1 rgba(0, 161, 0, 255));
-}
-
-PhoneFindDialog AddressWidget
-{
-	min-height:120px;
-	max-height:120px;
-}
-
-PhoneFindDialog AddressHomeWidget
-{
-	min-height:120px;
-	max-height:120px;
-}
-
 QLineEdit
 {
     border-style: outset;
@@ -252,6 +259,11 @@ QLineEdit
     text-align: center;
 	background-color: rgba(255, 255, 255, 255);
 
+}
+
+Address QPushButton:checked
+{
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(249, 249, 249, 255), stop:0.517073 rgba(246, 116, 9, 221), stop:1 rgba(249, 249, 249, 255));
 }
 
 ClientsPhoneWidget
@@ -279,7 +291,6 @@ ClientsPhoneWidget QWidget
 ClientsPhoneWidget QPushButton#addcontactbutton
 {
 	max-width: 100px;
-	min-width: 100px;
 }
 
 ClientsPhoneWidget QPushButton#deletecontactbutton
@@ -287,6 +298,8 @@ ClientsPhoneWidget QPushButton#deletecontactbutton
 	image: url(:/styles/delete.png);
 	max-width: 20px;
 	min-width: 20px;
+	border-radius: 12px;
+	border-width: 1px;
 }
 
 ClientsPhoneWidget MyLineEdit
@@ -297,9 +310,33 @@ ClientsPhoneWidget MyLineEdit
     padding: 1px;
     text-align: center;
 	background-color: rgba(255, 255, 255, 255);
-	font: 16px;
+	font: 13px;
 	max-width: 250px;
-	min-width: 250px;
+}
+
+BaseAddressWidget
+{
+	max-width: 1230px;
+}
+
+PriceWidget
+{
+	max-width: 1230px;
+}
+
+TypeApartment
+{
+	max-width: 850px;
+}
+
+ApartmentInformation
+{
+	max-width: 50px;
+}
+
+CommentWidget
+{
+	max-width: 1250px;
 }
 
 QTableView#viewclient
@@ -317,45 +354,13 @@ ViewObjectWidget QTableView[find="state2"]
 	background-color: rgb(170, 170, 255);
 }
 
-QComboBox
+DialogPhotoAlbum QPushButton
 {
-    border-style: outset;
-    border-width: 1px;
-    border-radius: 6px;
-    padding: 3px;
-    text-align: center;
-}
-
-QComboBox::down-arrow {
-    image: url(:/styles/styles-image/down2.png);
-    height: 40px;
-}
-
-QComboBox::drop-down {
-    subcontrol-position: center right;
-    width: 15px;
-    right:3px;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    background:rgb(250, 250, 250); /*none;*/
-}
-
-QComboBox:editable {
-    background: rgb(250, 250, 250); /*#ffffff;*/
-}
-
-QComboBox:!editable {
-    background: rgb(250, 250, 250); /*#d7d4d1;*/
+	min-width: 15px;
+	max-width: 15px;
 }
 
 QMessageBox QPushButton
 {
 	min-width: 70px;
-	max-width: 70px;
-	
-}
-
-QMessageBox QPushButton
-{
-	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(30, 162, 232, 50), stop:0.517073 rgba(30, 162, 232, 255), stop:1 rgba(30, 162, 232, 50));
 }

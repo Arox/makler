@@ -11,13 +11,14 @@
 #include "agentwidget.h"
 #include "dialoguniversal.h"
 #include "dialogforwidgetforcontrol.h"
-#include <QMessageBox>
+#include "messages.h"
 
 AdminWidget::AdminWidget(QWidget *parent) :
     WidgetForControl(parent),
     ui(new Ui::AdminWidget)
 {
     ui->setupUi(this);
+    ui->mpRemove->setProperty("remove", "true");
     mpViewObjects = new ConsalidatorObjects(this);
     connect(mpViewObjects, SIGNAL(changeModel(ConsalidatorObjects::TypeObject)), this, SLOT(changeObject(ConsalidatorObjects::TypeObject)));
     connect(mpViewObjects, SIGNAL(isSelect(bool)), this, SLOT(changeSelect(bool)));
@@ -168,7 +169,7 @@ QString AdminWidget::idName()
 
 void AdminWidget::on_mpTake_clicked()
 {
-    if (QMessageBox::question(this, TRANSLATE("Передача объекта"), QString(TRANSLATE("Вы уверены, что хотите передать объект \"%1\"").arg(ui->mpAgents->currentText()))) == QMessageBox::Yes)
+    if (question(this, TRANSLATE("Передача объекта"), QString(TRANSLATE("Вы уверены, что хотите передать объект \"%1\"").arg(ui->mpAgents->currentText()))))
     {
         mpViewObjects->changeAgent(ui->mpAgents->itemData(ui->mpAgents->currentIndex()).toInt());
     }
@@ -178,7 +179,7 @@ void AdminWidget::on_mpRemove_clicked()
 {
     if (mpViewObjects->isSelected())
     {
-        if (QMessageBox::question(this, TRANSLATE("Удаление"), TRANSLATE("Вы действительно хотите удалить выделенные объекты?")) == QMessageBox::Yes)
+        if (question(this, TRANSLATE("Удаление"), TRANSLATE("Вы действительно хотите удалить выделенные объекты?")))
         {
             mpViewObjects->removeSelected();
             mpViewObjects->reload();

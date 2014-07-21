@@ -18,7 +18,7 @@
 #include "findhome.h"
 #include "findrent.h"
 
-#include <QMessageBox>
+#include "messages.h"
 
 ViewObjectWidget::ViewObjectWidget(TypeObject aType, int aAgent_fk, QWidget *parent):
     WidgetForControl(parent),
@@ -26,7 +26,8 @@ ViewObjectWidget::ViewObjectWidget(TypeObject aType, int aAgent_fk, QWidget *par
     mMapper(this)
 {
     ui->setupUi(this);
-
+    ui->mpButtonAdd->setProperty("color", "true");
+    ui->mpFilter->setProperty("color", "true");
     switch (aType) {
     case APARTMENT:
         mpModel = new TableModelApartment();
@@ -169,17 +170,17 @@ bool ViewObjectWidget::isActive(int aRow)
     if (vStatus.isEmpty()) return true;
     if (vStatus == "A")
     {
-        QMessageBox::warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Объект уже отложен"));
+        warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Объект уже отложен"));
     }
     else
     {
         if (vStatus == "S")
         {
-            QMessageBox::warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Объект уже в архиве"));
+            warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Объект уже в архиве"));
         }
         else
         {
-            QMessageBox::warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Неизвестное состояние объекта"));
+            warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Неизвестное состояние объекта"));
         }
     }
     return false;

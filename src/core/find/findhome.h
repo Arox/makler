@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "widgetforcontrol.h"
-#include "findaddresswidget.h"
 #include "findaddresshomewidget.h"
 #include "findinformationarea.h"
 #include "findpricewidget.h"
@@ -21,7 +20,6 @@ public:
 protected:
     virtual void getData();
 private:
-    FindAddressWidget mAddress;
     FindAddressHomeWidget mHomeAddress;
     FindInformationArea mArea;
     FindPriceWidget mPrice;

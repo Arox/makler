@@ -7,6 +7,9 @@ FindObjectsWidget::FindObjectsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->mpFind->setProperty("color", "true");
+    ui->mpRemove->setProperty("remove", "true");
+
     ui->mpRent->setObjectName("rentbutton");
     ui->mpHome->setObjectName("homebutton");
     ui->mpApartment->setObjectName("apartmentbutton");

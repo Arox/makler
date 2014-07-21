@@ -30,10 +30,13 @@ void NewPhotoGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 {
     QRectF vRect = boundingRect();
 
-    /*QLinearGradient vGradient(vRect.topLeft(), vRect.bottomRight());
-    vGradient.setColorAt(0.4, Qt::gray);
-    vGradient.setColorAt(0.6, Qt::blue);
-    painter->fillRect(vRect, vGradient);*/
+    /*QBrush vOld = painter->brush();
+    QBrush vBackground;
+    vBackground.setColor(Qt::gray);
+    vBackground.setStyle(Qt::SolidPattern);
+    painter->fillRect(vRect, vBackground);
+    painter->setBrush(vOld);*/
+
     if (!mIcon.isNull())
     {
         painter->drawImage(vRect.adjusted(10, 10, -10, -10), mIcon);

@@ -5,7 +5,7 @@
 
 #include <QApplication>
 #include <QGraphicsSceneMouseEvent>
-#include <QMessageBox>
+#include "messages.h"
 #include <QGraphicsView>
 
 #include <QDebug>
@@ -98,12 +98,11 @@ void	PhotoGraphicsItem::mousePressEvent ( QGraphicsSceneMouseEvent * event )
         {
             if (scene()->views().count())
             {
-                int vResult = QMessageBox::question(scene()->views().at(0)->parentWidget()
+                bool vResult = question(scene()->views().at(0)->parentWidget()
                                       , TRANSLATE("Удалить фото")
                                       , TRANSLATE("Вы действительно хотите удалить фотографию?")
-                                                    , QMessageBox::Ok
-                                                    ,QMessageBox::Cancel);
-                if (vResult == QMessageBox::Ok)
+                                                    );
+                if (vResult)
                 {
                     ((GalleryGrapicsScene*)scene())->remove(id());
                 }

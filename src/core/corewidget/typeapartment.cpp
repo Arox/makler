@@ -17,8 +17,9 @@ TypeApartment::TypeApartment(QWidget *parent) :
     mIdObjects(-1)
 {
     ui->setupUi(this);
-    ui->mpRooms->setVisible(false);
-    ui->label_7->setVisible(false);
+    ui->label_2->setProperty("title", "true");
+    //ui->mpRooms->setVisible(false);
+    //ui->label_7->setVisible(false);
 
     QStringList vDicts;
     vDicts << "apartment" << "material" << "fund";

@@ -2,7 +2,7 @@
 #include "ui_rentwidget.h"
 
 #include <QTime>
-#include <QMessageBox>
+#include "messages.h"
 
 #include "globalsbase.h"
 #include "globals.h"
@@ -22,11 +22,11 @@ RentWidget::RentWidget(int aAgent, QWidget *parent) :
     ui->mainLayout->addWidget(&mAddress);
     ui->mainLayout->addWidget(&mArea);
     ui->mainLayout->addWidget(&mPrice);
-    ui->centerLayout->insertWidget(1, &mInformation);
+    ui->mainLayout->addWidget(&mInformation);
     ui->mainLayout->addWidget(&mComment);
     ui->mainLayout_2->insertWidget(3, &mButtons);
 
-    mInformation.setNameDictionary("rent", 1);
+    mInformation.setNameDictionary("rent", 5);
     connect(&mButtons, SIGNAL(back()), this, SLOT(backWidget()));
     connect(&mButtons, SIGNAL(noSave()), this, SLOT(noSave()));
 }
@@ -52,7 +52,7 @@ void RentWidget::backWidget()
     }
     else
     {
-        QMessageBox::warning(this, TRANSLATE("Не все поля заполнены"), TRANSLATE("Адрес объекта, телефон и имя клиента обязательны для заполнения"));
+        warning(this, TRANSLATE("Не все поля заполнены"), TRANSLATE("Адрес объекта, телефон и имя клиента обязательны для заполнения"));
     }
 
 }

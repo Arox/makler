@@ -10,6 +10,9 @@ PassportWidget::PassportWidget(QWidget *parent) :
   , mId(-1)
 {
     ui->setupUi(this);
+    ui->mpSave->setProperty("color", "true");
+    ui->label_9->setProperty("title", "true");
+
     connect(ui->mpSave, SIGNAL(clicked()), this, SLOT(save()));
     connect(ui->mpBack, SIGNAL(clicked()), this, SIGNAL(back()));
 }

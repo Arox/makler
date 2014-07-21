@@ -3,7 +3,7 @@
 
 #include "globalsbase.h"
 #include "language.h"
-#include <QMessageBox>
+#include "messages.h"
 
 AgentWidget::AgentWidget(QWidget *parent) :
     MainWidget(parent),
@@ -18,6 +18,8 @@ AgentWidget::AgentWidget(QWidget *parent) :
         ui->mpRoles->addItem(vResponse[i]["display_role"].toString());
         mRolesIds.append(vResponse[i]["id"].toInt());
     }
+
+    ui->mpSave->setProperty("color", "true");
 
     connect(ui->mpSave, SIGNAL(clicked()), this, SLOT(save()));
     connect(ui->mpBack, SIGNAL(clicked()), this, SIGNAL(back()));
@@ -74,17 +76,17 @@ void AgentWidget::save()
 {
     if (ui->mpName->text().isEmpty())
     {
-        QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Поле \"имя\" не может быть пустым"));
+        warning(this, TRANSLATE("Ошибка"), TRANSLATE("Поле \"имя\" не может быть пустым"));
         return;
     }
     if (ui->mpSername->text().isEmpty())
     {
-        QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Поле \"фамилия\" не может быть пустым"));
+        warning(this, TRANSLATE("Ошибка"), TRANSLATE("Поле \"фамилия\" не может быть пустым"));
         return;
     }
     if (ui->mpPassword1->text() != ui->mpPassword2->text())
     {
-        QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Пароль и его подтверждение не совпадают"));
+        warning(this, TRANSLATE("Ошибка"), TRANSLATE("Пароль и его подтверждение не совпадают"));
         return;
     }
 
@@ -92,7 +94,7 @@ void AgentWidget::save()
     {
         if (execQuery(QString("SELECT id FROM users WHERE login = '%1'").arg(ui->mpLogin->text())).count())
         {
-            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Пользователь с таим логином уже существует"));
+            warning(this, TRANSLATE("Ошибка"), TRANSLATE("Пользователь с таим логином уже существует"));
             return;
         }
         execQuery(QString("INSERT INTO mans (name, sername, patronymic) VALUES ('%1', '%2', '%3')")
@@ -109,7 +111,7 @@ void AgentWidget::save()
         }
         else
         {
-            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные о пользователе"));
+            warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные о пользователе"));
             return;
         }
 
@@ -125,7 +127,7 @@ void AgentWidget::save()
         vResponse = execQuery(QString("SELECT id as id FROM users WHERE login = '%1'").arg(ui->mpLogin->text()));
         if (!vResponse.count())
         {
-            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные логина"));
+            warning(this, TRANSLATE("Ошибка"), TRANSLATE("Не удалось сохранить данные логина"));
             return;
         }
 
@@ -148,7 +150,7 @@ void AgentWidget::save()
                               .arg(vIdUser));
         if (vResponse.count())
         {
-            QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Такой логин уже существует"));
+            warning(this, TRANSLATE("Ошибка"), TRANSLATE("Такой логин уже существует"));
             return;
         }
     }

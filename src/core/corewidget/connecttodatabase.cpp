@@ -4,7 +4,7 @@
 #include "settings.h"
 #include "language.h"
 
-#include <QMessageBox>
+#include "messages.h"
 #include <QSqlDatabase>
 
 
@@ -121,10 +121,10 @@ void ConnectToDatabase::showisConnect()
 {
     if (!isConnect())
     {
-        QMessageBox::warning(this, TRANSLATE("Ошибка соединения"), TRANSLATE("Не удалось соедениться с БД"));
+        warning(this, TRANSLATE("Ошибка соединения"), TRANSLATE("Не удалось соедениться с БД"));
     }
     else
     {
-        QMessageBox::information(this, TRANSLATE("Соединение успешно"), TRANSLATE("Соединение с базой данных прошло успешно"));
+        information(this, TRANSLATE("Соединение успешно"), TRANSLATE("Соединение с базой данных прошло успешно"));
     }
 }

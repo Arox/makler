@@ -52,16 +52,16 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mpSave">
+        <widget class="QPushButton" name="mpRestore">
          <property name="text">
-          <string>Сохранить</string>
+          <string>Восстановить</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mpRestore">
+        <widget class="QPushButton" name="mpSave">
          <property name="text">
-          <string>Восстановить</string>
+          <string>Сохранить</string>
          </property>
         </widget>
        </item>

@@ -34,6 +34,9 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
+      <widget class="QPlainTextEdit" name="mpEditor"/>
+     </item>
+     <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLabel" name="label_2">
@@ -58,25 +61,22 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QPushButton" name="mpButtonAside">
-           <property name="text">
-            <string>Отложить</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="mpButtonCancel">
            <property name="text">
             <string>Отмена</string>
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="mpButtonAside">
+           <property name="text">
+            <string>Отложить</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QPlainTextEdit" name="mpEditor"/>
      </item>
     </layout>
    </item>

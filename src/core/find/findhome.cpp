@@ -11,7 +11,6 @@ FindHome::FindHome(QWidget *parent) :
     addWidget(&mType);
     addWidget(&mPrice);
     addWidget(&mHomeAddress);
-    addWidget(&mAddress);
 }
 
 FindHome::~FindHome()
@@ -25,8 +24,7 @@ void FindHome::getData()
           << mArea.sqlWhere()
           << mType.sqlWhere()
           << mPrice.sqlWhere()
-          << mHomeAddress.sqlWhere()
-          << mAddress.sqlWhere();
+          << mHomeAddress.sqlWhere();
     vList.removeAll("");
     vList.removeAll("()");
     setSql(vList.join(" AND "));
@@ -36,7 +34,6 @@ void FindHome::getData()
           << mArea.joinWhere()
           << mType.joinWhere()
           << mPrice.joinWhere()
-          << mHomeAddress.joinWhere()
-          << mAddress.joinWhere();
+          << mHomeAddress.joinWhere();
    setJoin(vList.join(" "));
 }

@@ -9,7 +9,7 @@
 #include <QApplication>
 #include <QColor>
 #include <QDateTime>
-
+#include "messages.h"
 
 TableModelPost::TableModelPost(int aIdUser, QObject *parent):
     QAbstractTableModel(parent)
@@ -298,6 +298,8 @@ ViewPostsWidget::ViewPostsWidget(int aIdUser, QWidget *parent) :
     mUser_fk(aIdUser)
 {
     ui->setupUi(this);
+    ui->mpWrite->setProperty("color", "true");
+    ui->mpRemove->setProperty("remove", "true");
     update();
     connect(&mPostModel, SIGNAL(checkStateChange()), this, SLOT(changeChecked()));
     connect(&mPostModel, SIGNAL(update()), this, SLOT(update()));
@@ -339,13 +341,21 @@ void ViewPostsWidget::changeChecked()
 void ViewPostsWidget::on_mpRemove_clicked()
 {
     QList<int> vRemovesId = mPostModel.checkedId();
-    for (int i = 0; i < vRemovesId.count(); ++i)
+    if (vRemovesId.count() == 0)
     {
-        mPostModel.remove(vRemovesId.at(i));
+        information(this, TRANSLATE("Невозможно удалить"), TRANSLATE("Вы не выбрали писем, которые необходимо удалить"));
+        return;
     }
-    update();
-    mPostModel.clearChecked();
-    changeChecked();
+    if (question(this, TRANSLATE("Вы уверены?"), TRANSLATE("Вы уверены, что хотите удалить письмо?")))
+    {
+        for (int i = 0; i < vRemovesId.count(); ++i)
+        {
+            mPostModel.remove(vRemovesId.at(i));
+        }
+        update();
+        mPostModel.clearChecked();
+        changeChecked();
+    }
 }
 
 void ViewPostsWidget::on_mpBack_clicked()

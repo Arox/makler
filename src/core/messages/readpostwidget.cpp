@@ -5,7 +5,7 @@
 
 #include <QFileDialog>
 #include <QFile>
-#include <QMessageBox>
+#include "messages.h"
 
 ReadPostWidget::ReadPostWidget(int aIdUser, int aIdMessage, QWidget *parent) :
     MainWidget(parent),
@@ -32,7 +32,7 @@ void ReadPostWidget::saveFile(QString aName, QByteArray aArray)
         QFile vFile(vName);
         if (!vFile.open(QIODevice::WriteOnly))
         {
-            QMessageBox::warning(this, TRANSLATE("ошибка записи файла"), TRANSLATE("Не удалось записать файл на диск"));
+            warning(this, TRANSLATE("ошибка записи файла"), TRANSLATE("Не удалось записать файл на диск"));
             return;
         }
         vFile.write(aArray);

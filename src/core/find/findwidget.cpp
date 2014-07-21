@@ -8,6 +8,7 @@ FindWidget::FindWidget(QWidget *parent) :
     ui(new Ui::FindWidget)
 {
     ui->setupUi(this);
+    ui->mpFind->setProperty("color", "true");
     connect(ui->mpFind, SIGNAL(clicked()), this, SLOT(on_mpFind_clicked()));
     connect(ui->mpBack, SIGNAL(clicked()), this, SLOT(on_mpBack_clicked()));
 }

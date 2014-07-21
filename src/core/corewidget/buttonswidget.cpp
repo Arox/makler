@@ -16,6 +16,7 @@ ButtonsWidget::ButtonsWidget(QWidget *parent) :
     mIdObject(-1)
 {
     ui->setupUi(this);
+    ui->mpBack->setProperty("color", "true");
 }
 
 ButtonsWidget::~ButtonsWidget()

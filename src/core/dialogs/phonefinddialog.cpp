@@ -156,7 +156,7 @@ PhoneFindDialog::PhoneFindDialog(QWidget *parent) :
     mAddress(location::FINDROOM, this)
 {
     ui->setupUi(this);
-
+    ui->mpNext->setProperty("color", "true");
     ui->contactLayout->insertWidget(0,&mNumber);
     ui->contactLayout->insertWidget(0, &mPhone);
     ui->contactLayout->insertWidget(0, &mFio);

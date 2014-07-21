@@ -9,7 +9,7 @@ CommentWidget::CommentWidget(QWidget *parent) :
   ,mIdObject(-1)
 {
     ui->setupUi(this);
-
+    ui->label->setProperty("title", "true");
     //connect(ui->mpComment, SIGNAL(textChanged()), this, SLOT(save()));
 }
 

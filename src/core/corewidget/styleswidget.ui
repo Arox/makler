@@ -103,7 +103,6 @@
       </item>
      </layout>
      <zorder></zorder>
-     <zorder></zorder>
      <zorder>lineEdit</zorder>
      <zorder>plainTextEdit</zorder>
     </widget>
@@ -124,16 +123,16 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="mpOk">
+      <widget class="QPushButton" name="mpCancel">
        <property name="text">
-        <string>Ok</string>
+        <string>Отмена</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="mpCancel">
+      <widget class="QPushButton" name="mpOk">
        <property name="text">
-        <string>Отмена</string>
+        <string>Ok</string>
        </property>
       </widget>
      </item>

@@ -15,7 +15,7 @@ InformationArea::InformationArea(QWidget *parent) :
   , mId(-1)
 {
     ui->setupUi(this);
-
+    ui->label_5->setProperty("title", "true");
     /*connect(ui->mpTotal, SIGNAL(textChanged(QString)), this, SLOT(save()));
     connect(ui->mpFloor, SIGNAL(textChanged(QString)), this, SLOT(save()));
     connect(ui->mpKitchen, SIGNAL(textChanged(QString)), this, SLOT(save()));*/

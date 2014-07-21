@@ -10,6 +10,7 @@ DialogAside::DialogAside(int aIdObject, QWidget *parent) :
     mIdObject(aIdObject)
 {
     ui->setupUi(this);
+    ui->mpButtonAside->setProperty("color", "true");
     ui->mpDate->setDate(QDate::currentDate().addDays(1));
 }
 

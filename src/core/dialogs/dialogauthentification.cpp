@@ -6,7 +6,7 @@
 
 #include <QDesktopWidget>
 #include <QSqlQuery>
-#include <QMessageBox>
+#include "messages.h"
 
 #include <QDebug>
 
@@ -15,6 +15,7 @@ DialogAuthentification::DialogAuthentification(QWidget *parent) :
     ui(new Ui::DialogAuthentification)
 {
     ui->setupUi(this);
+    ui->mpOk->setProperty("color", "true");
     QDesktopWidget mydesk;
     move(mydesk.width() / 2 - width() / 2, mydesk.height() / 2 - height() / 2);
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowTitleHint);
@@ -65,7 +66,7 @@ void DialogAuthentification::on_mpOk_clicked()
         accept();
         return;
     }
-    QMessageBox::warning(this, TRANSLATE("Ошибка аутентификации"), TRANSLATE("Пользователь не найден"));
+    warning(this, TRANSLATE("Ошибка аутентификации"), TRANSLATE("Пользователь не найден"));
 }
 
 void DialogAuthentification::on_mpExit_clicked()

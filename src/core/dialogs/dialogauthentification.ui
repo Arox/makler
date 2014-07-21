@@ -106,25 +106,6 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="mpOk">
-       <property name="minimumSize">
-        <size>
-         <width>90</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>90</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>OK</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="mpExit">
        <property name="minimumSize">
         <size>
@@ -140,6 +121,25 @@
        </property>
        <property name="text">
         <string>Выход</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mpOk">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>90</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>OK</string>
        </property>
       </widget>
      </item>

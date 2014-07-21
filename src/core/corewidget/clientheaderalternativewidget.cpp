@@ -15,7 +15,8 @@ ClientHeaderAlternativeWidget::ClientHeaderAlternativeWidget(QWidget *parent) :
 
     mpContact = new ClientsPhoneWidget(this);
     ui->verticalLayout->insertWidget(0, mpContact);
-
+    ui->mpSave->setProperty("color", "true");
+    ui->label_4->setProperty("title", "true");
     connect(ui->mpDescription, SIGNAL(textChanged()), this, SLOT(save()));
 }
 

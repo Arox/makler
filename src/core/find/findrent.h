@@ -3,14 +3,13 @@
 
 #include <QWidget>
 #include "widgetforcontrol.h"
-#include "findaddresswidget.h"
-#include "findaddresshomewidget.h"
 #include "findinformationarea.h"
 #include "findpricewidget.h"
 #include "findtypeapartment.h"
 #include "apartmentinformation.h"
 
 #include "findwidget.h"
+#include "address/address.h"
 
 class FindRent : public FindWidget
 {
@@ -22,8 +21,7 @@ public:
 protected:
     virtual void getData();
 private:
-    FindAddressWidget mAddress;
-    FindAddressHomeWidget mHomeAddress;
+    Address mAddress;
     FindInformationArea mArea;
     FindPriceWidget mPrice;
     FindTypeApartment mType;

@@ -4,6 +4,7 @@
 #include <QHBoxLayout>
 #include "globalsbase.h"
 #include "language.h"
+#include "messages.h"
 
 ClientsPhoneWidget::ClientsPhoneWidget(QWidget *parent) :
     QWidget(parent),
@@ -31,6 +32,7 @@ ClientsPhoneWidget::~ClientsPhoneWidget()
 void ClientsPhoneWidget::addContact()
 {
     QHBoxLayout* vpLayout = new QHBoxLayout();
+    //vpLayout->setContentsMargins(0, 0, 0, 0);
     MyLineEdit* vpFio = new MyLineEdit(TRANSLATE("ФИО"), MyLineEdit::Normal, this);
     MyLineEdit* vpPhone = new MyLineEdit(TRANSLATE("Телефон"), MyLineEdit::Normal, this);
     QPushButton* vpButton = new QPushButton(this);
@@ -48,7 +50,7 @@ void ClientsPhoneWidget::addContact()
     connect(vpButton, SIGNAL(clicked()), &mDispatcher, SLOT(map()));
     mDispatcher.setMapping(vpButton, vpFio);
 
-    ui->centralLayout->insertLayout(0 , vpLayout);
+    ui->centralLayout->insertLayout(mContainers.count() - 1, vpLayout);
 }
 
 void ClientsPhoneWidget::load(int aIdHeader)
@@ -159,25 +161,27 @@ void ClientsPhoneWidget::removeContact(QWidget *apRemoveObject)
     }
     if (vIndex < 0) return;
 
-    if (mContainers[vIndex]->indexOf(mpFios[vIndex]) >= 0)
+    if (question(this, TRANSLATE("Удаление контакта"), TRANSLATE("Вы уверены, что хотите удалить контакт?")))
     {
-        QLayout* vpLayout = mContainers[vIndex];
-        int i = 0;
-        while (vpLayout->count()) {
-            if (vpLayout->itemAt(i)->widget())
-            {
-                delete vpLayout->itemAt(0)->widget();
+        if (mContainers[vIndex]->indexOf(mpFios[vIndex]) >= 0)
+        {
+            QLayout* vpLayout = mContainers[vIndex];
+            int i = 0;
+            while (vpLayout->count()) {
+                if (vpLayout->itemAt(i)->widget())
+                {
+                    delete vpLayout->itemAt(0)->widget();
+                }
+                else
+                {
+                    i++;
+                }
             }
-            else
-            {
-                i++;
-            }
+            delete vpLayout;
         }
-        delete vpLayout;
+        mpFios.removeAt(vIndex);
+        mpPhones.removeAt(vIndex);
+        mIds.removeAt(vIndex);
+        mContainers.removeAt(vIndex);
     }
-
-    mpFios.removeAt(vIndex);
-    mpPhones.removeAt(vIndex);
-    mIds.removeAt(vIndex);
-    mContainers.removeAt(vIndex);
 }

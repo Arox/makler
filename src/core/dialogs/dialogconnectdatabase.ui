@@ -45,16 +45,16 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="mpOk">
+        <widget class="QPushButton" name="mpExit">
          <property name="text">
-          <string>Ок</string>
+          <string>Выход</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mpExit">
+        <widget class="QPushButton" name="mpOk">
          <property name="text">
-          <string>Выход</string>
+          <string>Ок</string>
          </property>
         </widget>
        </item>

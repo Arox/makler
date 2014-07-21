@@ -4,7 +4,7 @@
 #include "globalsbase.h"
 #include "language.h"
 #include <QFileDialog>
-#include <QMessageBox>
+#include "messages.h"
 #include <QTime>
 
 WritePost::WritePost(int aUser_fk, QWidget *parent) :
@@ -14,7 +14,7 @@ WritePost::WritePost(int aUser_fk, QWidget *parent) :
     mUser_fk(aUser_fk)
 {
     ui->setupUi(this);
-
+    ui->mpSend->setProperty("color", "true");
     loadUsers();
     ui->verticalLayout->insertWidget(1, &mViewPost);
     ui->mpSend->setEnabled(false);
@@ -33,7 +33,7 @@ void WritePost::on_mpAddFile_clicked()
     QFile vFile(vFileName);
     if (!vFile.open(QIODevice::ReadOnly))
     {
-        QMessageBox::warning(this, TRANSLATE("невозможно добавить файл"), TRANSLATE("Ошибка при попытке открыт файл"));
+        warning(this, TRANSLATE("невозможно добавить файл"), TRANSLATE("Ошибка при попытке открыт файл"));
     }
     QFileInfo vInfo(vFileName);
     mViewPost.addFile(vInfo.baseName(), vFileName);

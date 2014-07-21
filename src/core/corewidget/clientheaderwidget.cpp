@@ -17,6 +17,7 @@ ClientHeaderWidget::ClientHeaderWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     mpContacts = new ClientsPhoneWidget(this);
+    ui->label_7->setProperty("title", "true");
     ui->mainLayout->insertWidget(0, mpContacts);
 }
 

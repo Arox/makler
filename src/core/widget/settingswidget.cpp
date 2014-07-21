@@ -10,6 +10,7 @@ SettingsWidget::SettingsWidget(int aUser_fk, QStringList aRoles, QWidget *parent
 {
     Q_UNUSED(aUser_fk);
     ui->setupUi(this);
+    ui->mpBack->setProperty("color", "true");
     while (ui->mpContainer->count()) ui->mpContainer->removeItem(0);
 
     ui->mpContainer->addItem(&mEditorDatabase, TRANSLATE("Настройки подключения к БД"));

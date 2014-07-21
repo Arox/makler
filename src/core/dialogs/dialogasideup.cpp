@@ -94,6 +94,7 @@ DialogAsideUp::DialogAsideUp(int aUser_fk, QWidget *parent) :
     mUser_fk(aUser_fk)
 {
     ui->setupUi(this);
+    ui->mpAside->setProperty("color", "true");
     load();
     ui->mpAsideDescription->setEnabled(false);
 

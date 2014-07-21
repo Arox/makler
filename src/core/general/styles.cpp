@@ -2,7 +2,7 @@
 #include <QApplication>
 
 #include <QSettings>
-#include <QMessageBox>
+#include "messages.h"
 #include <QResource>
 
 #include "language.h"
@@ -63,7 +63,7 @@ void Styles::loadStyles(QStringList aFiles)
             }
             else
             {
-                QMessageBox::warning(0, TRANSLATE("Предупреждение"), QString("%1 %2").arg(TRANSLATE("Не удалось загрузить файл ").arg(vFileName)));
+                warning(0, TRANSLATE("Предупреждение"), QString("%1 %2").arg(TRANSLATE("Не удалось загрузить файл ").arg(vFileName)));
             }
         }
     }
@@ -108,7 +108,7 @@ QString Styles::style(QString aStyleName)
                 }
                 else
                 {
-                    QMessageBox::warning(0, TRANSLATE("Предупреждение"), QString("%1 %2").arg(TRANSLATE("Не удалось загрузить файл ").arg(vFileName)));
+                    warning(0, TRANSLATE("Предупреждение"), QString("%1 %2").arg(TRANSLATE("Не удалось загрузить файл ").arg(vFileName)));
                 }
             }
         }

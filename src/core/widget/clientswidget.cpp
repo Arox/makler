@@ -14,7 +14,7 @@
 #include "rentwidget.h"
 #include "homewidget.h"
 
-#include <QMessageBox>
+#include "messages.h"
 #include <QTime>
 #include <QInputDialog>
 #include "dialoguniversal.h"
@@ -27,7 +27,7 @@ ClientsWidget::ClientsWidget(int aAgent, QWidget *parent) :
     mView(this)
 {
     ui->setupUi(this);
-
+    ui->mpButtonAdd->setProperty("color", "true");
     ResponseType vResponse = execQuery(QString("SELECT id FROM static_dictionaries WHERE parent is NULL AND name = 'typeobject'"));
     if (vResponse.count())
     {
@@ -85,13 +85,13 @@ void ClientsWidget::add()
     if (!ok) return;
     if (vPhone.length() == 0)
     {
-        QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Вы не ввели номер телефона"));
+        warning(this, TRANSLATE("Ошибка"), TRANSLATE("Вы не ввели номер телефона"));
         return;
     }
     ResponseType vResponse = execQuery(QString("SELECT * FROM clients WHERE phone LIKE '%1'").arg(vPhone));
     if (vResponse.count())
     {
-        QMessageBox::warning(this, TRANSLATE("Ошибка"), TRANSLATE("Такой телефон уже есть"));
+        warning(this, TRANSLATE("Ошибка"), TRANSLATE("Такой телефон уже есть"));
         return;
     }
     int vTypeId = execQuery(QString("SELECT id FROM types WHERE type = 'client'"))[0]["id"].toInt();
@@ -163,17 +163,17 @@ bool ClientsWidget::isActive(int aRow)
     if (vStatus.isEmpty()) return true;
     if (vStatus == "A")
     {
-        QMessageBox::warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Объект уже отложен"));
+        warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Объект уже отложен"));
     }
     else
     {
         if (vStatus == "S")
         {
-            QMessageBox::warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Объект уже в архиве"));
+            warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Объект уже в архиве"));
         }
         else
         {
-            QMessageBox::warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Неизвестное состояние объекта"));
+            warning(this, TRANSLATE("Невозможно выполнить операцию"), TRANSLATE("Неизвестное состояние объекта"));
         }
     }
     return false;

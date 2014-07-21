@@ -1,7 +1,7 @@
 #include "baseaddresswidget.h"
 #include "ui_baseaddresswidget.h"
 
-#include <QMessageBox>
+#include "messages.h"
 #include <QTime>
 #include <QCompleter>
 #include "../general/globalsbase.h"
@@ -100,7 +100,7 @@ void AddressWidget::saveStreet()
 
 bool BaseAddressWidget::isState(int aState)
 {
-    return mState & aState;
+    return (mState & aState) == aState;
 }
 
 void BaseAddressWidget::load(int aIdObjects)
@@ -289,6 +289,7 @@ void BaseAddressWidget::setState(int aState)
     {
         setNormalVisible();
         ui->mpLandMark->setVisible(false);
+        ui->label_6->setVisible(false);
 
         mCityBox.data()->setEditable(true);
         mStreetBox.data()->setEditable(true);
@@ -296,7 +297,14 @@ void BaseAddressWidget::setState(int aState)
 
         if (isState(location::FINDROOM))
         {
-            ui->mpRoomContainer->setVisible(true);
+            CityWidget* vpCityWidget = dynamic_cast<CityWidget*>(mCityBox.data());
+            if (vpCityWidget)
+            {
+                if (vpCityWidget->type() == CityModel::City)
+                {
+                    ui->mpRoomContainer->setVisible(true);
+                }
+            }
         }
         else
         {

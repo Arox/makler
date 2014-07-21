@@ -8,6 +8,7 @@
 #include "../mainwidget.h"
 
 #include "verticalcontanerwidget.h"
+#include "horizontalcontainerwidget.h"
 #include "citymodel.h"
 
 namespace Ui {
@@ -64,9 +65,9 @@ private:
     QSignalMapper mMapper;
     QList<LocationSelect*> mBoxes;
 
-    VerticalContanerWidget mCityBox;
-    VerticalContanerWidget mMicrodistrictBox;
-    VerticalContanerWidget mStreetBox;
+    HorizontalContainerWidget mCityBox;
+    HorizontalContainerWidget mMicrodistrictBox;
+    HorizontalContainerWidget mStreetBox;
 };
 
 #endif // BASEADDRESSWIDGET_H

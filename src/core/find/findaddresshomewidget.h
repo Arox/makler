@@ -1,9 +1,9 @@
 #ifndef FINDADDRESSHOMEWIDGET_H
 #define FINDADDRESSHOMEWIDGET_H
 
-#include "address/addresshome.h"
+#include "address/baseaddresswidget.h"
 
-class FindAddressHomeWidget : public AddressHome
+class FindAddressHomeWidget : public BaseAddressWidget
 {
     Q_OBJECT
 public:

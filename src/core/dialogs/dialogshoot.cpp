@@ -9,6 +9,7 @@ DialogShoot::DialogShoot(int aIdObject, QWidget *parent) :
     mIdObject(aIdObject)
 {
     ui->setupUi(this);
+    ui->mpButtonShoot->setProperty("color", "true");
 }
 
 DialogShoot::~DialogShoot()

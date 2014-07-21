@@ -34,9 +34,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="mpNext">
+      <widget class="QPushButton" name="mpFind">
        <property name="text">
-        <string>Продолжить</string>
+        <string>Поиск</string>
        </property>
       </widget>
      </item>
@@ -54,9 +54,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="mpFind">
+      <widget class="QPushButton" name="mpNext">
        <property name="text">
-        <string>Поиск</string>
+        <string>Продолжить</string>
        </property>
       </widget>
      </item>

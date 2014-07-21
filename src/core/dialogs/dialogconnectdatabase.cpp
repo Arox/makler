@@ -2,7 +2,7 @@
 #include "ui_dialogconnectdatabase.h"
 #include "language.h"
 
-#include <QMessageBox>
+#include "messages.h"
 
 DialogConnectDatabase::DialogConnectDatabase(QWidget *parent) :
     QDialog(parent),
@@ -11,6 +11,7 @@ DialogConnectDatabase::DialogConnectDatabase(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->verticalLayout->insertWidget(0, &mConnectWidget);
+    ui->mpOk->setProperty("color", "true");
     mConnectWidget.readSettings();
 }
 
@@ -28,7 +29,7 @@ void DialogConnectDatabase::on_mpOk_clicked()
     }
     else
     {
-        QMessageBox::warning(this, TRANSLATE("Ошибка подключения"), TRANSLATE("Не удалось подключиться к базе данных"));
+        warning(this, TRANSLATE("Ошибка подключения"), TRANSLATE("Не удалось подключиться к базе данных"));
     }
 }
 

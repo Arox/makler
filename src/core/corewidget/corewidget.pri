@@ -21,7 +21,8 @@ SOURCES += \
     $$PWD/address/streetwidget.cpp \
     corewidget/address/addresscity.cpp \
     corewidget/address/addresshome.cpp \
-    corewidget/styleswidget.cpp
+    corewidget/styleswidget.cpp \
+    corewidget/address/horizontalcontainerwidget.cpp
 
 HEADERS  +=  \
     $$PWD/address/baseaddresswidget.h \
@@ -41,7 +42,8 @@ HEADERS  +=  \
     $$PWD/address/streetwidget.h \
     corewidget/address/addresscity.h \
     corewidget/address/addresshome.h \
-    corewidget/styleswidget.h
+    corewidget/styleswidget.h \
+    corewidget/address/horizontalcontainerwidget.h
 
 FORMS    +=  \
     $$PWD/address/baseaddresswidget.ui \
@@ -49,7 +51,8 @@ FORMS    +=  \
     $$PWD/connecttodatabase.ui \
     $$PWD/editorsettingsdatabase.ui \
     $$PWD/address/verticalcontanerwidget.ui \
-    corewidget/styleswidget.ui
+    corewidget/styleswidget.ui \
+    corewidget/address/horizontalcontainerwidget.ui
 
 #ALL OTHER
 SOURCES += \

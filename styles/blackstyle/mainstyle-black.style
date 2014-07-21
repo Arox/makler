@@ -1,0 +1,58 @@
+QPushButton
+{
+    background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(255, 255, 255, 175), stop:0.517073 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 69));
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 16px;
+    border-color: beige;
+    font: bold 14px;
+    /*min-width: 10em;*/
+    padding: 6px;
+}
+
+QPushButton:pressed
+{
+    border-style: outset;
+    border-width: 2px;
+}
+
+QLineEdit
+{
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 12px;
+    padding: 1px;
+    text-align: center;
+}
+
+QComboBox
+{
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 3px;
+    text-align: center;
+}
+
+QComboBox::down-arrow {
+    image: url(:/styles/styles-image/down2.png);
+    height: 40px;
+}
+
+QComboBox::drop-down {
+    subcontrol-position: center right;
+    width: 15px;
+    right:3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background:none;
+}
+
+QComboBox:editable {
+    background: #ffffff;
+}
+
+QComboBox:!editable {
+    background: #d7d4d1;
+}
+

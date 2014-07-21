@@ -9,6 +9,7 @@ StylesWidget::StylesWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->mpStyles->addItems(Styles::styles());
+    ui->mpOk->setProperty("color", "true");
     connect(ui->mpStyles, SIGNAL(activated(QString)), this, SLOT(changeStyle(QString)));
 }
 

@@ -14,7 +14,16 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -154,16 +163,16 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="mpSave">
+      <widget class="QPushButton" name="mpBack">
        <property name="text">
-        <string>Сохранить</string>
+        <string>Отмена</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="mpBack">
+      <widget class="QPushButton" name="mpSave">
        <property name="text">
-        <string>Отмена</string>
+        <string>Сохранить</string>
        </property>
       </widget>
      </item>

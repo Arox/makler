@@ -96,16 +96,16 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="mpSave">
+      <widget class="QPushButton" name="mpCancel">
        <property name="text">
-        <string>Сохранить</string>
+        <string>Отменить</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="mpCancel">
+      <widget class="QPushButton" name="mpSave">
        <property name="text">
-        <string>Отменить</string>
+        <string>Сохранить</string>
        </property>
       </widget>
      </item>

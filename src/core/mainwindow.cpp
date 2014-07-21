@@ -14,7 +14,7 @@
 #include <QDebug>
 #include <QDesktopWidget>
 #include <QTime>
-#include <QMessageBox>
+#include "messages.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -65,7 +65,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *apEvent)
 {
-    bool vResult = QMessageBox::information(this, TRANSLATE("Выход"), TRANSLATE("Вы действительно хотите выйти из программы?"),QMessageBox::Ok, QMessageBox::Cancel) == QMessageBox::Ok;
+    bool vResult = question(this, TRANSLATE("Выход"), TRANSLATE("Вы действительно хотите выйти из программы?"));
     if (vResult)
     {
         apEvent->accept();

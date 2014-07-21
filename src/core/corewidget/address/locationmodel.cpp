@@ -12,6 +12,8 @@ LocationModel::LocationModel(QObject *parent) :
 void LocationModel::load()
 {
     mData = execQuery(sqlQuery());
+    if (mIcons.count()) mIcons.clear();
+    mIcons.fill(QIcon(), mData.count());
 }
 
 int	LocationModel::columnCount(const QModelIndex &) const
@@ -41,7 +43,25 @@ QVariant LocationModel::data(const QModelIndex & index, int role) const
             }
         }
     }
+    if (role == Qt::DecorationRole)
+    {
+        if (mIcons.count() > index.row() && index.row() >= 0)
+        {
+            return mIcons.at(index.row());
+        }
+    }
     return QVariant();
+}
+
+bool LocationModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (role == Qt::DecorationRole)
+    {
+        if (mIcons.count() > index.row())
+        {
+            mIcons[index.row()] = value.value<QIcon>();
+        }
+    }
 }
 
 QModelIndex	LocationModel::index(int row, int column, const QModelIndex &) const

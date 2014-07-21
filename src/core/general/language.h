@@ -1,5 +1,6 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
+#include <QApplication>
 
 #ifdef WINDOWS_OS
 #define TRANSLATE(x) QApplication::translate("TRANSLATE", x, 0)

@@ -245,16 +245,16 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="mpSave">
+      <widget class="QPushButton" name="mpBack">
        <property name="text">
-        <string>Сохранить</string>
+        <string>Назад</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="mpBack">
+      <widget class="QPushButton" name="mpSave">
        <property name="text">
-        <string>Назад</string>
+        <string>Сохранить</string>
        </property>
       </widget>
      </item>

@@ -24,11 +24,11 @@ void LocationSelect::on_changeStatus(int aType)
 {
     if (isType(location::MULTISELECT))
     {
-        connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(clickItemComboBox(int)));
+        connect(this, SIGNAL(activated(int)), this, SLOT(clickItemComboBox(int)));
     }
     else
     {
-        disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(clickItemComboBox(int)));
+        disconnect(this, SIGNAL(activated(int)), this, SLOT(clickItemComboBox(int)));
     }
     if (modelSelect()) modelSelect()->setType(aType);
     if (modelCompleter()) modelCompleter()->setType(aType);
@@ -62,12 +62,7 @@ void LocationSelect::reload()
 {
     if (completer())
     {
-        completer()->setModel(0);
         completer()->setModel(modelCompleter());
-    }
-    if (model())
-    {
-        setModel(0);
     }
     if (modelSelect()) setModel(modelSelect());
 }
@@ -105,7 +100,8 @@ void LocationSelect::clickItemComboBox(int aIndex)
     {
         if (itemIcon(aIndex).isNull())
         {
-            setItemIcon(aIndex, QIcon(":/select/select-ok.png"));
+            setItemIcon(aIndex, QIcon(":/select/picture/ok.png"));
+            setCurrentIndex(aIndex);
         }
         else
         {

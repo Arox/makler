@@ -1,7 +1,7 @@
 #include "findaddresshomewidget.h"
 
 FindAddressHomeWidget::FindAddressHomeWidget(QWidget *parent) :
-    AddressHome(location::FIND | location::MULTISELECT, parent)
+    BaseAddressWidget(CityModel::Garden, location::FIND | location::MULTISELECT, parent)
 {
 }
 

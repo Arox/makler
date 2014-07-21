@@ -4,7 +4,7 @@
 #include "language.h"
 #include <QLineEdit>
 #include <QInputDialog>
-#include <QMessageBox>
+#include "messages.h"
 #include <QCompleter>
 
 AddressEditor::AddressEditor(QWidget *parent) :
@@ -13,6 +13,9 @@ AddressEditor::AddressEditor(QWidget *parent) :
 {
     mTypesCitys << "city" << "garden";
     ui->setupUi(this);
+    ui->mpRemoveCity->setProperty("remove", "true");
+    ui->mpRemoveLocality->setProperty("remove", "true");
+    ui->mpRemoveStreet->setProperty("remove", "true");
     connect(ui->mpCity->lineEdit(), SIGNAL(returnPressed()), this, SLOT(saveCity()));
     connect(ui->mpLocality->lineEdit(), SIGNAL(returnPressed()), this, SLOT(saveLocality()));
     connect(ui->mpStreet->lineEdit(), SIGNAL(returnPressed()), this, SLOT(saveStreet()));
@@ -235,7 +238,7 @@ void AddressEditor::on_mpAddLocality_clicked()
     int vIdCity = ui->mpCity->itemData(ui->mpCity->currentIndex()).toInt();
     if (vIdCity < 1)
     {
-        QMessageBox::warning(this, TRANSLATE("Нельзя добавить"), TRANSLATE("Не выбран населенный пункт"));
+        warning(this, TRANSLATE("Нельзя добавить"), TRANSLATE("Не выбран населенный пункт"));
         return;
     }
     QString vText = QInputDialog::getText(this, TRANSLATE("Добавление района"), TRANSLATE("Введите название района"));
@@ -267,7 +270,7 @@ void AddressEditor::on_mpRemoveLocality_clicked()
     if (vIdLocality < 1) return;
     if (execQuery(QString("SELECT * FROM address WHERE address.microdistrict_fk = %1").arg(vIdLocality)).count())
     {
-        QMessageBox::warning(this, TRANSLATE("Нельзя удалить"), TRANSLATE("Нельзя удалить, так как есть адреса с этим районом."));
+        warning(this, TRANSLATE("Нельзя удалить"), TRANSLATE("Нельзя удалить, так как есть адреса с этим районом."));
         return;
     }
     execQuery(QString("DELETE address_microdistrict WHERE id = %1")
@@ -280,7 +283,7 @@ void AddressEditor::on_mpAddStreet_clicked()
     int vIdCity = ui->mpCity->itemData(ui->mpCity->currentIndex()).toInt();
     if (vIdCity < 1)
     {
-        QMessageBox::warning(this, TRANSLATE("Нельзя добавить"), TRANSLATE("Не выбран населенный пункт"));
+        warning(this, TRANSLATE("Нельзя добавить"), TRANSLATE("Не выбран населенный пункт"));
         return;
     }
     QString vText = QInputDialog::getText(this, TRANSLATE("Добавление улицы"), TRANSLATE("Введите название улицы"));
@@ -313,7 +316,7 @@ void AddressEditor::on_mpRemoveStreet_clicked()
     if (vIdStreet < 1) return;
     if (execQuery(QString("SELECT * FROM address WHERE address.street_fk = %1").arg(vIdStreet)).count())
     {
-        QMessageBox::warning(this, TRANSLATE("Нельзя удалить"), TRANSLATE("Нельзя удалить, так как есть адреса с этой улицей."));
+        warning(this, TRANSLATE("Нельзя удалить"), TRANSLATE("Нельзя удалить, так как есть адреса с этой улицей."));
         return;
     }
     execQuery(QString("DELETE address_street WHERE id = %1")
@@ -350,7 +353,7 @@ void AddressEditor::on_mpRemoveCity_clicked()
     if (vIdCity < 1) return;
     if (execQuery(QString("SELECT * FROM address_street, address_microdistrict WHERE address_street.city_fk = %1 OR address_microdistrict.city_fk = %1").arg(vIdCity)).count())
     {
-        QMessageBox::warning(this, TRANSLATE("Нельзя удалить"), TRANSLATE("Нельзя удалить, так как есть адреса с этим населенным пунктом. Удалите сначала все районы и все улицы"));
+        warning(this, TRANSLATE("Нельзя удалить"), TRANSLATE("Нельзя удалить, так как есть адреса с этим населенным пунктом. Удалите сначала все районы и все улицы"));
         return;
     }
     execQuery(QString("DELETE address_city WHERE id = %1")
