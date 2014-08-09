@@ -217,7 +217,7 @@ bool GalleryGrapicsScene::nextStep()
         return false;
     }
     mPhotos.at(mCurrent + 1)->setPos(_pos(countPhotos()));
-    for (int i = 0; i < countPhotos() + 1; ++i)
+    for (int i = 1; i < countPhotos() + 1; ++i)
     {
         mAnimationsNext[i]->setItem(mPhotos.at(mCurrent - lastIndexPhotos() + i));
         mAnimationsNext[i]->setTimeLine(&mTimerNext);
@@ -233,6 +233,7 @@ bool GalleryGrapicsScene::nextStep()
         }
 
     }
+    removeItem(mPhotos.at(mCurrent - lastIndexPhotos()));
     if (!mPhotos.at(mCurrent + 1)->scene())
     {
         addItem(mPhotos.at(mCurrent + 1));
@@ -259,7 +260,7 @@ bool GalleryGrapicsScene::backStep()
     {
         addItem(mPhotos.at(mCurrent - countPhotos()));
     }
-    for (int i = 0; i < countPhotos() + 1; ++i)
+    for (int i = 0; i < countPhotos(); ++i)
     {
         mAnimationsBack[i]->setItem(mPhotos.at(mCurrent - countPhotos() + i));
         mAnimationsBack[i]->setTimeLine(&mTimerBack);
@@ -275,6 +276,7 @@ bool GalleryGrapicsScene::backStep()
         }
 
     }
+    removeItem(mPhotos.at(mCurrent));
     if (!mPhotos.at(mCurrent - lastIndexPhotos())->scene())
     {
         addItem(mPhotos.at(mCurrent - lastIndexPhotos()));

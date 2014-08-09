@@ -9,7 +9,7 @@ HelpWidget::HelpWidget(QWidget *parent) :
     ui(new Ui::HelpWidget)
 {
     ui->setupUi(this);
-    QString vFileName = QString("%1/help/main.html").arg(qApp->applicationDirPath());
+    QString vFileName = QString("%1/help/hallo.html").arg(qApp->applicationDirPath());
     QFile vFile(vFileName);
     if (vFile.open(QIODevice::ReadOnly))
     {

@@ -13,8 +13,6 @@ SettingsWidget::SettingsWidget(int aUser_fk, QStringList aRoles, QWidget *parent
     ui->mpBack->setProperty("color", "true");
     while (ui->mpContainer->count()) ui->mpContainer->removeItem(0);
 
-    ui->mpContainer->addItem(&mEditorDatabase, TRANSLATE("Настройки подключения к БД"));
-    ui->mpContainer->addItem(&mStyles, TRANSLATE("Стили"));
     if (aRoles.contains("admin"))
     {
         mpAdmin = new AdminWidget(this);
@@ -26,6 +24,8 @@ SettingsWidget::SettingsWidget(int aUser_fk, QStringList aRoles, QWidget *parent
         /*mpSync = new ViewBases(this);
         ui->mpContainer->addItem(mpSync, TRANSLATE("Синхронизация данных"));*/
     }
+    ui->mpContainer->addItem(&mEditorDatabase, TRANSLATE("Настройки подключения к БД"));
+    ui->mpContainer->addItem(&mStyles, TRANSLATE("Стили"));
 
     connect(ui->mpBack, SIGNAL(clicked()), this, SLOT(backClicked()));
 }

@@ -49,7 +49,7 @@ void WritePost::on_mpUsers_activated(int index)
 void WritePost::loadUsers()
 {
     ui->mpUsers->clear();
-    ResponseType vResponse = execQuery(QString("SELECT name as name, sername as sername, patronymic as patronymic, users.id as id FROM users INNER JOIN mans ON users.man_fk = mans.id WHERE users.is_active = TRUE"));
+    ResponseType vResponse = execQuery(QString("SELECT name as name, sername as sername, patronymic as patronymic, mans.id as id FROM users INNER JOIN mans ON users.man_fk = mans.id WHERE users.is_active = TRUE"));
     QList<int> vIdUsers = mViewPost.idUserList();
 
     for (int i = 0; i < vResponse.count(); ++i)

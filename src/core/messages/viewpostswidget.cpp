@@ -29,8 +29,8 @@ TableModelPost::TableModelPost(int aIdUser, QObject *parent):
              << TRANSLATE("");
     mCheckedsColumn = 0;
 
-    mSqlStringFull  << QString("select * from messages_full_view where ARRAY[%1] <@ user_fk").arg(mIdUser);
-
+    //mSqlStringFull  << QString("select * from messages_full_view where ARRAY[%1] <@ user_fk").arg(mIdUser);
+    mSqlStringFull  << QString("select * from full_messages_view where %1 = \"from\"").arg(mIdUser);
     mTimer.start();
 }
 
@@ -267,7 +267,8 @@ int TableModelPost::fullCount() const
 
 void TableModelPost::needUpdate()
 {
-    ResponseType vResponse = execQuery(QString("SELECT count(*) as count FROM messages_full_view WHERE ARRAY[%1] <@ user_fk").arg(mIdUser));
+    //ResponseType vResponse = execQuery(QString("SELECT count(*) as count FROM messages_full_view WHERE ARRAY[%1] <@ user_fk").arg(mIdUser));
+    ResponseType vResponse = execQuery(QString("SELECT count(*) as count FROM full_messages_view WHERE %1 = \"from\"").arg(mIdUser));
     if (vResponse.count() && (vResponse[0]["count"].toInt() > mData.count()))
     {
         emit update();

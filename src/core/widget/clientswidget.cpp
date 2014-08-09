@@ -300,6 +300,7 @@ void ClientsWidget::reloadObject(int aRow)
     }
     execQuery(QString("UPDATE objects SET status = NULL WHERE id = %1").arg(vIdObject));
     load();
+    mListButtonsTable.removeAt(aRow);
 }
 
 void ClientsWidget::on_mpView_clicked(const QModelIndex &index)

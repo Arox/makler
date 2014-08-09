@@ -8,6 +8,7 @@
 #include "topmenu.h"
 #include "styles.h"
 #include "dialogconnectdatabase.h"
+#include <QMessageBox>
 
 QMainWindow* getWindow()
 {
@@ -33,6 +34,7 @@ QMainWindow* getWindow()
              db.setPort(vPort);
         if (!db.open())
         {
+            QMessageBox::information(0, "", db.lastError().text());
             DialogConnectDatabase vDialogConnect;
             if (vDialogConnect.exec() != QDialog::Accepted)
             {

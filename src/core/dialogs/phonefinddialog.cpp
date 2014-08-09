@@ -232,13 +232,16 @@ void PhoneFindDialog::on_mpFind_clicked()
 
     //ADD ADDRESS
     QStringList vWheres;
-    vWheres
-            << (mAddress.data().isLocality() ? QString("microdistrict_fk = %1").arg(mAddress.data().locality().at(0)) : QString(""))
-            << (mAddress.data().isStreet() ? QString("street_fk = %1").arg(mAddress.data().street().at(0)) : QString(""))
-            << (mAddress.data().isNumber1() ? QString("number1 = '%1'").arg(mAddress.data().number1()) : QString(""))
-            << (mAddress.data().isNumber2() ? QString("number2 = '%1'").arg(mAddress.data().number2()) : QString(""))
-            << (mAddress.data().isRoom() ? QString("room = '%1'").arg(mAddress.data().room()) : QString(""));
-    vWheres.removeAll("");
+    if (mAddress.data().isNumber1())
+    {
+        vWheres
+                << (mAddress.data().isLocality() ? QString("microdistrict_fk = %1").arg(mAddress.data().locality().at(0)) : QString(""))
+                << (mAddress.data().isStreet() ? QString("street_fk = %1").arg(mAddress.data().street().at(0)) : QString(""))
+                << (mAddress.data().isNumber1() ? QString("number1 = '%1'").arg(mAddress.data().number1()) : QString(""))
+                << (mAddress.data().isNumber2() ? QString("number2 = '%1'").arg(mAddress.data().number2()) : QString(""))
+                << (mAddress.data().isRoom() ? QString("room = '%1'").arg(mAddress.data().room()) : QString(""));
+        vWheres.removeAll("");
+    }
     if (vWheres.count())
     {
         vConstraints << QString("(%1)").arg(vWheres.join(" AND "));
